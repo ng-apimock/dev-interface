@@ -1,0 +1,50 @@
+:host {
+  td {
+    padding: 0.375rem 0.75rem;
+
+    &.time {
+      width: 30%;
+    }
+    &.criteria {
+      width: 50%;
+    }
+    &.details {
+      width: 20%;
+    }
+
+    .badge {
+      float: right;
+      color: white;
+
+      &-delete {
+        background: crimson;
+      }
+
+      &-get {
+        background: steelblue;
+      }
+
+      &-post {
+        background: seagreen;
+      }
+
+      &-put {
+        background: seagreen;
+      }
+    }
+
+    .btn-primary {
+      background: steelblue;
+      color: white;
+      border-radius: 0.25rem;
+    }
+  }
+
+  .rotate {
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+  }
+}

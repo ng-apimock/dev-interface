@@ -1,0 +1,30 @@
+<div class="container-fluid">
+
+    <div class="alert alert-success" *ngIf="change">
+        Variable '<strong [innerHtml]="change.key"></strong>' has been '<strong>{{change.type}}</strong>'<span
+            *ngIf="change.value"> to '<strong [innerHtml]="change.value"></strong>'</span>
+    </div>
+    <h2>Available variables</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let variable of data.variables" apimock-variable-overview-row [variable]="variable"
+            (updated)="onUpdate($event)"></tr>
+        </tbody>
+        <tfoot>
+        <tr apimock-variable-overview-footer-row (updated)="onUpdate($event)">
+            <td colspan="3">
+                <button (click)="resetMocksToDefaults()" class="btn-primary">Reset to defaults</button>
+                <button (click)="setMocksToPassThrough()" class="btn-primary">Set to passThrough</button>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

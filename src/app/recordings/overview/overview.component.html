@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <h2>Recordings</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Name</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let recording of data.recordings.reverse()">
+            <tr apimock-recording-overview-row [recording]="recording"></tr>
+            <tr apimock-recording-overview-request-row [recording]="recording"
+                *ngIf="recording.showRequestDetails"></tr>
+            <tr apimock-recording-overview-response-row [recording]="recording"
+                *ngIf="recording.showResponseDetails"></tr>
+        </ng-container>
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+</div>

@@ -1,0 +1,29 @@
+<td colspan="3">
+    <table>
+        <thead>
+        <th colspan="2">Response details</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="key">status</td>
+            <td class="value">{{recording.response.status}}</td>
+        </tr>
+        <tr>
+            <td class="key">headers</td>
+            <td class="value">
+                <pre [innerHtml]="recording.response.headers | prettyjson:2"></pre>
+            </td>
+        </tr>
+        <tr>
+            <td class="key">data</td>
+            <td class="value">
+                <pre *ngIf="!recording.response.data.apimockFileLocation"
+                     [innerHtml]="recording.response.data | prettyjson:2"></pre>
+                <a *ngIf="recording.response.data.apimockFileLocation" target="_blank"
+                   [href]="recording.response.data.apimockFileLocation">download</a>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</td>

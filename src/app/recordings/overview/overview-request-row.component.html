@@ -1,0 +1,30 @@
+<td colspan="3">
+    <table>
+        <thead>
+        <th colspan="2">Request details</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="key">url</td>
+            <td class="value">{{recording.request.url}}</td>
+        </tr>
+        <tr>
+            <td class="key">method</td>
+            <td class="value">{{recording.request.method}}</td>
+        </tr>
+        <tr>
+            <td class="key">headers</td>
+            <td class="value">
+                <pre [innerHtml]="recording.request.headers | prettyjson:2"></pre>
+            </td>
+        </tr>
+        <tr *ngIf="(recording.request.body | json) != '{}'">
+            <td class="key">body</td>
+            <td class="value">
+                <pre [innerHtml]="recording.request.body | prettyjson:2"></pre>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</td>

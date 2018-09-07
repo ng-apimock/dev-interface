@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="alert alert-success" *ngIf="change">
+        Mock '<strong [innerHtml]="change.name"></strong>' has changed the '<strong [innerHtml]="change.type"></strong>'
+        to '<strong [innerHtml]="change.value"></strong>'
+    </div>
+    <h2>Available mocks</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Criteria</th>
+            <th>Scenario</th>
+            <th>Delay</th>
+            <th>Echo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let mock of data.mocks">
+            <tr apimock-mock-overview-row [mock]="mock" [state]="data.state[mock.name]"
+                (updated)="onUpdate($event)"></tr>
+        </ng-container>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5" class="text-right">
+                <button (click)="resetMocksToDefaults()" class="btn-primary">Reset to defaults</button>
+                <button (click)="setMocksToPassThrough()" class="btn-primary">Set to passThrough</button>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

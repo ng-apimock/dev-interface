@@ -1,0 +1,35 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/tables";
+
+:host {
+  h2 {
+    font-size: 1.25rem;
+    color: steelblue;
+  }
+
+  table {
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-bordered;
+    @extend .table-hover;
+    @extend .table-sm;
+
+    thead {
+      color: steelblue;
+
+      th {
+        padding: 0.175rem 0.75rem;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .btn-primary {
+    background: steelblue;
+    color: white;
+    border-radius: 0.25rem;
+    margin-left: 5px;
+  }
+}

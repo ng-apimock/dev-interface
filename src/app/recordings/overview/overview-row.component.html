@@ -1,0 +1,19 @@
+<td class="time" [innerHtml]="recording.datetime | date: 'MM/dd/yyyy - HH:mm:ss'"></td>
+<td class="criteria">
+    <span [innerHtml]="recording.request.url"></span>
+    <span class="badge"
+          ngClass="badge-{{recording.request.method | lowercase }}"
+          [innerHtml]="recording.request.method"></span>
+</td>
+<td class="details text-right">
+    <button (click)="toggleRequestDetails()" class="btn-primary">
+        <span [ngClass]="{'icon-chevron-down2': recording.showRequestDetails === true,
+              'icon-chevron-up2': recording.showRequestDetails === false}"></span>
+        request
+    </button>
+    <button (click)="toggleResponseDetails()" class="btn-primary">
+         <span [ngClass]="{'icon-chevron-down2': recording.showResponseDetails === true,
+              'icon-chevron-up2': recording.showResponseDetails === false}"></span>
+        response
+    </button>
+</td>

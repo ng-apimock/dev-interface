@@ -1,0 +1,5 @@
+<td class="key" [innerHtml]="variable.key"></td>
+<td class="value"><input type="text" (keyup)="value$.next($event.target.value)" [(ngModel)]="variable.value"></td>
+<td class="options text-right">
+    <button class="btn-primary" (click)="delete$.next()">x</button>
+</td>
