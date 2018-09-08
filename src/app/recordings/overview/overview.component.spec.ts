@@ -26,6 +26,48 @@ describe('OverviewComponent', () => {
             expect(component.subscriptions).toEqual([]));
     });
 
+    describe('enableRecording', () => {
+        beforeEach(() => {
+            recordingsService.record.returns(of({}));
+            component.enableRecording();
+        });
+
+        it('calls record', () =>
+            sinon.assert.called(recordingsService.record));
+
+        it('subscribes to record and sets the data record to true once resolved', () =>
+            expect(component.data.record).toBe(true));
+
+        it('adds the observable to the subscription list', () =>
+            expect(component.subscriptions.length).toBe(1));
+
+        afterEach(() => {
+            component.subscriptions = [];
+            recordingsService.record.reset();
+        });
+    });
+
+    describe('disableRecording', () => {
+        beforeEach(() => {
+            recordingsService.record.returns(of({}));
+            component.disableRecording();
+        });
+
+        it('calls record', () =>
+            sinon.assert.called(recordingsService.record));
+
+        it('subscribes to record and sets the data record to false once resolved', () =>
+            expect(component.data.record).toBe(false));
+
+        it('adds the observable to the subscription list', () =>
+            expect(component.subscriptions.length).toBe(1));
+
+        afterEach(() => {
+            component.subscriptions = [];
+            recordingsService.record.reset();
+        });
+    });
+
     describe('getRecordings', () => {
         beforeEach(() => {
             componentGetRecordingsFn.callThrough();
@@ -49,7 +91,7 @@ describe('OverviewComponent', () => {
                         },
                         "datetime": now.getTime()
                     }]
-                }
+                }, "record": true
             }));
             component.getRecordings();
         });
@@ -68,10 +110,15 @@ describe('OverviewComponent', () => {
                     },
                     datetime: now.getTime(),
                     name: 'mock name'
-                }]
+                }],
+                record: true
             }));
 
+        it('adds the observable to the subscription list', () =>
+            expect(component.subscriptions.length).toBe(1));
+
         afterEach(() => {
+            component.subscriptions = [];
             componentGetRecordingsFn.reset();
             recordingsService.getRecordings.reset();
         });

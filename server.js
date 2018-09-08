@@ -6,7 +6,6 @@ const app = connect();
 const mocksDirectory = path.join(require.resolve('@ng-apimock/test-application'), '..', '..', 'mocks');
 
 apimock.processor.process({src: mocksDirectory});
-apimock.processor.mocksState.record = true;
 
 app.use(apimock.middleware);
 app.use('/', serveStatic(path.join(require.resolve('@ng-apimock/test-application'), '..')));

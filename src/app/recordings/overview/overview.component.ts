@@ -21,21 +21,39 @@ export class OverviewComponent implements OnInit, OnDestroy {
         this.subscriptions = [];
     }
 
+    /** Enable recording. */
+    enableRecording() {
+        this.subscriptions.push(this.recordingsService.record(true).subscribe((data) => {
+            this.data.record = true;
+        }));
+    }
+
+    /** Disable recording. */
+    disableRecording() {
+        this.subscriptions.push(this.recordingsService.record(false).subscribe((data) => {
+            this.data.record = false;
+        }));
+    }
+
     /** Gets the recordings. */
     getRecordings() {
-        this.recordingsService.getRecordings()
-            .pipe(map((data) => Object.keys(data.recordings)
-                .map((key) => data.recordings[key].map((recording) => {
-                    const result = recording;
-                    result.name = key;
-                    result.response.data = JSON.parse(result.response.data) || {}
-                    return result;
-                }))
-                .reduce((recordings, recording) => recordings.concat(recording), [])
+        this.subscriptions.push(this.recordingsService.getRecordings()
+            .pipe(map((data) => {
+                    data.recordings = Object.keys(data.recordings)
+                        .map((key) => data.recordings[key].map((recording) => {
+                            const result = recording;
+                            result.name = key;
+                            result.response.data = JSON.parse(result.response.data) || {}
+                            return result;
+                        }))
+                        .reduce((recordings, recording) => recordings.concat(recording), []);
+                    return data;
+                }
             ))
             .subscribe((data) => {
-                this.data.recordings = data;
-            });
+                this.data.recordings = data.recordings;
+                this.data.record = data.record;
+            }));
     }
 
     /** {@inheritDoc}. */
