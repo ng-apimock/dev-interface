@@ -41,7 +41,7 @@ export class UpdateMockRequest {
 export class UpdateMockScenarioRequest extends UpdateMockRequest {
     /** {@inheritDoc} */
     constructor(public name: string, public value: string) {
-        super(name, 'scenario', value)
+        super(name, 'scenario', value);
     }
 }
 
@@ -49,7 +49,7 @@ export class UpdateMockScenarioRequest extends UpdateMockRequest {
 export class UpdateMockDelayRequest extends UpdateMockRequest {
     /** {@inheritDoc} */
     constructor(public name: string, public value: string) {
-        super(name, 'delay', value)
+        super(name, 'delay', value);
     }
 }
 
@@ -57,6 +57,6 @@ export class UpdateMockDelayRequest extends UpdateMockRequest {
 export class UpdateMockEchoRequest extends UpdateMockRequest {
     /** {@inheritDoc} */
     constructor(public name: string, public value: string) {
-        super(name, 'echo', value)
+        super(name, 'echo', value);
     }
 }

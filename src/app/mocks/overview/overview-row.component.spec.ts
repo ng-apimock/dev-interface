@@ -22,7 +22,7 @@ describe('OverviewRowComponent', () => {
             scenario: 'scenario',
             delay: 0,
             echo: false
-        }
+        };
     });
 
     describe('ngOnDestroy', () => {

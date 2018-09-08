@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MockRequest, UpdateMockDelayRequest, UpdateMockEchoRequest, UpdateMockScenarioRequest} from '../mock-request';
 import {MocksService} from '../mocks.service';
-import {Subject} from "rxjs";
-import {debounceTime, distinctUntilChanged, map, switchMap} from "rxjs/operators";
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map, switchMap} from 'rxjs/operators';
 
 @Component({
     selector: '[apimock-mock-overview-row]',

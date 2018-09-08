@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MockRequest} from './mock-request';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 /** Mocks service. */
 @Injectable()

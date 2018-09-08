@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MocksService} from '../mocks.service';
 import {Subscription, timer} from 'rxjs';
 import {UpdateMockRequest} from '../mock-request';
-import {flatMap} from "rxjs/operators";
+import {flatMap} from 'rxjs/operators';
 
 @Component({
     selector: 'apimock-mocks-overview',

@@ -72,26 +72,26 @@ describe('OverviewComponent', () => {
         beforeEach(() => {
             componentGetRecordingsFn.callThrough();
             recordingsService.getRecordings.returns(of({
-                "recordings": {
-                    "mock name": [{
-                        "request": {
-                            "url": "/some/url",
-                            "method": "GET",
-                            "headers": {
-                                "record": "true"
+                'recordings': {
+                    'mock name': [{
+                        'request': {
+                            'url': '/some/url',
+                            'method': 'GET',
+                            'headers': {
+                                'record': 'true'
                             },
-                            "payload": {}
+                            'payload': {}
                         },
-                        "response": {
-                            "data": "[{\"some\":\"thing\"}]",
-                            "status": 200,
-                            "headers": {
-                                "content-type": ["application/json"]
+                        'response': {
+                            'data': '[{\'some\':\'thing\'}]',
+                            'status': 200,
+                            'headers': {
+                                'content-type': ['application/json']
                             }
                         },
-                        "datetime": now.getTime()
+                        'datetime': now.getTime()
                     }]
-                }, "record": true
+                }, 'record': true
             }));
             component.getRecordings();
         });

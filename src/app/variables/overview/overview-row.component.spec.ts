@@ -85,7 +85,7 @@ describe('OverviewRowComponent', () => {
 
             afterEach(() => {
                 updatedEmitFn.reset();
-            })
+            });
         });
     });
 

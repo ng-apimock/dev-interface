@@ -36,7 +36,7 @@ export class OverviewFooterRowComponent implements OnInit, OnDestroy {
                 switchMap((request: VariableRequest) => this.variablesService.updateVariable(request))
             )
             .subscribe(() => {
-                this.updated.emit(new UpdateVariableRequest(this.variable.key, 'set ', this.variable.value))
+                this.updated.emit(new UpdateVariableRequest(this.variable.key, 'set ', this.variable.value));
                 this.variable = { key: undefined, value: undefined };
             });
     }

@@ -18,7 +18,7 @@ describe('RecordingsService', () => {
 
     describe('record', () => it('sets the recording indicator', () => {
         service.record(true);
-        sinon.assert.calledWith(http.put, '/ngapimock/actions', { action: "record", record: true });
+        sinon.assert.calledWith(http.put, '/ngapimock/actions', { action: 'record', record: true });
     }));
 
     afterEach(() => {

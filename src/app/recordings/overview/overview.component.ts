@@ -43,7 +43,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
                         .map((key) => data.recordings[key].map((recording) => {
                             const result = recording;
                             result.name = key;
-                            result.response.data = JSON.parse(result.response.data) || {}
+                            result.response.data = JSON.parse(result.response.data) || {};
                             return result;
                         }))
                         .reduce((recordings, recording) => recordings.concat(recording), []);

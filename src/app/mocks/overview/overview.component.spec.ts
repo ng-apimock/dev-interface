@@ -24,7 +24,7 @@ describe('OverviewComponent', () => {
 
     describe('constructor', () => {
         it('creates a new data object', () =>
-            expect(component.data).toEqual({ mocks: [] }))
+            expect(component.data).toEqual({ mocks: [] }));
 
         it('creates a new subscriptions object', () =>
             expect(component.subscriptions).toEqual([]));
