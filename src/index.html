@@ -6,7 +6,8 @@
     <base href="/" id="baseHref">
     <script>
         (function() {
-            document.getElementById('baseHref').href = '/' + window.location.pathname.split('/')[1] + "/";
+            const pathname = window.location.pathname.split('/')[1];
+            document.getElementById('baseHref').href = `/${pathname !== '' ? pathname + '/' : ''}`;
         })();
     </script>
 
