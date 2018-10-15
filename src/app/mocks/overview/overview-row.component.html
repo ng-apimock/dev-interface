@@ -6,7 +6,7 @@
 <td class="scenario">
     <select class="custom-select" name="{{mock.name}}" [(ngModel)]="state.scenario" name="senario"
             (change)="scenario$.next($event.target.value)">
-        <option *ngFor="let response of mock.responses" [value]="response" [innerHtml]="response"></option>
+        <option *ngFor="let response of mock.responses" [value]="response" [innerHtml]="response" [selected]=""></option>
         <option value="passThrough" class="">passThrough</option>
     </select>
 </td>
