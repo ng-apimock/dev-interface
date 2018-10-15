@@ -7,7 +7,7 @@ exports.config = {
         default_directory: '/tmp'
     },
     specs: [
-        'features/*.feature'
+        'features/**/*.feature'
     ],
     beforeLaunch: () => {
         const child_process = require('child_process');

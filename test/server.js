@@ -3,12 +3,14 @@ const connect = require('connect');
 const path = require('path');
 const serveStatic = require('serve-static');
 const app = connect();
-const mocksDirectory = path.join(require.resolve('@ng-apimock/test-application'), '..', '..', 'mocks');
+const testApplicationMocksDirectory = path.join(require.resolve('@ng-apimock/test-application'), '..', '..', 'mocks');
+const testMocksDirectory = path.join(__dirname, 'mocks');
 
-apimock.processor.process({src: mocksDirectory});
+apimock.processor.process({src: testApplicationMocksDirectory});
+apimock.processor.process({src: testMocksDirectory});
 
 app.use(apimock.middleware);
-app.use('/dev-interface', serveStatic(path.join(process.cwd(),'dist'), {index: ['index.html']}));
+app.use('/dev-interface', serveStatic(path.join(__dirname, '..','dist'), {index: ['index.html']}));
 app.use('/', serveStatic(path.join(require.resolve('@ng-apimock/test-application'), '..')));
 app.use('/items', function (request, response, next) {
     response.writeHead(200, {'Content-Type': 'application/json'});
