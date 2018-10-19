@@ -12,7 +12,9 @@
 
     When(/^I update the delay to (.*) for mock with name (.*)$/, delayResponse);
 
-    When(/^I enable echoing for mock with name (.*)$/, enableEchoing);
+    When(/^I enable echoing for mock with name (.*)$/, toggleEchoing);
+
+    When(/^I disable echoing for mock with name (.*)$/, toggleEchoing);
 
     Then(/^the (.*) tab is active$/, tabIsActive);
 
@@ -25,6 +27,8 @@
     Then(/^the delay for mock with name (.*) is changed to (.*)$/, checkDelayResponse);
 
     Then(/^echoing for mock with name (.*) is enabled$/, checkEchoingEnabled);
+
+    Then(/^echoing for mock with name (.*) is disabled/, checkEchoingDisabled);
 
     async function checkMocksPresent(dataTable) {
         await forEach(dataTable.rows(), async (row, index) => {
@@ -51,6 +55,15 @@
         expect(updateResponseRecordings[0].request.body.echo).to.equal(true);
     }
 
+    async function checkEchoingDisabled(name) {
+        await browser.sleep(1000); // wait until the command has been finished
+        const recordings = await ngApimock.getRecordings();
+        const updateResponseRecordings = await recordings.recordings['updateResponse'];
+        expect(updateResponseRecordings.length).to.equal(2);
+        expect(updateResponseRecordings[1].request.body.name).to.equal(name);
+        expect(updateResponseRecordings[1].request.body.echo).to.equal(false);
+    }
+
     async function checkDelayResponse(name, delay) {
         await browser.sleep(1000); // wait until the command has been finished
         const recordings = await ngApimock.getRecordings();
@@ -74,7 +87,7 @@
         await delayEl.sendKeys(delay);
     }
 
-    async function enableEchoing(name) {
+    async function toggleEchoing(name) {
         const echoEl = await client.tabs.mocks.find(name).echo;
         await echoEl.click();
     }
