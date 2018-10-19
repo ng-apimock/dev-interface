@@ -1,0 +1,18 @@
+{
+  "name": "updateResponse",
+  "request": {
+    "url": "/ngapimock-intercept/mocks",
+    "method": "PUT"
+  },
+  "responses": {
+    "success": {
+      "status": 200,
+      "data": {
+      },
+      "default": true
+    },
+    "server-error": {
+      "status": 500
+    }
+  }
+}

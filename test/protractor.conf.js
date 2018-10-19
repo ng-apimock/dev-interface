@@ -9,6 +9,9 @@ exports.config = {
     specs: [
         'features/**/*.feature'
     ],
+    plugins: [{
+        package: '@ng-apimock/protractor-plugin'
+    }],
     beforeLaunch: () => {
         const child_process = require('child_process');
         const path = require('path');

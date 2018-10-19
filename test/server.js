@@ -9,18 +9,17 @@ const testMocksDirectory = path.join(__dirname, 'mocks');
 apimock.processor.process({src: testApplicationMocksDirectory});
 apimock.processor.process({src: testMocksDirectory});
 
-app.use(apimock.middleware);
-app.use('/dev-interface', serveStatic(path.join(__dirname, '..','dist'), {index: ['index.html']}));
-app.use('/', serveStatic(path.join(require.resolve('@ng-apimock/test-application'), '..')));
-app.use('/items', function (request, response, next) {
-    response.writeHead(200, {'Content-Type': 'application/json'});
-    if (request.method === 'GET') {
-        response.end('["passThrough"]');
-    } else if (request.method === 'POST') {
-        response.end('["passThrough"]');
-    } else {
-        next();
+// use ng-apimock to test the web interface.
+app.use(function (request, response, next) {
+    if (request.url.startsWith('/ngapimock/') &&
+        request.url !== '/ngapimock/recordings' &&
+        request.url !== '/ngapimock/actions') {
+        request.url = `/ngapimock-intercept/${request.url.substring(11)}`;
     }
+    next();
 });
+app.use(apimock.middleware);
+app.use('/dev-interface/', serveStatic(path.join(__dirname, '..', 'dist'), {index: ['index.html']}));
+app.use('/', serveStatic(path.join(require.resolve('@ng-apimock/test-application'), '..')));
 app.listen(9900);
 console.log('ng-apimock-angular-test-app is running on port 9900');

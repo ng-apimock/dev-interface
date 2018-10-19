@@ -18,6 +18,13 @@ class MocksOverviewPO {
     row(index) {
         return new MocksOverviewRowPO(this.container.$$('[apimock-mock-overview-row]').get(index));
     }
+
+    find(name) {
+        return new MocksOverviewRowPO(this.container.$$('[apimock-mock-overview-row]').filter(async (el) => {
+            const text = await el.$('.name').getText();
+            return text === name;
+        }).first());
+    }
     isActive() {
         return this.container.isPresent();
     }
@@ -30,7 +37,8 @@ class MocksOverviewRowPO {
 
     get delay() {return this.container.$('.delay').$('input')};
     get name() {return this.container.$('.name')};
-    get scenario() {return this.container.$('.scenario').$$('option').filter((option) => option.isSelected()).first()};
+    get scenario() {return this.container.$('.scenario')};
+    get echo() {return this.container.$('.echo').$('input')};
 }
 
 module.exports = ClientPO;

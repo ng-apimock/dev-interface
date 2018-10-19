@@ -1,0 +1,76 @@
+{
+  "name": "get mocks",
+  "request": {
+    "url": "/ngapimock-intercept/mocks",
+    "method": "GET"
+  },
+  "responses": {
+    "success": {
+      "status": 200,
+      "data": {
+        "state": {
+          "get items": {
+            "scenario": "crypto-currencies",
+            "echo": false,
+            "delay": 0
+          },
+          "post item": {
+            "scenario": "ok",
+            "echo": false,
+            "delay": 0
+          },
+          "get something": {
+            "scenario": "passThrough",
+            "echo": false,
+            "delay": 1000
+          }
+        },
+        "mocks": [
+          {
+            "name": "get items",
+            "request": {
+              "url": "/items",
+              "method": "GET"
+            },
+            "responses": [
+              "crypto-currencies",
+              "crypto-exchanges",
+              "binary",
+              "server-error"
+            ]
+          },
+          {
+            "name": "post item",
+            "request": {
+              "url": "/items",
+              "method": "POST",
+              "payload": {
+                "item": "^[a-zA-Z]{3,10}$"
+              }
+            },
+            "responses": [
+              "ok",
+              "nok",
+              "server-error"
+            ]
+          },
+          {
+            "name": "get something",
+            "request": {
+              "url": "/something",
+              "method": "GET"
+            },
+            "responses": [
+              "success",
+              "server-error"
+            ]
+          }
+        ]
+      },
+      "default": true,
+      "headers": {
+        "Content-type": "application/json"
+      }
+    }
+  }
+}
