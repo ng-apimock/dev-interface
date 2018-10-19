@@ -22,9 +22,31 @@ jobs:
           name: Lint
           command: npm run lint
       - run:
+          name: Test
+          command: npm test
+      - run:
           name: Build
           command: npm run build
-
+      - run:
+          name: Download sauce-connect
+          command: |
+            wget https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz
+            tar -xzf sc-4.4.12-linux.tar.gz
+      - run:
+          name: Start SauceLabs Tunnel
+          command: |
+            cd sc-*-linux
+            ./bin/sc --user ${SAUCE_USERNAME} --api-key ${SAUCE_ACCESS_KEY} --tunnel-identifier ${CIRCLE_BUILD_NUM}
+          background: true
+          - run:
+              name: Wait for app to be ready
+              command: wget --retry-connrefused --no-check-certificate -T 30 localhost:4445
+          - run:
+              name: Integration
+              command: npm run protractor-ci
+          - run:
+              name: Wait for Sauce Connect to close the tunnel
+              command: pkill sc
   node-v9:
     <<: *node-base
     docker:
