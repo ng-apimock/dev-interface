@@ -3,11 +3,15 @@ class ClientPO {
         return browser.get('/dev-interface/#/');
     }
 
-    get tabs() {return new TabsPO(); }
+    get tabs() {
+        return new TabsPO();
+    }
 }
 
 class TabsPO {
-    get mocks() { return new MocksOverviewPO(); }
+    get mocks() {
+        return new MocksOverviewPO();
+    }
 }
 
 class MocksOverviewPO {
@@ -25,9 +29,12 @@ class MocksOverviewPO {
             return text === name;
         }).first());
     }
+
     isActive() {
         return this.container.isPresent();
     }
+
+    get actions() { return new MockActions(this.container); }
 }
 
 class MocksOverviewRowPO {
@@ -35,10 +42,31 @@ class MocksOverviewRowPO {
         this.container = container;
     }
 
-    get delay() {return this.container.$('.delay').$('input')};
-    get name() {return this.container.$('.name')};
-    get scenario() {return this.container.$('.scenario')};
-    get echo() {return this.container.$('.echo').$('input')};
+    get delay() {
+        return this.container.$('.delay').$('input')
+    }
+
+    get name() {
+        return this.container.$('.name')
+    }
+
+    get scenario() {
+        return this.container.$('.scenario')
+    }
+
+    get echo() {
+        return this.container.$('.echo').$('input')
+    }
+}
+
+class MockActions {
+    constructor(container) {
+        this.container = container;
+    }
+
+    get resetToDefaults() {
+        return this.container.element(by.buttonText('Reset to defaults'));
+    }
 }
 
 module.exports = ClientPO;

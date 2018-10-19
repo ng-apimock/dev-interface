@@ -16,6 +16,8 @@
 
     When(/^I disable echoing for mock with name (.*)$/, toggleEchoing);
 
+    When(/^I reset the mocks to defaults$/, resetToDefaults);
+
     Then(/^the (.*) tab is active$/, tabIsActive);
 
     Then(/^the following mocks are present:$/, checkMocksPresent);
@@ -95,6 +97,10 @@
     async function openDevInterface() {
         await ngApimock.recordRequests(true);
         await client.open();
+    }
+
+    async function resetToDefaults() {
+        await client.tabs.mocks.actions.resetToDefaults.click();
     }
 
     async function selectScenario(scenario, name) {
