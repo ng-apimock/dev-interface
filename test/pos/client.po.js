@@ -43,19 +43,19 @@ class MocksOverviewRowPO {
     }
 
     get delay() {
-        return this.container.$('.delay').$('input')
+        return this.container.$('.delay').$('input');
     }
 
     get name() {
-        return this.container.$('.name')
+        return this.container.$('.name');
     }
 
     get scenario() {
-        return this.container.$('.scenario')
+        return this.container.$('.scenario').$('select');
     }
 
     get echo() {
-        return this.container.$('.echo').$('input')
+        return this.container.$('.echo').$('input');
     }
 }
 
@@ -66,6 +66,10 @@ class MockActions {
 
     get resetToDefaults() {
         return this.container.element(by.buttonText('Reset to defaults'));
+    }
+
+    get setToPassThroughs() {
+        return this.container.element(by.buttonText('All to passThrough'));
     }
 }
 
