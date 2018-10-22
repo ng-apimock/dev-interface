@@ -1,0 +1,22 @@
+{
+  "name": "all to passThrough",
+  "request": {
+    "url": "/ngapimock-intercept/actions",
+    "method": "PUT",
+    "body": {
+      "action": "passThroughs"
+    }
+  },
+  "responses": {
+    "success": {
+      "status": 200,
+      "data": {
+        "to": "passThroughs"
+      },
+      "default": true,
+      "headers": {
+        "Content-type": "application/json"
+      }
+    }
+  }
+}

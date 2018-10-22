@@ -1,0 +1,22 @@
+{
+  "name": "reset to defaults",
+  "request": {
+    "url": "/ngapimock-intercept/actions",
+    "method": "PUT",
+    "body": {
+      "action": "defaults"
+    }
+  },
+  "responses": {
+    "success": {
+      "status": 200,
+      "data": {
+       "to": "defaults"
+      },
+      "default": true,
+      "headers": {
+        "Content-type": "application/json"
+      }
+    }
+  }
+}

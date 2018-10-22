@@ -18,6 +18,8 @@
 
     When(/^I reset the mocks to defaults$/, resetToDefaults);
 
+    When(/^I set the mocks to passThroughs$/, setToPassThroughs);
+
     Then(/^the (.*) tab is active$/, tabIsActive);
 
     Then(/^the following mocks are present:$/, checkMocksPresent);
@@ -31,6 +33,10 @@
     Then(/^echoing for mock with name (.*) is enabled$/, checkEchoingEnabled);
 
     Then(/^echoing for mock with name (.*) is disabled/, checkEchoingDisabled);
+
+    Then(/^all mocks are reset to defaults$/, checkResetToDefaults);
+
+    Then(/^all mocks are set to passThrough$/, checkSetToPassThroughs);
 
     async function checkMocksPresent(dataTable) {
         await forEach(dataTable.rows(), async (row, index) => {
@@ -51,7 +57,7 @@
     async function checkEchoingEnabled(name) {
         await browser.sleep(1000); // wait until the command has been finished
         const recordings = await ngApimock.getRecordings();
-        const updateResponseRecordings = await recordings.recordings['updateResponse'];
+        const updateResponseRecordings = await recordings.recordings['update response'];
         expect(updateResponseRecordings.length).to.equal(1);
         expect(updateResponseRecordings[0].request.body.name).to.equal(name);
         expect(updateResponseRecordings[0].request.body.echo).to.equal(true);
@@ -60,7 +66,7 @@
     async function checkEchoingDisabled(name) {
         await browser.sleep(1000); // wait until the command has been finished
         const recordings = await ngApimock.getRecordings();
-        const updateResponseRecordings = await recordings.recordings['updateResponse'];
+        const updateResponseRecordings = await recordings.recordings['update response'];
         expect(updateResponseRecordings.length).to.equal(2);
         expect(updateResponseRecordings[1].request.body.name).to.equal(name);
         expect(updateResponseRecordings[1].request.body.echo).to.equal(false);
@@ -69,24 +75,38 @@
     async function checkDelayResponse(name, delay) {
         await browser.sleep(1000); // wait until the command has been finished
         const recordings = await ngApimock.getRecordings();
-        const updateResponseRecordings = await recordings.recordings['updateResponse'];
+        const updateResponseRecordings = await recordings.recordings['update response'];
         expect(updateResponseRecordings.length).to.equal(1);
         expect(updateResponseRecordings[0].request.body.name).to.equal(name);
         expect(updateResponseRecordings[0].request.body.delay).to.equal(Number(delay));
     }
 
+    async function checkResetToDefaults() {
+        await browser.sleep(1000); // wait until the command has been finished
+        const recordings = await ngApimock.getRecordings();
+        const setToPassThroughRecordings = await recordings.recordings['reset to defaults'];
+        expect(setToPassThroughRecordings.length).to.equal(1);
+    }
+
     async function checkSelectedScenario(name, scenario) {
         await browser.sleep(100); // wait until the command has been finished
         const recordings = await ngApimock.getRecordings();
-        const updateResponseRecordings = await recordings.recordings['updateResponse'];
+        const updateResponseRecordings = await recordings.recordings['update response'];
         expect(updateResponseRecordings.length).to.equal(1);
         expect(updateResponseRecordings[0].request.body.name).to.equal(name);
         expect(updateResponseRecordings[0].request.body.scenario).to.equal(scenario);
     }
 
+    async function checkSetToPassThroughs() {
+        await browser.sleep(1000); // wait until the command has been finished
+        const recordings = await ngApimock.getRecordings();
+        const setToPassThroughRecordings = await recordings.recordings['all to passThrough'];
+        expect(setToPassThroughRecordings.length).to.equal(1);
+    }
+
     async function delayResponse(delay, name) {
         const delayEl = await client.tabs.mocks.find(name).delay;
-        await delayEl.sendKeys(delay);
+        await delayEl.clear().sendKeys(delay);
     }
 
     async function toggleEchoing(name) {
@@ -101,6 +121,10 @@
 
     async function resetToDefaults() {
         await client.tabs.mocks.actions.resetToDefaults.click();
+    }
+
+    async function setToPassThroughs() {
+        await client.tabs.mocks.actions.setToPassThroughs.click();
     }
 
     async function selectScenario(scenario, name) {

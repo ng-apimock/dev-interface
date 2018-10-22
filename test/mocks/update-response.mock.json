@@ -1,5 +1,5 @@
 {
-  "name": "updateResponse",
+  "name": "update response",
   "request": {
     "url": "/ngapimock-intercept/mocks",
     "method": "PUT"
