@@ -51,7 +51,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
                 }
             ))
             .subscribe((data) => {
-                this.data.recordings = data.recordings;
+                this.data.recordings = data.recordings.reverse();
                 this.data.record = data.record;
             }));
     }

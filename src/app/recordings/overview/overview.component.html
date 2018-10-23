@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let recording of data.recordings.reverse()">
+        <ng-container *ngFor="let recording of data.recordings">
             <tr apimock-recording-overview-row [recording]="recording"></tr>
             <tr apimock-recording-overview-request-row [recording]="recording"
                 *ngIf="recording.showRequestDetails"></tr>
