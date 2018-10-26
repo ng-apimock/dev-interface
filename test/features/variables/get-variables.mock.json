@@ -1,0 +1,22 @@
+{
+  "name": "get variables",
+  "request": {
+    "url": "/ngapimock-intercept/variables",
+    "method": "GET"
+  },
+  "responses": {
+    "success": {
+      "status": 200,
+      "data": {
+        "state": {
+          "some-key": "some value",
+          "another-key": "another value"
+        }
+      },
+      "default": true,
+      "headers": {
+        "Content-type": "application/json"
+      }
+    }
+  }
+}

@@ -7,10 +7,10 @@ exports.config = {
         default_directory: '/tmp'
     },
     specs: [
-        'features/**/*.feature'
+        path.join(__dirname, 'features', '**', '*.feature')
     ],
     plugins: [{
-        package: '@ng-apimock/protractor-plugin'
+        package: '@ng-apimock/protractor-plugin',
     }],
     beforeLaunch: () => {
         const child_process = require('child_process');
@@ -22,9 +22,14 @@ exports.config = {
     },
 
     onPrepare: async () => {
+        require('ts-node').register({
+            project: path.join(process.cwd(), 'src', 'tsconfig.e2e.json')
+        });
+
         const chai = require('chai');
         global.chai = chai;
         global.expect = chai.expect;
+
         await browser.getProcessedConfig().then(async () =>
             await browser.driver.manage().window().maximize());
     },
@@ -35,7 +40,10 @@ exports.config = {
     framework: 'custom',
     frameworkPath: require.resolve('protractor-cucumber-framework'),
     cucumberOpts: {
-        require: './step_definitions/*.steps.js',
-        format: 'summary'
+        require: [
+            path.join(__dirname, 'step_definitions', '*.steps.ts'),
+            path.join(__dirname, 'cucumber.helper.ts')
+        ],
+        format: [`json:${path.join(process.cwd(), 'report', 'results.json')}`, 'summary']
     }
 };

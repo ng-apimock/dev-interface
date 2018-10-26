@@ -5,6 +5,6 @@ Feature: Reset to defaults
   Developers should be able to reset the state to default
 
   Scenario: Reset to defaults
-    Given I open the dev interface
+    Given I open the mocks page
     When I reset the mocks to defaults
     Then all mocks are reset to defaults

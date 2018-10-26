@@ -1,5 +1,5 @@
-<td><input type="text" [(ngModel)]="variable.key"></td>
-<td><input type="text" [(ngModel)]="variable.value"></td>
+<td class="newKey"><input type="text" [(ngModel)]="variable.key"></td>
+<td class="newValue"><input type="text" [(ngModel)]="variable.value"></td>
 <td class="text-right">
     <button class="btn-primary" [disabled]="variable.key === undefined || variable.value === undefined"
             (click)="add$.next()">Add variable
