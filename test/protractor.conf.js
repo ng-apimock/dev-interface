@@ -44,6 +44,6 @@ exports.config = {
             path.join(__dirname, 'step_definitions', '*.steps.ts'),
             path.join(__dirname, 'cucumber.helper.ts')
         ],
-        format: [`json:${path.join(process.cwd(), 'report', 'results.json')}`, 'summary']
+        format: ['summary']
     }
 };
