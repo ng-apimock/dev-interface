@@ -4,6 +4,17 @@ import {VariablesOverviewRowPo} from './overview-row.component.po';
 const CONTAINER_SELECTOR = 'apimock-variables-overview';
 const OVERVIEW_ROW_SELECTOR = '[apimock-variable-overview-row]';
 
+export class VariablesOverviewActionsPo {
+    constructor(private ef: ElementFinder = null) {
+    }
+
+    async add(key: string, value: string): promise.Promise<void> {
+        await this.ef.$('.newKey').$('input').sendKeys(key);
+        await this.ef.$('.newValue').$('input').sendKeys(value);
+        await this.ef.element(by.buttonText('Add variable')).click();
+    }
+}
+
 export class VariablesOverviewPo {
     static get actions() {
         return new VariablesOverviewActionsPo($(CONTAINER_SELECTOR));
@@ -27,16 +38,4 @@ export class VariablesOverviewPo {
     static isActive(): promise.Promise<any> {
         return $(CONTAINER_SELECTOR).isPresent();
     }
-}
-
-export class VariablesOverviewActionsPo {
-    constructor(private ef: ElementFinder = null) {
-    }
-
-    async add(key: string, value: string): promise.Promise<void> {
-        await this.ef.$('.newKey').$('input').sendKeys(key);
-        await this.ef.$('.newValue').$('input').sendKeys(value);
-        await this.ef.element(by.buttonText('Add variable')).click();
-    }
-
 }

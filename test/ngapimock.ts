@@ -1,29 +1,29 @@
 export interface NgApimock {
-    delayResponse(name: string, delay: number) :Promise<any>;
+    delayResponse(name: string, delay: number): Promise<any>;
 
-    deleteVariable(key: string) :Promise<any>;
+    deleteVariable(key: string): Promise<any>;
 
-    echoRequest(name: string, echo: boolean) :Promise<any>;
+    echoRequest(name: string, echo: boolean): Promise<any>;
 
-    fetchResponse(request: Request) :Promise<any>;
+    fetchResponse(request: Request): Promise<any>;
 
-    getMocks() :Promise<any>;
+    getMocks(): Promise<any>;
 
     getRecordings(): Promise<any>;
 
-    getVariables() :Promise<any>;
+    getVariables(): Promise<any>;
 
-    recordRequests(record: boolean) :Promise<any>;
+    recordRequests(record: boolean): Promise<any>;
 
-    resetMocksToDefault() :Promise<any>;
+    resetMocksToDefault(): Promise<any>;
 
-    selectScenario(name: string, scenario: string) :Promise<any>;
+    selectScenario(name: string, scenario: string): Promise<any>;
 
-    setMocksToPassThrough() :Promise<any>;
+    setMocksToPassThrough(): Promise<any>;
 
-    setNgApimockCookie() :Promise<any>;
+    setNgApimockCookie(): Promise<any>;
 
-    setVariable(key: string, value: string) :Promise<any>;
+    setVariable(key: string, value: string): Promise<any>;
 
-    setVariables(variables: { [key: string]: string; }) :Promise<any>;
+    setVariables(variables: { [key: string]: string; }): Promise<any>;
 }

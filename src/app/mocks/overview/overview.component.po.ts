@@ -4,6 +4,19 @@ import {MocksOverviewRowPo} from './overview-row.component.po';
 const CONTAINER_SELECTOR = 'apimock-mocks-overview';
 const OVERVIEW_ROW_SELECTOR = '[apimock-mock-overview-row]';
 
+export class MockOverviewActionsPo {
+    constructor(private ef: ElementFinder = null) {
+    }
+
+    get resetToDefaults() {
+        return this.ef.element(by.buttonText('Reset to defaults'));
+    }
+
+    get setToPassThroughs() {
+        return this.ef.element(by.buttonText('All to passThrough'));
+    }
+}
+
 export class MocksOverviewPo {
     static get actions() {
         return new MockOverviewActionsPo($(CONTAINER_SELECTOR));
@@ -26,18 +39,5 @@ export class MocksOverviewPo {
 
     static isActive(): promise.Promise<any> {
         return $(CONTAINER_SELECTOR).isPresent();
-    }
-}
-
-export class MockOverviewActionsPo {
-    constructor(private ef: ElementFinder = null) {
-    }
-
-    get resetToDefaults() {
-        return this.ef.element(by.buttonText('Reset to defaults'));
-    }
-
-    get setToPassThroughs() {
-        return this.ef.element(by.buttonText('All to passThrough'));
     }
 }
