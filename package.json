@@ -60,7 +60,7 @@
     "@angular/platform-browser-dynamic": "7.0.2",
     "@angular/router": "7.0.2",
     "@ng-apimock/core": "1.0.11",
-    "@ng-apimock/protractor-plugin": "file:../protractor-plugin",
+    "@ng-apimock/protractor-plugin": "1.0.8",
     "@ng-apimock/test-application": "1.0.9",
     "@types/chai": "4.1.7",
     "@types/cucumber": "4.0.4",
@@ -90,6 +90,5 @@
     "zone.js": "0.8.26"
   },
   "dependencies": {
-    "protractor-multiple-cucumber-html-reporter-plugin": "^1.8.0"
   }
 }
