@@ -5,6 +5,14 @@
     </div>
     <h2>Available mocks</h2>
 
+    <div class="input-group">
+        <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Filter mocks">
+        <div class="input-group-append">
+            <span class="input-group-text icon-filter"></span>
+        </div>
+    </div>
+    <br />
+
     <table>
         <thead>
         <tr>
@@ -16,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let mock of data.mocks">
+        <ng-container *ngFor="let mock of data.mocks | filter:searchText">
             <tr apimock-mock-overview-row [mock]="mock" [state]="data.state[mock.name]"
                 (updated)="onUpdate($event)"></tr>
         </ng-container>
