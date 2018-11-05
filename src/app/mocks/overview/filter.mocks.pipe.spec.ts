@@ -9,8 +9,8 @@ describe('FilterMocksPipe', () => {
         });
 
         it('gets the matching mocks', () => {
-            const matches = pipe.transform([{name:'some'}, {name:'thing'}], 'so');
-            expect(matches).toEqual([{name:'some'}]);
+            const matches = pipe.transform([{ name: 'some' }, { name: 'thing' }], 'so');
+            expect(matches).toEqual([{ name: 'some' }]);
         });
 
         it('returns [] when no mocks are provided', () => {
@@ -19,8 +19,8 @@ describe('FilterMocksPipe', () => {
         });
 
         it('returns all the mocks when no search text is provided', () => {
-            const matches = pipe.transform([{name:'some'}, {name:'thing'}], undefined);
-            expect(matches).toEqual([{name:'some'}, {name:'thing'}]);
+            const matches = pipe.transform([{ name: 'some' }, { name: 'thing' }], undefined);
+            expect(matches).toEqual([{ name: 'some' }, { name: 'thing' }]);
         });
     });
 });

@@ -9,8 +9,8 @@ describe('FilterVariablesPipe', () => {
         });
 
         it('gets the matching variables', () => {
-            const matches = pipe.transform([{key:'some'}, {key:'thing'}], 'so');
-            expect(matches).toEqual([{key:'some'}]);
+            const matches = pipe.transform([{ key: 'some' }, { key: 'thing' }], 'so');
+            expect(matches).toEqual([{ key: 'some' }]);
         });
 
         it('returns [] when no variables are provided', () => {
@@ -19,8 +19,8 @@ describe('FilterVariablesPipe', () => {
         });
 
         it('returns all the variables when no search text is provided', () => {
-            const matches = pipe.transform([{key:'some'}, {key:'thing'}], undefined);
-            expect(matches).toEqual([{key:'some'}, {key:'thing'}]);
+            const matches = pipe.transform([{ key: 'some' }, { key: 'thing' }], undefined);
+            expect(matches).toEqual([{ key: 'some' }, { key: 'thing' }]);
         });
     });
 });

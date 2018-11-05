@@ -103,7 +103,7 @@ async function resetToDefaults(): Promise<void> {
     await MocksOverviewPo.actions.resetToDefaults();
 }
 
-async function search(query:string): Promise<void> {
+async function search(query: string): Promise<void> {
     await MocksOverviewPo.actions.search(query);
 }
 
