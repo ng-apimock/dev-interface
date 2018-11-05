@@ -1,5 +1,6 @@
 const path = require('path');
 let server;
+
 exports.config = {
     allScriptsTimeout: 5000,
     baseUrl: 'http://localhost:9900/',
@@ -7,7 +8,7 @@ exports.config = {
         default_directory: '/tmp'
     },
     specs: [
-        path.join(__dirname, 'features', '**', '*.feature')
+        path.join(__dirname, 'features', '**','*.feature')
     ],
     plugins: [{
         package: '@ng-apimock/protractor-plugin',
@@ -23,15 +24,12 @@ exports.config = {
 
     onPrepare: async () => {
         require('ts-node').register({
-            project: path.join(process.cwd(), 'src', 'tsconfig.e2e.json')
+            project: path.join(process.cwd(), 'test', 'tsconfig.e2e.json')
         });
 
         const chai = require('chai');
         global.chai = chai;
         global.expect = chai.expect;
-
-        await browser.getProcessedConfig().then(async () =>
-            await browser.driver.manage().window().maximize());
     },
     afterLaunch: () => {
         server.kill();

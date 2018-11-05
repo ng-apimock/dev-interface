@@ -13,6 +13,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     data: any;
     change: UpdateMockRequest;
     subscriptions: Subscription[];
+    searchText: string;
 
     /**
      * Constructor.
@@ -21,6 +22,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     constructor(private mocksService: MocksService) {
         this.data = { mocks: [] };
         this.subscriptions = [];
+        this.searchText = '';
     }
 
     /** Gets the mocks. */

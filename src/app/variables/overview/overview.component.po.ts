@@ -13,10 +13,14 @@ export class VariablesOverviewActionsPo {
         await this.ef.$('.newValue').$('input').sendKeys(value);
         await this.ef.element(by.buttonText('Add variable')).click();
     }
+
+    async search(query: string): promise.Promise<void> {
+        await this.ef.$('.search-variables').sendKeys(query);
+    }
 }
 
 export class VariablesOverviewPo {
-    static get actions() {
+    static get actions(): VariablesOverviewActionsPo {
         return new VariablesOverviewActionsPo($(CONTAINER_SELECTOR));
     }
 

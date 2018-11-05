@@ -8,12 +8,16 @@ export class MockOverviewActionsPo {
     constructor(private ef: ElementFinder = null) {
     }
 
-    get resetToDefaults() {
-        return this.ef.element(by.buttonText('Reset to defaults'));
+    async resetToDefaults(): promise.Promise<void> {
+        await this.ef.element(by.buttonText('Reset to defaults')).click();
     }
 
-    get setToPassThroughs() {
-        return this.ef.element(by.buttonText('All to passThrough'));
+    async setToPassThroughs(): promise.Promise<void> {
+        await this.ef.element(by.buttonText('All to passThrough')).click();
+    }
+
+    async search(query: string): promise.Promise<void> {
+        await this.ef.$('.search-mocks').sendKeys(query);
     }
 }
 

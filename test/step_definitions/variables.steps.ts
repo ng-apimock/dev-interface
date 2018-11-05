@@ -12,6 +12,7 @@ Given(/^I open the variables page$/, openVariablesPage);
 When(/^I add variable (.*) with value (.*)$/, addVariable);
 When(/^I update variable (.*) with (.*)$/, updateVariable);
 When(/^I delete variable (.*)$/, deleteVariable);
+When(/^I search for variables matching (.*)$/, search);
 
 Then(/^the variables tab is active$/, checkVariablesTabIsActive);
 Then(/^the following variables are present with state:$/, checkVariablesState);
@@ -66,6 +67,10 @@ async function deleteVariable(key: string): Promise<void> {
 async function openVariablesPage(): Promise<void> {
     await ngApimock.recordRequests(true);
     await VariablesOverviewPo.navigateTo();
+}
+
+async function search(query: string): Promise<void> {
+    await VariablesOverviewPo.actions.search(query);
 }
 
 async function updateVariable(key: string, value: string): Promise<void> {

@@ -13,6 +13,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     data: any;
     change: UpdateVariableRequest;
     subscriptions: Subscription[];
+    searchText: string;
 
     /**
      * Constructor.
@@ -21,6 +22,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     constructor(private variablesService: VariablesService) {
         this.data = { variables: [] };
         this.subscriptions = [];
+        this.searchText = '';
     }
 
     /** Gets the variables. */

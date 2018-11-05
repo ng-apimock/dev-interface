@@ -15,6 +15,7 @@ When(/^I enable echoing for mock with name (.*)$/, toggleEchoing);
 When(/^I disable echoing for mock with name (.*)$/, toggleEchoing);
 When(/^I reset the mocks to defaults$/, resetToDefaults);
 When(/^I set the mocks to passThroughs$/, setToPassThroughs);
+When(/^I search for mocks matching (.*)$/, search);
 
 Then(/^the mocks tab is active$/, checkMocksTabIsActive);
 Then(/^the following mocks are present with state:$/, checkMocksState);
@@ -99,11 +100,15 @@ async function openMocksPage(): Promise<void> {
 }
 
 async function resetToDefaults(): Promise<void> {
-    await MocksOverviewPo.actions.resetToDefaults.click();
+    await MocksOverviewPo.actions.resetToDefaults();
+}
+
+async function search(query:string): Promise<void> {
+    await MocksOverviewPo.actions.search(query);
 }
 
 async function setToPassThroughs(): Promise<void> {
-    await MocksOverviewPo.actions.setToPassThroughs.click();
+    await MocksOverviewPo.actions.setToPassThroughs();
 }
 
 async function selectScenario(scenario: string, name: string): Promise<void> {
