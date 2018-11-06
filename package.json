@@ -89,5 +89,7 @@
     "typescript": "3.1.6",
     "zone.js": "0.8.26"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@ng-apimock/base-client": "^1.0.6"
+  }
 }
