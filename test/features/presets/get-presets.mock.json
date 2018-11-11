@@ -1,0 +1,56 @@
+{
+  "name": "get presets",
+  "request": {
+    "url": "/ngapimock-intercept/presets",
+    "method": "GET"
+  },
+  "responses": {
+    "success": {
+      "status": 200,
+      "data": {
+        "presets": [
+          {
+            "name": "happy",
+            "mocks": {
+              "get mocks": {
+                "scenario": "success",
+                "echo": true,
+                "delay": 3000
+              },
+              "add or update variable": {
+                "scenario": "server-error"
+              }
+            },
+            "variables": {
+              "some": "thing",
+              "another": "thing",
+              "x": "x"
+            }
+          },
+          {
+            "name": "unhappy",
+            "mocks": {
+              "get mocks": {
+                "scenario": "failure",
+                "echo": true,
+                "delay": 1000
+              },
+              "add or update variable": {
+                "scenario": "server-error"
+              }
+            },
+            "variables": {
+              "some": "thing",
+              "another": "thing",
+              "x": "x"
+            }
+          }
+        ]
+      },
+      "default": true,
+      "headers": {
+        "Content-type": "application/json"
+      }
+    }
+  }
+}

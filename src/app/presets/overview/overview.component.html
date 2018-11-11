@@ -1,0 +1,30 @@
+<div class="container-fluid">
+
+    <apimock-alert [change]="change$"></apimock-alert>
+    <h2>Available presets</h2>
+
+    <div class="input-group">
+        <input type="text" [(ngModel)]="searchText" class="form-control search-presets" placeholder="Filter presets">
+        <div class="input-group-append">
+            <span class="input-group-text icon-filter"></span>
+        </div>
+    </div>
+    <br/>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Options</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let preset of data.presets | filter:searchText">
+            <tr apimock-preset-overview-row [preset]="preset" (updated)="onUpdate($event)"></tr>
+            <tr apimock-preset-overview-mocks-row [preset]="preset" *ngIf="preset.showMocksDetails"></tr>
+            <tr apimock-preset-overview-variables-row [preset]="preset" *ngIf="preset.showVariablesDetails"></tr>
+        </ng-container>
+        </tbody>
+    </table>
+</div>

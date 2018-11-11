@@ -1,0 +1,16 @@
+<td class="name" [innerHtml]="preset.name"></td>
+<td class="options text-right">
+    <button class="btn-primary" (click)="selectPreset()">Select</button>
+</td>
+<td class="details text-right">
+    <button (click)="toggleMocksDetails()" class="btn-primary">
+        <span [ngClass]="{'icon-chevron-down2': preset.showMocksDetails === true,
+              'icon-chevron-up2': preset.showMocksDetails === false}"></span>
+        mocks
+    </button>
+    <button (click)="toggleVariablesDetails()" class="btn-primary">
+         <span [ngClass]="{'icon-chevron-down2': preset.showVariablesDetails === true,
+              'icon-chevron-up2': preset.showVariablesDetails === false}"></span>
+        variables
+    </button>
+</td>

@@ -1,0 +1,107 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/tables";
+
+:host {
+  td {
+    padding: 0.375rem 0.75rem;
+
+    &.options {
+      width: 10%;
+    }
+    &.details {
+      width: 30%;
+    }
+
+    &.mocks, &.variables {
+      padding: 0;
+      margin: 0;
+      vertical-align: top;
+
+      table {
+        tbody {
+          td {
+            padding: 0.375rem 0.75rem;
+          }
+        }
+
+      }
+    }
+
+    select, input {
+      margin: -0.175rem 0;
+      height: calc(1.8rem + 2px);
+    }
+
+    select {
+      padding: 0.175rem 1.75rem 0.175rem 0.75rem;
+    }
+
+    input {
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      padding: 0.175rem 0.75rem 0.175rem 0.75rem;
+    }
+
+    input[type='number'] {
+      -moz-appearance: textfield;
+      width: 100%;
+    }
+
+    .badge {
+      float: right;
+      color: white;
+      padding-top: 5px;
+      margin-top: 2px;
+
+      &-delete {
+        background: crimson;
+      }
+
+      &-get {
+        background: steelblue;
+      }
+
+      &-post {
+        background: seagreen;
+      }
+
+      &-put {
+        background: seagreen;
+      }
+    }
+
+    .btn-primary {
+      background: steelblue;
+      color: white;
+      border-radius: 0.25rem;
+      border-color: steelblue;
+      margin-left: 5px;
+
+      &:focus {
+        color: white;
+        background: steelblue;
+        border-color: steelblue;
+        outline: 0;
+      }
+    }
+
+    table {
+      @extend .table;
+      @extend .table-striped;
+      @extend .table-bordered;
+      @extend .table-hover;
+      @extend .table-sm;
+
+      thead {
+        color: steelblue;
+
+        th {
+          padding: 0.175rem 0.75rem;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<td colspan="3">
+    <table>
+        <thead>
+        <tr>
+            <th colspan="4">Variables details</th>
+        </tr>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let variable of preset.variables | keyvalue">
+            <td [innerHtml]="variable.key"></td>
+            <td [innerHtml]="variable.value"></td>
+        </tr>
+        </tbody>
+
+    </table>
+</td>
