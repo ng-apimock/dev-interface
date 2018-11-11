@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MocksService} from '../mocks.service';
-import {Subscription, timer} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {UpdateMockRequest} from '../mock-request';
 import {flatMap} from 'rxjs/operators';
 
@@ -11,9 +11,9 @@ import {flatMap} from 'rxjs/operators';
 })
 export class OverviewComponent implements OnInit, OnDestroy {
     data: any;
-    change: UpdateMockRequest;
     subscriptions: Subscription[];
     searchText: string;
+    change$: Subject<any>;
 
     /**
      * Constructor.
@@ -40,30 +40,36 @@ export class OverviewComponent implements OnInit, OnDestroy {
     /** {@inheritDoc}.*/
     ngOnInit() {
         this.getMocks();
+        this.change$ = new Subject();
     }
 
     /**
      * On update show the message about the action that has been performed.
-     * @param {{mock: string; type: string; value: string}} change The change.
+     * @param {UpdateMockRequest} change The change.
      */
     onUpdate(change: UpdateMockRequest) {
-        this.change = change;
-        timer(1500).subscribe(() => {
-            this.change = undefined;
-        });
+        const message = `Mock '<strong>${change.name}</strong>' has changed the '<strong>${change.type}</strong>'
+        to '<strong>${change.value}</strong>'`;
+        this.change$.next(message);
     }
 
     /** Resets the mocks to defaults. */
     resetMocksToDefaults() {
         this.subscriptions.push(this.mocksService.resetMocksToDefault()
             .pipe(flatMap(() => this.mocksService.getMocks()))
-            .subscribe((data) => this.data = data));
+            .subscribe((data) => {
+                this.data = data;
+                this.change$.next('All mocks have been reset to defaults.');
+            }));
     }
 
     /** Sets the mocks to passThroughs. */
     setMocksToPassThrough() {
         this.subscriptions.push(this.mocksService.setMocksToPassThrough()
             .pipe(flatMap(() => this.mocksService.getMocks()))
-            .subscribe((data) => this.data = data));
+            .subscribe((data) => {
+                this.data = data;
+                this.change$.next('All mocks have been set to pass through.');
+            }));
     }
 }

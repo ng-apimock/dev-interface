@@ -1,23 +1,27 @@
-import * as sinon from 'sinon';
+import {assert, createStubInstance, SinonFakeTimers, SinonStub, SinonStubbedInstance, stub, useFakeTimers} from 'sinon';
 import {OverviewComponent} from './overview.component';
 import {VariablesService} from '../variables.service';
-import {of, Subscription} from 'rxjs';
+import {of, Subject, Subscription} from 'rxjs';
 import {UpdateVariableRequest} from '../variable-request';
 
 describe('OverviewComponent', () => {
     let component: OverviewComponent;
-    let componentGetVariablesFn: sinon.SinonStub;
-    let variablesService: sinon.SinonStubbedInstance<VariablesService>;
-    let subscription: sinon.SinonStubbedInstance<Subscription>;
+    let componentGetVariablesFn: SinonStub;
+    let changeSubject: SinonStubbedInstance<Subject<any>>;
+    let variablesService: SinonStubbedInstance<VariablesService>;
+    let subscription: SinonStubbedInstance<Subscription>;
     let request: UpdateVariableRequest;
+    let clock: SinonFakeTimers;
 
-    beforeAll(() => {
-        componentGetVariablesFn = sinon.stub(OverviewComponent.prototype, 'getVariables');
-        jasmine.clock().install();
-        subscription = sinon.createStubInstance(Subscription);
-        variablesService = sinon.createStubInstance(VariablesService);
-        request = sinon.createStubInstance(UpdateVariableRequest);
+    beforeEach(() => {
+        componentGetVariablesFn = stub(OverviewComponent.prototype, 'getVariables');
+        clock = useFakeTimers();
+        subscription = createStubInstance(Subscription);
+        changeSubject = createStubInstance(Subject);
+        variablesService = createStubInstance(VariablesService);
+        request = createStubInstance(UpdateVariableRequest);
         component = new OverviewComponent(variablesService as any);
+        component.change$ = changeSubject;
     });
 
     describe('constructor', () => {
@@ -36,7 +40,7 @@ describe('OverviewComponent', () => {
         });
 
         it('calls getVariables', () =>
-            sinon.assert.called(variablesService.getVariables));
+            assert.called(variablesService.getVariables));
 
         it('subscribes to getVariables and sets the data object once resolved', () =>
             expect(component.data).toEqual({
@@ -56,7 +60,7 @@ describe('OverviewComponent', () => {
         });
 
         it('unsubscribes the subscriptions', () =>
-            sinon.assert.calledWith(subscription.unsubscribe));
+            assert.calledWith(subscription.unsubscribe));
 
         afterEach(() => {
             subscription.unsubscribe.reset();
@@ -67,9 +71,14 @@ describe('OverviewComponent', () => {
         beforeEach(() => {
             component.ngOnInit();
         });
+
         it('call getVariables', () => {
-            sinon.assert.called(componentGetVariablesFn);
+            assert.called(componentGetVariablesFn);
         });
+
+
+        it('creates the change subject', () =>
+            expect(component.change$).toBeDefined());
 
         afterEach(() => {
             variablesService.getVariables.reset();
@@ -81,21 +90,15 @@ describe('OverviewComponent', () => {
             component.onUpdate(request);
         });
 
-        it('assigns the given request object to the change attribute', () =>
-            expect(component.change).toBe(request));
-
-        it('sets the change attribute to undefined after 1500 milliseconds', () => {
-            jasmine.clock().tick(1500);
-            expect(component.change).toBe(undefined);
-        });
+        it('emits the change', () =>
+            assert.called(changeSubject.next));
 
         afterEach(() => {
             variablesService.getVariables.reset();
         });
     });
 
-    afterAll(() => {
-        jasmine.clock().uninstall();
+    afterEach(() => {
         componentGetVariablesFn.restore();
     });
 });

@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 export class HeaderComponent implements OnInit {
     isCollapsed: boolean;
 
+    /** {@inheritDoc}. */
     ngOnInit() {
         this.isCollapsed = true;
     }

@@ -2,6 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({ name: 'filter' })
 export class FilterMocksPipe implements PipeTransform {
+    /** {@inheritDoc}.*/
     transform(mocks: any[], searchText: string): any[] {
         if (!mocks) {
             return [];

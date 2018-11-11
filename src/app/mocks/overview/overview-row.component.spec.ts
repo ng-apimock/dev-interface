@@ -1,21 +1,31 @@
-import * as sinon from 'sinon';
+import {
+    assert,
+    createStubInstance,
+    match,
+    SinonFakeTimers,
+    SinonStub,
+    SinonStubbedInstance,
+    stub,
+    useFakeTimers
+} from 'sinon';
 import {OverviewRowComponent} from './overview-row.component';
 import {MocksService} from '../mocks.service';
-import {of} from 'rxjs';
+import {of, Subject} from 'rxjs';
 import {MockRequest, UpdateMockDelayRequest, UpdateMockEchoRequest, UpdateMockScenarioRequest} from '../mock-request';
 import {EventEmitter} from '@angular/core';
 
 describe('OverviewRowComponent', () => {
     let component: OverviewRowComponent;
-    let mocksService: sinon.SinonStubbedInstance<MocksService>;
-    let updatedEmitFn: sinon.SinonStub;
-
-    beforeAll(() => {
-        mocksService = sinon.createStubInstance(MocksService);
-        jasmine.clock().install();
-    });
+    let mocksService: SinonStubbedInstance<MocksService>;
+    let updatedEmitFn: SinonStub;
+    let subscription: SinonStubbedInstance<Subject<any>>;
+    let clock: SinonFakeTimers;
 
     beforeEach(() => {
+        clock = useFakeTimers();
+        mocksService = createStubInstance(MocksService);
+        subscription = createStubInstance(Subject);
+
         component = new OverviewRowComponent(mocksService as any);
         component.mock = { name: 'mock' };
         component.state = {
@@ -26,36 +36,22 @@ describe('OverviewRowComponent', () => {
     });
 
     describe('ngOnDestroy', () => {
-        let delayUnsubscribeFn: sinon.SinonStub;
-        let echoUnsubscribeFn: sinon.SinonStub;
-        let scenarioUnsubscribeFn: sinon.SinonStub;
-
         beforeEach(() => {
-            delayUnsubscribeFn = sinon.stub(component.echo$, 'unsubscribe');
-            echoUnsubscribeFn = sinon.stub(component.delay$, 'unsubscribe');
-            scenarioUnsubscribeFn = sinon.stub(component.scenario$, 'unsubscribe');
+            component.subscriptions = [subscription as any];
             component.ngOnDestroy();
         });
 
-        it('unsubscribes the delay', () =>
-            sinon.assert.called(delayUnsubscribeFn));
-
-        it('unsubscribes the echo', () =>
-            sinon.assert.called(echoUnsubscribeFn));
-
-        it('unsubscribes the scenario', () =>
-            sinon.assert.called(scenarioUnsubscribeFn));
+        it('unsubscribes the subscriptions', () =>
+            assert.called(subscription.unsubscribe));
 
         afterEach(() => {
-            delayUnsubscribeFn.reset();
-            echoUnsubscribeFn.reset();
-            scenarioUnsubscribeFn.reset();
+            subscription.unsubscribe.reset();
         });
     });
 
     describe('ngOnInit', () => {
         beforeEach(() => {
-            updatedEmitFn = sinon.stub(component.updated, 'emit');
+            updatedEmitFn = stub(component.updated, 'emit');
             mocksService.updateMock.returns(of({}));
             component.ngOnInit();
         });
@@ -63,15 +59,15 @@ describe('OverviewRowComponent', () => {
         describe('delay$ on next', () => {
             beforeEach(() => {
                 component.delay$.next('2000'); // changed value
-                jasmine.clock().tick(500); // debounce 500
+                clock.tick(500); // debounce 500
             });
 
             it('calls updateMock', () =>
-                sinon.assert.calledWith(mocksService.updateMock, sinon.match((actual) =>
+                assert.calledWith(mocksService.updateMock, match((actual) =>
                     actual instanceof MockRequest)));
 
             it('subscribes to updateMock and emits the updated request', () =>
-                sinon.assert.calledWith(updatedEmitFn, sinon.match((actual) =>
+                assert.calledWith(updatedEmitFn, match((actual) =>
                     actual instanceof UpdateMockDelayRequest)));
 
             afterEach(() => {
@@ -83,15 +79,15 @@ describe('OverviewRowComponent', () => {
         describe('echo$ on next', () => {
             beforeEach(() => {
                 component.echo$.next(true); // changed value
-                jasmine.clock().tick(500); // debounce 500
+                clock.tick(500); // debounce 500
             });
 
             it('calls updateMock', () =>
-                sinon.assert.calledWith(mocksService.updateMock, sinon.match((actual) =>
+                assert.calledWith(mocksService.updateMock, match((actual) =>
                     actual instanceof MockRequest)));
 
             it('subscribes to updateMock and emits the updated request', () =>
-                sinon.assert.calledWith(updatedEmitFn, sinon.match((actual) =>
+                assert.calledWith(updatedEmitFn, match((actual) =>
                     actual instanceof UpdateMockEchoRequest)));
 
             afterEach(() => {
@@ -106,11 +102,11 @@ describe('OverviewRowComponent', () => {
             });
 
             it('calls updateMock', () =>
-                sinon.assert.calledWith(mocksService.updateMock, sinon.match((actual) =>
+                assert.calledWith(mocksService.updateMock, match((actual) =>
                     actual instanceof MockRequest)));
 
             it('subscribes to updateMock and emits the updated request', () =>
-                sinon.assert.calledWith(updatedEmitFn, sinon.match((actual) =>
+                assert.calledWith(updatedEmitFn, match((actual) =>
                     actual instanceof UpdateMockScenarioRequest)));
 
             afterEach(() => {
@@ -127,8 +123,4 @@ describe('OverviewRowComponent', () => {
     describe('updated', () =>
         it('is an eventEmitter', () =>
             expect(component.updated instanceof EventEmitter).toBe(true)));
-
-    afterAll(() => {
-        jasmine.clock().uninstall();
-    });
 });

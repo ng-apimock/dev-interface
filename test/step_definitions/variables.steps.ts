@@ -2,10 +2,10 @@ import {Given, Then, When} from 'cucumber';
 import {expect} from 'chai';
 import {VariablesOverviewPo} from '../../src/app/variables/overview/overview.component.po';
 import {browser} from 'protractor';
-import {NgApimock} from '../ngapimock';
+import {Client} from '@ng-apimock/protractor-plugin';
 
 const { forEach } = require('p-iteration');
-declare const ngApimock: NgApimock;
+declare const ngApimock: Client;
 
 Given(/^I open the variables page$/, openVariablesPage);
 

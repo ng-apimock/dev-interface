@@ -1,18 +1,16 @@
 <div class="container-fluid">
 
-    <div class="alert alert-success" *ngIf="change">
-        Variable '<strong [innerHtml]="change.key"></strong>' has been '<strong>{{change.type}}</strong>'<span
-            *ngIf="change.value"> to '<strong [innerHtml]="change.value"></strong>'</span>
-    </div>
+    <apimock-alert [change]="change$"></apimock-alert>
     <h2>Available variables</h2>
 
     <div class="input-group">
-        <input type="text" [(ngModel)]="searchText" class="form-control search-variables" placeholder="Filter variables">
+        <input type="text" [(ngModel)]="searchText" class="form-control search-variables"
+               placeholder="Filter variables">
         <div class="input-group-append">
             <span class="input-group-text icon-filter"></span>
         </div>
     </div>
-    <br />
+    <br/>
 
     <table>
         <thead>
@@ -23,8 +21,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let variable of data.variables | filter:searchText" apimock-variable-overview-row [variable]="variable"
-            (updated)="onUpdate($event)"></tr>
+        <tr *ngFor="let variable of data.variables | filter:searchText" apimock-variable-overview-row
+            [variable]="variable" (updated)="onUpdate($event)"></tr>
         </tbody>
         <tfoot>
         <tr apimock-variable-overview-footer-row (updated)="onUpdate($event)"></tr>

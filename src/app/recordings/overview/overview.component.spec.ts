@@ -83,7 +83,7 @@ describe('OverviewComponent', () => {
                             'payload': {}
                         },
                         'response': {
-                            'data': JSON.stringify([{'some': 'thing'}]),
+                            'data': JSON.stringify([{ 'some': 'thing' }]),
                             'status': 200,
                             'headers': {
                                 'content-type': ['application/json']

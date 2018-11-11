@@ -8,17 +8,8 @@ export class MocksOverviewRowPo {
         return this.ef.$('.delay').$('input');
     }
 
-    async delayResponse(delay: string): Promise<void> {
-        await this.delay.clear();
-        await this.delay.sendKeys(delay);
-    }
-
     get echo() {
         return this.ef.$('.echo').$('input');
-    }
-
-    async toggleEcho(): Promise<void> {
-        await this.echo.click();
     }
 
     get name() {
@@ -27,6 +18,15 @@ export class MocksOverviewRowPo {
 
     get scenario() {
         return this.ef.$('.scenario').$('select');
+    }
+
+    async delayResponse(delay: string): Promise<void> {
+        await this.delay.clear();
+        await this.delay.sendKeys(delay);
+    }
+
+    async toggleEcho(): Promise<void> {
+        await this.echo.click();
     }
 
     async selectScenario(scenario: string): Promise<void> {

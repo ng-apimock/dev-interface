@@ -1,25 +1,27 @@
-import * as sinon from 'sinon';
+import {assert, createStubInstance, SinonStub, SinonStubbedInstance, stub} from 'sinon';
 
 import {MocksService} from '../mocks.service';
 import {OverviewComponent} from './overview.component';
 
-import {of, Subscription} from 'rxjs';
+import {of, Subject, Subscription} from 'rxjs';
 import {UpdateMockRequest} from '../mock-request';
 
 describe('OverviewComponent', () => {
     let component: OverviewComponent;
-    let componentGetMocksFn: sinon.SinonStub;
-    let mocksService: sinon.SinonStubbedInstance<MocksService>;
-    let subscription: sinon.SinonStubbedInstance<Subscription>;
-    let updateRequest: sinon.SinonStubbedInstance<UpdateMockRequest>;
+    let componentGetMocksFn: SinonStub;
+    let changeSubject: SinonStubbedInstance<Subject<any>>;
+    let mocksService: SinonStubbedInstance<MocksService>;
+    let subscription: SinonStubbedInstance<Subscription>;
+    let updateRequest: SinonStubbedInstance<UpdateMockRequest>;
 
-    beforeAll(() => {
-        componentGetMocksFn = sinon.stub(OverviewComponent.prototype, 'getMocks');
-        jasmine.clock().install();
-        mocksService = sinon.createStubInstance(MocksService);
-        subscription = sinon.createStubInstance(Subscription);
-        updateRequest = sinon.createStubInstance(UpdateMockRequest);
+    beforeEach(() => {
+        componentGetMocksFn = stub(OverviewComponent.prototype, 'getMocks');
+        mocksService = createStubInstance(MocksService);
+        subscription = createStubInstance(Subscription);
+        updateRequest = createStubInstance(UpdateMockRequest);
+        changeSubject = createStubInstance(Subject);
         component = new OverviewComponent(mocksService as any);
+        component.change$ = changeSubject;
     });
 
     describe('constructor', () => {
@@ -39,7 +41,7 @@ describe('OverviewComponent', () => {
         });
 
         it('calls getMocks', () =>
-            sinon.assert.called(mocksService.getMocks));
+            assert.called(mocksService.getMocks));
 
         it('subscribes to getMocks and sets the data object once resolved', () =>
             expect(component.data).toEqual({ mocks: ['one'] }));
@@ -61,7 +63,7 @@ describe('OverviewComponent', () => {
         });
 
         it('unsubscribes the subscriptions', () =>
-            sinon.assert.calledWith(subscription.unsubscribe));
+            assert.calledWith(subscription.unsubscribe));
 
         afterEach(() => {
             subscription.unsubscribe.reset();
@@ -74,7 +76,10 @@ describe('OverviewComponent', () => {
         });
 
         it('gets the mocks', () =>
-            sinon.assert.called(componentGetMocksFn));
+            assert.called(componentGetMocksFn));
+
+        it('creates the change subject', () =>
+            expect(component.change$).toBeDefined());
 
         afterEach(() => {
             componentGetMocksFn.reset();
@@ -86,13 +91,8 @@ describe('OverviewComponent', () => {
             component.onUpdate(updateRequest);
         });
 
-        it('assigns the given request object to the change attribute', () =>
-            expect(component.change).toBe(updateRequest));
-
-        it('sets the change attribute to undefined after 1500 milliseconds', () => {
-            jasmine.clock().tick(1500);
-            expect(component.change).toBe(undefined);
-        });
+        it('emits the change', () =>
+            assert.called(changeSubject.next));
 
         afterEach(() => {
             mocksService.getMocks.reset();
@@ -107,13 +107,16 @@ describe('OverviewComponent', () => {
         });
 
         it('call resetMocksToDefault', () =>
-            sinon.assert.called(mocksService.resetMocksToDefault));
+            assert.called(mocksService.resetMocksToDefault));
 
         it('subscribes to resetMocksToDefault and once resolved calls getMocks', () =>
-            sinon.assert.called(mocksService.getMocks));
+            assert.called(mocksService.getMocks));
 
         it('subscribes to getMocks and sets the data object once resolved', () =>
             expect(component.data).toEqual({ mocks: ['one'] }));
+
+        it('subscribes to getMocks and emits the change', () =>
+            assert.calledWith(changeSubject.next, 'All mocks have been reset to defaults.'));
 
         afterEach(() => {
             mocksService.resetMocksToDefault.reset();
@@ -129,13 +132,16 @@ describe('OverviewComponent', () => {
         });
 
         it('call setMocksToPassThrough', () =>
-            sinon.assert.called(mocksService.setMocksToPassThrough));
+            assert.called(mocksService.setMocksToPassThrough));
 
         it('subscribes to setMocksToPassThrough and once resolved calls getMocks', () =>
-            sinon.assert.called(mocksService.getMocks));
+            assert.called(mocksService.getMocks));
 
         it('subscribes to getMocks and sets the data object once resolved', () =>
             expect(component.data).toEqual({ mocks: ['one'] }));
+
+        it('subscribes to getMocks and emits the change', () =>
+            assert.calledWith(changeSubject.next, 'All mocks have been set to pass through.'));
 
         afterEach(() => {
             mocksService.setMocksToPassThrough.reset();
@@ -143,8 +149,7 @@ describe('OverviewComponent', () => {
         });
     });
 
-    afterAll(() => {
-        jasmine.clock().uninstall();
+    afterEach(() => {
         componentGetMocksFn.restore();
     });
 });

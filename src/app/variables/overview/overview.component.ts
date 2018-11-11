@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VariablesService} from '../variables.service';
-import {Subscription, timer} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {UpdateVariableRequest} from '../variable-request';
 import {map} from 'rxjs/operators';
 
@@ -11,13 +11,13 @@ import {map} from 'rxjs/operators';
 })
 export class OverviewComponent implements OnInit, OnDestroy {
     data: any;
-    change: UpdateVariableRequest;
     subscriptions: Subscription[];
     searchText: string;
+    change$: Subject<any>;
 
     /**
      * Constructor.
-     * @param {MocksService} variablesService The mock service.
+     * @param {PresetsService} variablesService The mock service.
      */
     constructor(private variablesService: VariablesService) {
         this.data = { variables: [] };
@@ -43,6 +43,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     /** {@inheritDoc}.*/
     ngOnInit() {
         this.getVariables();
+        this.change$ = new Subject();
     }
 
     /**
@@ -50,11 +51,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
      * @param {UpdateVariableRequest} change The change.
      */
     onUpdate(change: UpdateVariableRequest) {
-        this.change = change;
-        this.getVariables();
-
-        timer(1500).subscribe(() => {
-            this.change = undefined;
-        });
+        const message = ` Variable '<strong>${change.key}</strong>' has been '<strong>${change.type}</strong>'
+            ${change.value ? ` to <strong>${change.value}</strong>` : ''}`;
+        this.change$.next(message);
     }
 }

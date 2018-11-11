@@ -1,8 +1,6 @@
 <div class="container-fluid">
-    <div class="alert alert-success" *ngIf="change">
-        Mock '<strong [innerHtml]="change.name"></strong>' has changed the '<strong [innerHtml]="change.type"></strong>'
-        to '<strong [innerHtml]="change.value"></strong>'
-    </div>
+
+    <apimock-alert [change]="change$"></apimock-alert>
     <h2>Available mocks</h2>
 
     <div class="input-group">
@@ -11,7 +9,7 @@
             <span class="input-group-text icon-filter"></span>
         </div>
     </div>
-    <br />
+    <br/>
 
     <table>
         <thead>

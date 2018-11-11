@@ -7,6 +7,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {VariablesModule} from './variables/variables.module';
 import {RecordingsModule} from './recordings/recordings.module';
 import {OverviewComponent} from './mocks/overview/overview.component';
+import {PresetsModule} from './presets/presets.module';
 
 export const routes: Routes = [{ path: '', component: OverviewComponent }];
 
@@ -18,6 +19,7 @@ export const routes: Routes = [{ path: '', component: OverviewComponent }];
     imports: [
         BrowserModule,
         MocksModule,
+        PresetsModule,
         VariablesModule,
         RecordingsModule,
         RouterModule.forRoot(routes, { useHash: true })

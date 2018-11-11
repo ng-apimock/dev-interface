@@ -1,4 +1,13 @@
-import * as sinon from 'sinon';
+import {
+    assert,
+    createStubInstance,
+    match,
+    SinonFakeTimers,
+    SinonStub,
+    SinonStubbedInstance,
+    stub,
+    useFakeTimers
+} from 'sinon';
 import {OverviewRowComponent} from './overview-row.component';
 import {VariablesService} from '../variables.service';
 import {of} from 'rxjs';
@@ -7,34 +16,32 @@ import {EventEmitter} from '@angular/core';
 
 describe('OverviewRowComponent', () => {
     let component: OverviewRowComponent;
-    let variablesService: sinon.SinonStubbedInstance<VariablesService>;
-    let updatedEmitFn: sinon.SinonStub;
-
-    beforeAll(() => {
-        variablesService = sinon.createStubInstance(VariablesService);
-        jasmine.clock().install();
-    });
+    let variablesService: SinonStubbedInstance<VariablesService>;
+    let updatedEmitFn: SinonStub;
+    let clock: SinonFakeTimers;
 
     beforeEach(() => {
+        variablesService = createStubInstance(VariablesService);
+        clock = useFakeTimers();
         component = new OverviewRowComponent(variablesService as any);
         component.variable = { name: 'variable' };
     });
 
     describe('ngOnDestroy', () => {
-        let deleteUnsubscribeFn: sinon.SinonStub;
-        let valueUnsubscribeFn: sinon.SinonStub;
+        let deleteUnsubscribeFn: SinonStub;
+        let valueUnsubscribeFn: SinonStub;
 
         beforeEach(() => {
-            deleteUnsubscribeFn = sinon.stub(component.delete$, 'unsubscribe');
-            valueUnsubscribeFn = sinon.stub(component.value$, 'unsubscribe');
+            deleteUnsubscribeFn = stub(component.delete$, 'unsubscribe');
+            valueUnsubscribeFn = stub(component.value$, 'unsubscribe');
             component.ngOnDestroy();
         });
 
         it('unsubscribes the delete', () =>
-            sinon.assert.called(deleteUnsubscribeFn));
+            assert.called(deleteUnsubscribeFn));
 
         it('unsubscribes the value', () =>
-            sinon.assert.called(valueUnsubscribeFn));
+            assert.called(valueUnsubscribeFn));
 
         afterEach(() => {
             deleteUnsubscribeFn.reset();
@@ -44,7 +51,7 @@ describe('OverviewRowComponent', () => {
 
     describe('ngOnInit', () => {
         beforeEach(() => {
-            updatedEmitFn = sinon.stub(component.updated, 'emit');
+            updatedEmitFn = stub(component.updated, 'emit');
             variablesService.updateVariable.returns(of({}));
             variablesService.deleteVariable.returns(of({}));
             component.ngOnInit();
@@ -56,10 +63,10 @@ describe('OverviewRowComponent', () => {
             });
 
             it('calls deleteVariable', () =>
-                sinon.assert.called(variablesService.deleteVariable));
+                assert.called(variablesService.deleteVariable));
 
             it('subscribes to deleteVariable and emits the updated request', () =>
-                sinon.assert.calledWith(updatedEmitFn, sinon.match((actual) =>
+                assert.calledWith(updatedEmitFn, match((actual) =>
                     actual instanceof UpdateVariableRequest)));
 
             afterEach(() => {
@@ -72,15 +79,15 @@ describe('OverviewRowComponent', () => {
         describe('value$ on next', () => {
             beforeEach(() => {
                 component.value$.next('2000'); // changed value
-                jasmine.clock().tick(500); // debounce 500
+                clock.tick(500); // debounce 500
             });
 
             it('calls updateVariable', () =>
-                sinon.assert.calledWith(variablesService.updateVariable, sinon.match((actual) =>
+                assert.calledWith(variablesService.updateVariable, match((actual) =>
                     actual instanceof VariableRequest)));
 
             it('subscribes to updateVariable and emits the updated request', () =>
-                sinon.assert.calledWith(updatedEmitFn, sinon.match((actual) =>
+                assert.calledWith(updatedEmitFn, match((actual) =>
                     actual instanceof UpdateVariableRequest)));
 
             afterEach(() => {
@@ -93,7 +100,4 @@ describe('OverviewRowComponent', () => {
         it('is an eventEmitter', () =>
             expect(component.updated instanceof EventEmitter).toBe(true)));
 
-    afterAll(() => {
-        jasmine.clock().uninstall();
-    });
 });

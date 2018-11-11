@@ -6,11 +6,13 @@ import {OverviewRowModule} from './overview-row.module';
 import {OverviewFooterRowModule} from './overview-footer-row.module';
 import {FilterVariablesPipe} from './filter.variables.pipe';
 import {FormsModule} from '@angular/forms';
+import {AlertModule} from '../../alert/alert.module';
 
 export const routes: Routes = [{ path: 'variables', component: OverviewComponent }];
 
 @NgModule({
     imports: [
+        AlertModule,
         CommonModule,
         FormsModule,
         OverviewFooterRowModule,
@@ -18,8 +20,8 @@ export const routes: Routes = [{ path: 'variables', component: OverviewComponent
         RouterModule.forChild(routes),
     ],
     declarations: [
-        OverviewComponent,
-        FilterVariablesPipe
+        FilterVariablesPipe,
+        OverviewComponent
     ],
     exports: [
         OverviewComponent

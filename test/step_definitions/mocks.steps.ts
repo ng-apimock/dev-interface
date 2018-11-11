@@ -2,10 +2,10 @@ import {Given, Then, When} from 'cucumber';
 import {MocksOverviewPo} from '../../src/app/mocks/overview/overview.component.po';
 import {expect} from 'chai';
 import {browser} from 'protractor';
-import {NgApimock} from '../ngapimock';
+import {Client} from '@ng-apimock/protractor-plugin';
 
 const { forEach } = require('p-iteration');
-declare const ngApimock: NgApimock;
+declare const ngApimock: Client;
 
 Given(/^I open the mocks page$/, openMocksPage);
 

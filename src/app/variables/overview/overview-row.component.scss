@@ -29,6 +29,13 @@
       background: steelblue;
       color: white;
       border-radius: 0.25rem;
+
+      &:focus {
+        color: white;
+        background: steelblue;
+        border-color: steelblue;
+        outline: 0;
+      }
     }
   }
 }

@@ -1,4 +1,13 @@
-import * as sinon from 'sinon';
+import {
+    assert,
+    createStubInstance,
+    match,
+    SinonFakeTimers,
+    SinonStub,
+    SinonStubbedInstance,
+    stub,
+    useFakeTimers
+} from 'sinon';
 import {OverviewFooterRowComponent} from './overview-footer-row.component';
 import {VariablesService} from '../variables.service';
 import {UpdateVariableRequest, VariableRequest} from '../variable-request';
@@ -7,14 +16,15 @@ import {EventEmitter} from '@angular/core';
 
 describe('OverviewFooterRowComponent', () => {
     let component: OverviewFooterRowComponent;
-    let variableRequest: sinon.SinonStubbedInstance<VariableRequest>;
-    let variablesService: sinon.SinonStubbedInstance<VariablesService>;
-    let updatedEmitFn: sinon.SinonStub;
+    let variableRequest: SinonStubbedInstance<VariableRequest>;
+    let variablesService: SinonStubbedInstance<VariablesService>;
+    let updatedEmitFn: SinonStub;
+    let clock: SinonFakeTimers;
 
-    beforeAll(() => {
-        variableRequest = sinon.createStubInstance(VariableRequest);
-        variablesService = sinon.createStubInstance(VariablesService);
-        jasmine.clock().install();
+    beforeEach(() => {
+        variableRequest = createStubInstance(VariableRequest);
+        variablesService = createStubInstance(VariablesService);
+        clock = useFakeTimers();
         component = new OverviewFooterRowComponent(variablesService as any);
     });
 
@@ -24,15 +34,15 @@ describe('OverviewFooterRowComponent', () => {
     });
 
     describe('ngOnDestroy', () => {
-        let addUnsubscribeFn: sinon.SinonStub;
+        let addUnsubscribeFn: SinonStub;
 
         beforeEach(() => {
-            addUnsubscribeFn = sinon.stub(component.add$, 'unsubscribe');
+            addUnsubscribeFn = stub(component.add$, 'unsubscribe');
             component.ngOnDestroy();
         });
 
         it('unsubscribes the add', () =>
-            sinon.assert.called(addUnsubscribeFn));
+            assert.called(addUnsubscribeFn));
 
         afterEach(() => {
             addUnsubscribeFn.reset();
@@ -41,7 +51,7 @@ describe('OverviewFooterRowComponent', () => {
 
     describe('ngOnInit', () => {
         beforeEach(() => {
-            updatedEmitFn = sinon.stub(component.updated, 'emit');
+            updatedEmitFn = stub(component.updated, 'emit');
             variablesService.updateVariable.returns(of({}));
             component.ngOnInit();
         });
@@ -52,10 +62,10 @@ describe('OverviewFooterRowComponent', () => {
             });
 
             it('calls updateVariable', () =>
-                sinon.assert.called(variablesService.updateVariable));
+                assert.called(variablesService.updateVariable));
 
             it('subscribes to updateVariable and emits the updated request', () =>
-                sinon.assert.calledWith(updatedEmitFn, sinon.match((actual) =>
+                assert.calledWith(updatedEmitFn, match((actual) =>
                     actual instanceof UpdateVariableRequest)));
 
             afterEach(() => {
@@ -72,8 +82,4 @@ describe('OverviewFooterRowComponent', () => {
     describe('updated', () =>
         it('is an eventEmitter', () =>
             expect(component.updated instanceof EventEmitter).toBe(true)));
-
-    afterAll(() => {
-        jasmine.clock().uninstall();
-    });
 });

@@ -19,6 +19,13 @@
         background: lightgray;
         color: black;
       }
+
+      &:focus {
+        color: white;
+        background: steelblue;
+        border-color: steelblue;
+        outline: 0;
+      }
     }
   }
 }

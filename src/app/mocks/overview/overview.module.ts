@@ -5,19 +5,21 @@ import {OverviewRowModule} from './overview-row.module';
 import {RouterModule, Routes} from '@angular/router';
 import {FilterMocksPipe} from './filter.mocks.pipe';
 import {FormsModule} from '@angular/forms';
+import {AlertModule} from '../../alert/alert.module';
 
 export const routes: Routes = [{ path: 'mocks', component: OverviewComponent }];
 
 @NgModule({
     imports: [
+        AlertModule,
         CommonModule,
         FormsModule,
         OverviewRowModule,
         RouterModule.forChild(routes),
     ],
     declarations: [
-        OverviewComponent,
-        FilterMocksPipe
+        FilterMocksPipe,
+        OverviewComponent
     ],
     exports: [
         OverviewComponent
