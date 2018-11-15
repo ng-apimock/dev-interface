@@ -1,13 +1,13 @@
 {
   "name": "@ng-apimock/dev-interface",
   "description": "Development interface for ng-apimock",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "homepage": "https://github.com/ng-apimock/dev-interface#readme",
   "author": {
     "name": "Mischa Dasberg",
     "email": "mischa@dasberg.nl"
   },
-  "main": "dist/index.html",
+  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "ngapimock": "node test/server.js",
