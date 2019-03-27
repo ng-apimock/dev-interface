@@ -10,7 +10,7 @@ describe('AlertComponent', () => {
     beforeEach(() => {
         component = new AlertComponent();
         changeObservable = createStubInstance(Observable);
-        component.change = changeObservable;
+        component.change = changeObservable as any;
         clock = useFakeTimers();
     });
 

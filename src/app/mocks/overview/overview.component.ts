@@ -13,7 +13,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     data: any;
     subscriptions: Subscription[];
     searchText: string;
-    change$: Subject<any>;
+    change$: Subject<string>;
 
     /**
      * Constructor.
