@@ -82,7 +82,7 @@
     "protractor-cucumber-framework": "6.1.1",
     "protractor-intercept": "1.0.2",
     "rxjs": "6.4.0",
-    "sauce-connect-launcher": "1.2.5",
+    "sauce-connect-launcher": "1.2.4",
     "sinon": "7.3.1",
     "ts-node": "8.0.3",
     "tslint": "5.14.0",
