@@ -25,5 +25,5 @@ app.use((request, response, next) => {
 app.use(apimock.middleware);
 app.use('/dev-interface/', serveStatic(path.join(__dirname, '..', 'dist')));
 app.use('/', serveStatic(require('@ng-apimock/test-application')));
-app.listen(9900);
-console.log('ng-apimock-angular-test-app is running on port 9900');
+app.listen(9999);
+console.log('ng-apimock-angular-test-app is running on port 9999');

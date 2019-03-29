@@ -21,7 +21,7 @@ describe('OverviewComponent', () => {
         selectPresetRequest = createStubInstance(SelectPresetRequest);
         changeSubject = createStubInstance(Subject);
         component = new OverviewComponent(presetsService as any);
-        component.change$ = changeSubject;
+        component.change$ = changeSubject as any;
     });
 
     describe('constructor', () => {

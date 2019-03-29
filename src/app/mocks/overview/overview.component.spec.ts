@@ -21,7 +21,7 @@ describe('OverviewComponent', () => {
         updateRequest = createStubInstance(UpdateMockRequest);
         changeSubject = createStubInstance(Subject);
         component = new OverviewComponent(mocksService as any);
-        component.change$ = changeSubject;
+        component.change$ = changeSubject as any;
     });
 
     describe('constructor', () => {

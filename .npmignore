@@ -2,6 +2,7 @@
 src
 
 # test
+test
 **/*.spec.*
 
 # configs
@@ -10,6 +11,7 @@ tslint.json
 
 # idea
 .idea
+*.iml
 
 # ci
 .circleci
