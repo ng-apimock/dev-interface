@@ -11,7 +11,7 @@
     }
 
     .btn-primary {
-      background: steelblue;
+      background: #4caf50;
       color: white;
       border-radius: 0.25rem;
 
@@ -22,8 +22,8 @@
 
       &:focus {
         color: white;
-        background: steelblue;
-        border-color: steelblue;
+        background: #4caf50;
+        border-color: #4caf50;
         outline: 0;
       }
     }

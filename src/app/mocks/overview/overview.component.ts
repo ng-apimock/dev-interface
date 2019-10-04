@@ -38,7 +38,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     }
 
     /** {@inheritDoc}.*/
-    ngOnInit() {
+    ngOnInit(): void {
         this.getMocks();
         this.change$ = new Subject();
     }
@@ -47,7 +47,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
      * On update show the message about the action that has been performed.
      * @param {UpdateMockRequest} change The change.
      */
-    onUpdate(change: UpdateMockRequest) {
+    onUpdate(change: UpdateMockRequest): void {
         const message = `Mock '<strong>${change.name}</strong>' has changed the '<strong>${change.type}</strong>'
         to '<strong>${change.value}</strong>'`;
         this.change$.next(message);
