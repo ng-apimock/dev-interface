@@ -54,5 +54,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
         const message = ` Variable '<strong>${change.key}</strong>' has been '<strong>${change.type}</strong>'
             ${change.value ? ` to <strong>${change.value}</strong>` : ''}`;
         this.change$.next(message);
+        this.getVariables();
     }
 }
