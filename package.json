@@ -1,7 +1,7 @@
 {
   "name": "@ng-apimock/dev-interface",
   "description": "Development interface for ng-apimock",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "homepage": "https://github.com/ng-apimock/dev-interface#readme",
   "author": {
     "name": "Mischa Dasberg",
