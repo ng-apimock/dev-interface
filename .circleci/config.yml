@@ -2,10 +2,10 @@ workflows:
   version: 2
   build:
     jobs:
-      - node-v10
-      - node-v12:
+    - node-v10
+    - node-v12:
         requires:
-          - node-v10
+        - node-v10
 
 version: 2
 jobs:
