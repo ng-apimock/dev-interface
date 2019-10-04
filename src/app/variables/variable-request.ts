@@ -13,7 +13,7 @@ export class VariableRequest {
         this.payload[variable.key] = !Number.isNaN(Number.parseInt(variable.value))
             ? Number(variable.value)
             : /^(true|false)$/.test(variable.value)
-                ? variable.value == 'true' ? true : false
+                ? variable.value === 'true'
                 : variable.value;
 
         this.key = variable.key;
