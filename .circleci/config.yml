@@ -2,10 +2,10 @@ workflows:
   version: 2
   build:
     jobs:
-    - node-v9
-    - node-v10:
+      - node-v10
+      - node-v12:
         requires:
-        - node-v9
+          - node-v10
 
 version: 2
 jobs:
@@ -50,11 +50,11 @@ jobs:
           name: Wait for Sauce Connect to close the tunnel
           command: pkill sc
 
-  node-v9:
-    <<: *node-base
-    docker:
-      - image: node:9
   node-v10:
     <<: *node-base
     docker:
       - image: node:10
+  node-v12:
+    <<: *node-base
+    docker:
+      - image: node:12
