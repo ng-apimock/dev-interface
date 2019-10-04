@@ -1,6 +1,6 @@
 /** Mock request. */
 export class VariableRequest {
-    payload: { [key: string]: string };
+    payload: { [key: string]: any };
     key: string;
     value: string;
 
@@ -8,9 +8,14 @@ export class VariableRequest {
      * Constructor.
      * @param {{ key: string, value: string }} variable The variable.
      */
-    constructor(private variable: { key: string, value: string }) {
+    constructor(private variable: { key: string, value: any }) {
         this.payload = {};
-        this.payload[variable.key] = variable.value;
+        this.payload[variable.key] = !Number.isNaN(Number.parseInt(variable.value))
+            ? Number(variable.value)
+            : /^(true|false)$/.test(variable.value)
+                ? variable.value == 'true' ? true : false
+                : variable.value;
+
         this.key = variable.key;
         this.value = variable.value;
     }
