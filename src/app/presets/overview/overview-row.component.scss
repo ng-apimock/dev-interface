@@ -60,7 +60,7 @@
       }
 
       &-get {
-        background: steelblue;
+        background: #4caf50;
       }
 
       &-post {
@@ -73,16 +73,16 @@
     }
 
     .btn-primary {
-      background: steelblue;
+      background: #4caf50;
       color: white;
       border-radius: 0.25rem;
-      border-color: steelblue;
+      border-color: #4caf50;
       margin-left: 5px;
 
       &:focus {
         color: white;
-        background: steelblue;
-        border-color: steelblue;
+        background: #4caf50;
+        border-color: #4caf50;
         outline: 0;
       }
     }
@@ -95,7 +95,7 @@
       @extend .table-sm;
 
       thead {
-        color: steelblue;
+        color: #4caf50;
 
         th {
           padding: 0.175rem 0.75rem;

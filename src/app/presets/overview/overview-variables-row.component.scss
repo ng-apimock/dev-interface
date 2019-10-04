@@ -11,7 +11,7 @@
     @extend .table-sm;
 
     pre {
-      /deep/ span {
+      ::ng-deep span {
         white-space: normal;
 
         &.string {
@@ -33,7 +33,7 @@
     }
 
     thead {
-      color: steelblue;
+      color: #4caf50;
 
       th {
         padding: 0.175rem 0.75rem;
