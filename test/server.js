@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = connect();
 const testMocksDirectory = path.join(__dirname, 'features');
 
-apimock.processor.process({src: testMocksDirectory});
+apimock.processor.process({src: testMocksDirectory, watch: true});
 
 // use ng-apimock to test the web interface.
 app.use(bodyParser.json());
