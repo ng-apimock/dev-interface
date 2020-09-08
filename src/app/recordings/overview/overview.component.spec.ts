@@ -1,26 +1,26 @@
-import * as sinon from 'sinon';
-import {OverviewComponent} from './overview.component';
-import {RecordingsService} from '../recordings.service';
-import {of, Subscription} from 'rxjs';
+import { createSpyObj } from 'jest-createspyobj';
+
+import { of, Subject } from 'rxjs';
+
+import { RecordingsService } from '../recordings.service';
+
+import { OverviewComponent } from './overview.component';
 
 describe('OverviewComponent', () => {
     const now = new Date();
     let component: OverviewComponent;
-    let componentGetRecordingsFn: sinon.SinonStub;
-    let recordingsService: sinon.SinonStubbedInstance<RecordingsService>;
-    let subscription: sinon.SinonStubbedInstance<Subscription>;
+    let recordingsService: jest.Mocked<RecordingsService>;
+    let subscription: jest.Mocked<Subject<any>>;
 
     beforeAll(() => {
-        componentGetRecordingsFn = sinon.stub(OverviewComponent.prototype, <any>'getRecordings');
-        jasmine.clock().install();
-        subscription = sinon.createStubInstance(Subscription);
-        recordingsService = sinon.createStubInstance(RecordingsService);
+        subscription = createSpyObj(Subject, ['next', 'unsubscribe']);
+        recordingsService = createSpyObj(RecordingsService, ['getRecordings', 'record']);
         component = new OverviewComponent(recordingsService as any);
     });
 
     describe('constructor', () => {
         it('creates a new data object', () =>
-            expect(component.data).toEqual({ recordings: [] }));
+            expect(component.data).toEqual({recordings: []}));
 
         it('creates a new subscriptions object', () =>
             expect(component.subscriptions).toEqual([]));
@@ -28,85 +28,92 @@ describe('OverviewComponent', () => {
 
     describe('enableRecording', () => {
         beforeEach(() => {
-            recordingsService.record.returns(of({}));
+            recordingsService.record.mockReturnValue(of({}));
             component.enableRecording();
         });
 
+        afterEach(() => {
+            component.subscriptions = [];
+        });
+
         it('calls record', () =>
-            sinon.assert.called(recordingsService.record));
+            expect(recordingsService.record).toHaveBeenCalled());
 
         it('subscribes to record and sets the data record to true once resolved', () =>
             expect(component.data.record).toBe(true));
 
         it('adds the observable to the subscription list', () =>
             expect(component.subscriptions.length).toBe(1));
-
-        afterEach(() => {
-            component.subscriptions = [];
-            recordingsService.record.reset();
-        });
     });
 
     describe('disableRecording', () => {
         beforeEach(() => {
-            recordingsService.record.returns(of({}));
+            recordingsService.record.mockReturnValue(of({}));
             component.disableRecording();
         });
 
+        afterEach(() => {
+            component.subscriptions = [];
+        });
+
         it('calls record', () =>
-            sinon.assert.called(recordingsService.record));
+            expect(recordingsService.record).toHaveBeenCalled());
 
         it('subscribes to record and sets the data record to false once resolved', () =>
             expect(component.data.record).toBe(false));
 
         it('adds the observable to the subscription list', () =>
             expect(component.subscriptions.length).toBe(1));
-
-        afterEach(() => {
-            component.subscriptions = [];
-            recordingsService.record.reset();
-        });
     });
 
     describe('getRecordings', () => {
         beforeEach(() => {
-            componentGetRecordingsFn.callThrough();
-            recordingsService.getRecordings.returns(of({
-                'recordings': {
+            recordingsService.getRecordings.mockReturnValue(of({
+                recordings: {
                     'mock name': [{
-                        'request': {
-                            'url': '/some/url',
-                            'method': 'GET',
-                            'headers': {
-                                'record': 'true'
+                        request: {
+                            url: '/some/url',
+                            method: 'GET',
+                            headers: {
+                                record: 'true'
                             },
-                            'payload': {}
+                            payload: {}
                         },
-                        'response': {
-                            'data': JSON.stringify([{ 'some': 'thing' }]),
-                            'status': 200,
-                            'headers': {
+                        response: {
+                            data: JSON.stringify([{'some': 'thing'}]),
+                            status: 200,
+                            headers: {
                                 'content-type': ['application/json']
                             }
                         },
-                        'datetime': now.getTime()
+                        datetime: now.getTime()
                     }]
-                }, 'record': true
+                },
+                record: true
             }));
             component.getRecordings();
         });
 
+        afterEach(() => {
+            component.subscriptions = [];
+        });
+
         it('calls getRecordings', () =>
-            sinon.assert.called(recordingsService.getRecordings));
+            expect(recordingsService.getRecordings).toHaveBeenCalled());
 
         it('subscribes to getRecordings and sets the data object once resolved', () =>
             expect(component.data).toEqual({
                 recordings: [{
-                    request: { url: '/some/url', method: 'GET', headers: { record: 'true' }, payload: {} },
+                    request: {
+                        url: '/some/url',
+                        method: 'GET',
+                        headers: {record: 'true'},
+                        payload: {}
+                    },
                     response: {
-                        data: [{ some: 'thing' }],
+                        data: [{some: 'thing'}],
                         status: 200,
-                        headers: { 'content-type': ['application/json'] }
+                        headers: {'content-type': ['application/json']}
                     },
                     datetime: now.getTime(),
                     name: 'mock name'
@@ -117,11 +124,6 @@ describe('OverviewComponent', () => {
         it('adds the observable to the subscription list', () =>
             expect(component.subscriptions.length).toBe(1));
 
-        afterEach(() => {
-            component.subscriptions = [];
-            componentGetRecordingsFn.reset();
-            recordingsService.getRecordings.reset();
-        });
     });
 
     describe('ngOnDestroy', () => {
@@ -131,15 +133,20 @@ describe('OverviewComponent', () => {
         });
 
         it('unsubscribes the subscriptions', () =>
-            sinon.assert.calledWith(subscription.unsubscribe));
-
-        afterEach(() => {
-            subscription.unsubscribe.reset();
-        });
+            expect(subscription.unsubscribe).toHaveBeenCalled());
     });
 
-    afterAll(() => {
-        jasmine.clock().uninstall();
-        componentGetRecordingsFn.restore();
+    describe('ngOnInit', () => {
+        let getRecordingsFn;
+
+        beforeEach(() => {
+            getRecordingsFn = jest.spyOn(component, 'getRecordings');
+            getRecordingsFn.mockImplementation(() => []);
+
+            component.ngOnInit();
+        });
+
+        it('gets the recordings', () =>
+            expect(getRecordingsFn).toHaveBeenCalled());
     });
 });

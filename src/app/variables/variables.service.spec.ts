@@ -1,38 +1,39 @@
-import {HttpClient} from '@angular/common/http';
-import {VariableRequest} from './variable-request';
-import {VariablesService} from './variables.service';
+import { createSpyObj } from 'jest-createspyobj';
 
-import {assert, createStubInstance, SinonStubbedInstance} from 'sinon';
+import { HttpClient } from '@angular/common/http';
+
+import { VariableRequest } from './variable-request';
+import { VariablesService } from './variables.service';
 
 describe('MocksService', () => {
-    let http: SinonStubbedInstance<HttpClient>;
+    let http: jest.Mocked<HttpClient>;
     let service: VariablesService;
-    let variableRequest: SinonStubbedInstance<VariableRequest>;
+    let variableRequest: jest.Mocked<VariableRequest>;
 
     beforeAll(() => {
-        http = createStubInstance(HttpClient);
-        variableRequest = createStubInstance(VariableRequest);
+        http = createSpyObj(HttpClient);
+        variableRequest = createSpyObj(VariableRequest);
         variableRequest.payload = { some: 'thing' };
         service = new VariablesService(http as any);
     });
-    describe('getVariables', () => it('gets the variables', () => {
-        service.getVariables();
-        assert.calledWith(http.get, '/ngapimock/variables');
-    }));
+    describe('getVariables', () => {
+        it('gets the variables', () => {
+            service.getVariables();
+            expect(http.get).toHaveBeenCalledWith('/ngapimock/variables');
+        });
+    });
 
-    describe('deleteVariable', () => it('deletes the variable', () => {
-        service.deleteVariable('key');
-        assert.calledWith(http.delete, '/ngapimock/variables/key');
-    }));
+    describe('deleteVariable', () => {
+        it('deletes the variable', () => {
+            service.deleteVariable('key');
+            expect(http.delete).toHaveBeenCalledWith('/ngapimock/variables/key');
+        });
+    });
 
-    describe('updateVariable', () => it('updates the variable', () => {
-        service.updateVariable(variableRequest as any);
-        assert.calledWith(http.put, '/ngapimock/variables', { some: 'thing' });
-    }));
-
-    afterEach(() => {
-        http.delete.reset();
-        http.get.reset();
-        http.put.reset();
+    describe('updateVariable', () => {
+        it('updates the variable', () => {
+            service.updateVariable(variableRequest as any);
+            expect(http.put).toHaveBeenCalledWith('/ngapimock/variables', { some: 'thing' });
+        });
     });
 });

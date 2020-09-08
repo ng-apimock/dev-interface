@@ -1,27 +1,26 @@
-import {assert, createStubInstance, SinonStub, SinonStubbedInstance, stub} from 'sinon';
+import { createSpyObj } from 'jest-createspyobj';
 
-import {PresetsService} from '../presets.service';
-import {OverviewComponent} from './overview.component';
+import { of, Subject, Subscription } from 'rxjs';
 
-import {of, Subject, Subscription} from 'rxjs';
-import {SelectPresetRequest} from '../select-preset-request';
+import { PresetsService } from '../presets.service';
+import { SelectPresetRequest } from '../select-preset-request';
+
+import { OverviewComponent } from './overview.component';
 
 describe('OverviewComponent', () => {
     let component: OverviewComponent;
-    let componentGetPresetsFn: SinonStub;
-    let changeSubject: SinonStubbedInstance<Subject<any>>;
-    let presetsService: SinonStubbedInstance<PresetsService>;
-    let subscription: SinonStubbedInstance<Subscription>;
-    let selectPresetRequest: SinonStubbedInstance<SelectPresetRequest>;
+    let changeSubject: jest.Mocked<Subject<any>>;
+    let presetsService: jest.Mocked<PresetsService>;
+    let subscription: jest.Mocked<Subscription>;
+    let selectPresetRequest: jest.Mocked<SelectPresetRequest>;
 
     beforeEach(() => {
-        componentGetPresetsFn = stub(OverviewComponent.prototype, 'getPresets');
-        presetsService = createStubInstance(PresetsService);
-        subscription = createStubInstance(Subscription);
-        selectPresetRequest = createStubInstance(SelectPresetRequest);
-        changeSubject = createStubInstance(Subject);
+        presetsService = createSpyObj(PresetsService);
+        subscription = createSpyObj(Subscription);
+        selectPresetRequest = createSpyObj(SelectPresetRequest);
+        changeSubject = createSpyObj(Subject, ['next']);
         component = new OverviewComponent(presetsService as any);
-        component.change$ = changeSubject as any;
+        component.change$ = changeSubject;
     });
 
     describe('constructor', () => {
@@ -34,25 +33,22 @@ describe('OverviewComponent', () => {
 
     describe('getPresets', () => {
         beforeEach(() => {
-            componentGetPresetsFn.callThrough();
-            presetsService.getPresets.returns(of({ presets: ['one'] }));
+            presetsService.getPresets.mockReturnValue(of({ presets: ['one'] }));
             component.getPresets();
         });
 
+        afterEach(() => {
+            component.subscriptions = [];
+        });
+
         it('calls getPresets', () =>
-            assert.called(presetsService.getPresets));
+            expect(presetsService.getPresets).toHaveBeenCalled());
 
         it('subscribes to getPresets and sets the data object once resolved', () =>
             expect(component.data).toEqual({ presets: ['one'] }));
 
         it('adds the observable to the subscription list', () =>
             expect(component.subscriptions.length).toBe(1));
-
-        afterEach(() => {
-            component.subscriptions = [];
-            componentGetPresetsFn.reset();
-            presetsService.getPresets.reset();
-        });
     });
 
     describe('ngOnDestroy', () => {
@@ -62,27 +58,24 @@ describe('OverviewComponent', () => {
         });
 
         it('unsubscribes the subscriptions', () =>
-            assert.calledWith(subscription.unsubscribe));
-
-        afterEach(() => {
-            subscription.unsubscribe.reset();
-        });
+            expect(subscription.unsubscribe).toHaveBeenCalled());
     });
 
     describe('ngOnInit', () => {
+        let getPresetsFn;
+
         beforeEach(() => {
+            getPresetsFn = jest.spyOn(component, 'getPresets');
+            getPresetsFn.mockImplementation(() => []);
+
             component.ngOnInit();
         });
 
-        it('gets the mocks', () =>
-            assert.called(componentGetPresetsFn));
+        it('gets the presets', () =>
+            expect(component.getPresets).toHaveBeenCalled());
 
         it('creates the change subject', () =>
             expect(component.change$).toBeDefined());
-
-        afterEach(() => {
-            componentGetPresetsFn.reset();
-        });
     });
 
     describe('onUpdate', () => {
@@ -91,14 +84,6 @@ describe('OverviewComponent', () => {
         });
 
         it('emits the change', () =>
-            assert.called(changeSubject.next));
-
-        afterEach(() => {
-            presetsService.getPresets.reset();
-        });
-    });
-
-    afterEach(() => {
-        componentGetPresetsFn.restore();
+            expect(component.change$.next).toHaveBeenCalled());
     });
 });

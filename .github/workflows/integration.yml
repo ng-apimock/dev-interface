@@ -1,0 +1,34 @@
+name: Integration
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org
+      - name: install
+        run: npm ci
+      - name: build
+        run: npm run build
+      - name: sauce connect proxy download
+        run: npm run sauce:download
+      - name: sauce connect
+        run: nohup npm run sauce:start -- --user=${{ secrets.SAUCE_USERNAME }} --api-key=${{ secrets.SAUCE_ACCESS_KEY }} --tunnel-identifier=${{ github.run_id }} --readyfile=/tmp/sc-started &
+      - name: sauce connected check
+        run: npm run sauce:started
+      - name: integration test
+        run: npm run protractor-ci
+        env:
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+          FORCE_EXIT: true

@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {Subject} from 'rxjs';
-import {UpdateVariableRequest, VariableRequest} from '../variable-request';
-import {VariablesService} from '../variables.service';
-import {map, switchMap} from 'rxjs/operators';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
+import { UpdateVariableRequest, VariableRequest } from '../variable-request';
+import { VariablesService } from '../variables.service';
 
 @Component({
     selector: '[apimock-variable-overview-footer-row]',
@@ -19,7 +20,7 @@ export class OverviewFooterRowComponent implements OnInit, OnDestroy {
      * Constructor.
      * @param {VariablesService} variablesService The mocks service.
      */
-    constructor(private variablesService: VariablesService) {
+    constructor(private readonly variablesService: VariablesService) {
         this.variable = { key: undefined, value: undefined };
     }
 
@@ -29,7 +30,7 @@ export class OverviewFooterRowComponent implements OnInit, OnDestroy {
     }
 
     /** {@inheritDoc} */
-    ngOnInit() {
+    ngOnInit(): void {
         this.add$
             .pipe(
                 map(() => new VariableRequest(this.variable)),

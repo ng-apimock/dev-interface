@@ -4,21 +4,25 @@
     "newProjectRoot": "projects",
     "projects": {
         "dev-interface": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
             "root": "",
             "sourceRoot": "src",
-            "projectType": "application",
             "prefix": "",
-            "schematics": {},
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "aot": true,
                         "outputPath": "dist",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
-                        "tsConfig": "tsconfig.json",
+                        "tsConfig": "tsconfig.app.json",
+                        "aot": true,
                         "assets": [
                             "src/favicon.ico",
                             "src/assets"
@@ -45,7 +49,19 @@
                             "aot": true,
                             "extractLicenses": true,
                             "vendorChunk": false,
-                            "buildOptimizer": true
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "15kb",
+                                    "maximumError": "20kb"
+                                }
+                            ]
                         }
                     }
                 },
@@ -64,7 +80,9 @@
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": [
-                            "tsconfig.json"
+                            "tsconfig.app.json",
+                            "tsconfig.spec.json",
+                            "tsconfig.e2e.json"
                         ],
                         "exclude": [
                             "**/node_modules/**"

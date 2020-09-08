@@ -1,18 +1,19 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {SelectPresetRequest} from './select-preset-request';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { SelectPresetRequest } from './select-preset-request';
 
 /** Presets service. */
 @Injectable()
 export class PresetsService {
-    private BASE_URL = '/ngapimock';
+    private readonly BASE_URL = '/ngapimock';
 
     /**
      * Constructor.
      * @param {HttpClient} http The http client.
      */
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     /**
@@ -28,7 +29,7 @@ export class PresetsService {
      * @param {SelectPresetRequest} request The request.
      * @return {Observable<Object>} observable The observable.
      */
-    selectPreset(request: SelectPresetRequest) {
+    selectPreset(request: SelectPresetRequest): Observable<any> {
         return this.http.put(`${this.BASE_URL}/presets`, request);
     }
 }

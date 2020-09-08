@@ -1,17 +1,17 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 /** Recordings service. */
 @Injectable()
 export class RecordingsService {
-    private BASE_URL = '/ngapimock';
+    private readonly BASE_URL = '/ngapimock';
 
     /**
      * Constructor.
      * @param {HttpClient} http The http client.
      */
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     /**

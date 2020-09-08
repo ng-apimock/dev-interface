@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'ngapimock-header',
@@ -9,7 +9,7 @@ export class HeaderComponent implements OnInit {
     isCollapsed: boolean;
 
     /** {@inheritDoc}. */
-    ngOnInit() {
+    ngOnInit(): void {
         this.isCollapsed = true;
     }
 

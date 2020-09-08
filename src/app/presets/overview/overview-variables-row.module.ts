@@ -1,6 +1,7 @@
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {OverviewVariablesRowComponent} from './overview-variables-row.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+import { OverviewVariablesRowComponent } from './overview-variables-row.component';
 
 @NgModule({
     imports: [

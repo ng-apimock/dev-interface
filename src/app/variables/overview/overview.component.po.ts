@@ -1,5 +1,6 @@
-import {$, browser, by, ElementFinder, promise} from 'protractor';
-import {VariablesOverviewRowPo} from './overview-row.component.po';
+import { $, browser, by, ElementFinder, promise } from 'protractor';
+
+import { VariablesOverviewRowPo } from './overview-row.component.po';
 
 const CONTAINER_SELECTOR = 'apimock-variables-overview';
 const OVERVIEW_ROW_SELECTOR = '[apimock-variable-overview-row]';
@@ -29,7 +30,7 @@ export class VariablesOverviewPo {
     }
 
     static find(name: string): VariablesOverviewRowPo {
-        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async (el) => {
+        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async el => {
             const text = await el.$('.key').getText();
             return text === name;
         }).first());

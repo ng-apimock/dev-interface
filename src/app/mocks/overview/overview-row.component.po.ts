@@ -1,22 +1,22 @@
-import {ElementFinder} from 'protractor';
+import { ElementFinder } from 'protractor';
 
 export class MocksOverviewRowPo {
     constructor(private ef: ElementFinder = null) {
     }
 
-    get delay() {
+    get delay(): any {
         return this.ef.$('.delay').$('input');
     }
 
-    get echo() {
+    get echo(): any {
         return this.ef.$('.echo').$('input');
     }
 
-    get name() {
+    get name(): any {
         return this.ef.$('.name');
     }
 
-    get scenario() {
+    get scenario(): any {
         return this.ef.$('.scenario').$('select');
     }
 

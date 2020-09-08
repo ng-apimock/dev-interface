@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'filter' })
 export class FilterPresetsPipe implements PipeTransform {
@@ -10,6 +10,6 @@ export class FilterPresetsPipe implements PipeTransform {
             return presets;
         }
         searchText = searchText.toLowerCase();
-        return presets.filter((preset) => preset.name.toLowerCase().includes(searchText));
+        return presets.filter(preset => preset.name.toLowerCase().includes(searchText));
     }
 }

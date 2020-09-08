@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable, timer} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable, timer } from 'rxjs';
 
 @Component({
     selector: 'apimock-alert',
@@ -13,8 +13,8 @@ export class AlertComponent implements OnInit {
     message: string;
 
     /** {@inheritDoc}.*/
-    ngOnInit() {
-        this.change.subscribe((c) => {
+    ngOnInit(): void {
+        this.change.subscribe((c: string) => {
             this.message = c;
             timer(this.seconds).subscribe(() => {
                 this.message = undefined;

@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'filter' })
 export class FilterMocksPipe implements PipeTransform {
@@ -11,6 +11,6 @@ export class FilterMocksPipe implements PipeTransform {
             return mocks;
         }
         searchText = searchText.toLowerCase();
-        return mocks.filter((mock) => mock.name.toLowerCase().includes(searchText));
+        return mocks.filter(mock => mock.name.toLowerCase().includes(searchText));
     }
 }

@@ -1,59 +1,46 @@
-import {
-    assert,
-    createStubInstance,
-    match,
-    SinonFakeTimers,
-    SinonStub,
-    SinonStubbedInstance,
-    stub,
-    useFakeTimers
-} from 'sinon';
-import {OverviewRowComponent} from './overview-row.component';
-import {VariablesService} from '../variables.service';
-import {of} from 'rxjs';
-import {UpdateVariableRequest, VariableRequest} from '../variable-request';
-import {EventEmitter} from '@angular/core';
+import { createSpyObj } from 'jest-createspyobj';
+
+import { EventEmitter } from '@angular/core';
+import { of, Subject } from 'rxjs';
+
+import { VariablesService } from '../variables.service';
+
+import { OverviewRowComponent } from './overview-row.component';
+
+jest.useFakeTimers();
 
 describe('OverviewRowComponent', () => {
     let component: OverviewRowComponent;
-    let variablesService: SinonStubbedInstance<VariablesService>;
-    let updatedEmitFn: SinonStub;
-    let clock: SinonFakeTimers;
+    let variablesService: jest.Mocked<VariablesService>;
+    let subscription: jest.Mocked<Subject<any>>;
 
     beforeEach(() => {
-        variablesService = createStubInstance(VariablesService);
-        clock = useFakeTimers();
+        variablesService = createSpyObj(VariablesService, ['deleteVariable', 'updateVariable']);
+        subscription = createSpyObj(Subject, ['next', 'unsubscribe']);
+
         component = new OverviewRowComponent(variablesService as any);
         component.variable = { name: 'variable' };
     });
 
     describe('ngOnDestroy', () => {
-        let deleteUnsubscribeFn: SinonStub;
-        let valueUnsubscribeFn: SinonStub;
-
         beforeEach(() => {
-            deleteUnsubscribeFn = stub(component.delete$, 'unsubscribe');
-            valueUnsubscribeFn = stub(component.value$, 'unsubscribe');
+            component.subscriptions = [subscription as any];
             component.ngOnDestroy();
         });
 
-        it('unsubscribes the delete', () =>
-            assert.called(deleteUnsubscribeFn));
-
-        it('unsubscribes the value', () =>
-            assert.called(valueUnsubscribeFn));
-
-        afterEach(() => {
-            deleteUnsubscribeFn.reset();
-            valueUnsubscribeFn.reset();
-        });
+        it('unsubscribes the subscriptions', () =>
+            expect(subscription.unsubscribe).toHaveBeenCalled());
     });
 
     describe('ngOnInit', () => {
+        let updatedEmitFn;
+
         beforeEach(() => {
-            updatedEmitFn = stub(component.updated, 'emit');
-            variablesService.updateVariable.returns(of({}));
-            variablesService.deleteVariable.returns(of({}));
+            component.variable = {key: 'my-key', value: 'my-value'};
+            updatedEmitFn = jest.spyOn(component.updated, 'emit');
+            variablesService.updateVariable.mockReturnValue(of({}));
+            variablesService.deleteVariable.mockReturnValue(of({}));
+
             component.ngOnInit();
         });
 
@@ -63,41 +50,46 @@ describe('OverviewRowComponent', () => {
             });
 
             it('calls deleteVariable', () =>
-                assert.called(variablesService.deleteVariable));
+                expect(variablesService.deleteVariable).toHaveBeenCalledWith('my-key'));
 
             it('subscribes to deleteVariable and emits the updated request', () =>
-                assert.calledWith(updatedEmitFn, match((actual) =>
-                    actual instanceof UpdateVariableRequest)));
-
-            afterEach(() => {
-                updatedEmitFn.reset();
-                variablesService.deleteVariable.reset();
-                variablesService.updateVariable.reset();
-            });
+                expect(updatedEmitFn).toHaveBeenCalledWith({
+                    key: 'my-key',
+                    type: 'deleted',
+                    value: ''
+                }));
         });
 
         describe('value$ on next', () => {
             beforeEach(() => {
                 component.value$.next('2000'); // changed value
-                clock.tick(500); // debounce 500
+                jest.advanceTimersByTime(500); // debounce 500
             });
 
             it('calls updateVariable', () =>
-                assert.calledWith(variablesService.updateVariable, match((actual) =>
-                    actual instanceof VariableRequest)));
+                expect(variablesService.updateVariable).toHaveBeenCalledWith({
+                    key: 'my-key',
+                    payload: {
+                        'my-key': 'my-value'
+                    },
+                    value: 'my-value',
+                    variable: {
+                        key: 'my-key',
+                        value: 'my-value'
+                    }
+                }));
 
             it('subscribes to updateVariable and emits the updated request', () =>
-                assert.calledWith(updatedEmitFn, match((actual) =>
-                    actual instanceof UpdateVariableRequest)));
-
-            afterEach(() => {
-                updatedEmitFn.reset();
-            });
+                expect(updatedEmitFn).toHaveBeenCalledWith({
+                    key: 'my-key',
+                    type: 'update',
+                    value: 'my-value'
+                }));
         });
     });
 
-    describe('updated', () =>
+    describe('updated', () => {
         it('is an eventEmitter', () =>
-            expect(component.updated instanceof EventEmitter).toBe(true)));
-
+            expect(component.updated instanceof EventEmitter).toBe(true));
+    });
 });

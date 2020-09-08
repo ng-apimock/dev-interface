@@ -1,18 +1,19 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {VariableRequest} from './variable-request';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { VariableRequest } from './variable-request';
 
 /** Variables service. */
 @Injectable()
 export class VariablesService {
-    private BASE_URL = '/ngapimock';
+    private readonly BASE_URL = '/ngapimock';
 
     /**
      * Constructor.
      * @param {HttpClient} http The http client.
      */
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     /**
@@ -20,7 +21,7 @@ export class VariablesService {
      * @param {string} key The key.
      * @return {Observable<Object>} observable The observable.
      */
-    deleteVariable(key: string) {
+    deleteVariable(key: string): Observable<Object> {
         return this.http.delete(`${this.BASE_URL}/variables/${key}`);
     }
 
@@ -37,7 +38,7 @@ export class VariablesService {
      * @param {VariableRequest} request The request.
      * @return {Observable<Object>} observable The observable.
      */
-    updateVariable(request: VariableRequest) {
+    updateVariable(request: VariableRequest): Observable<Object> {
         return this.http.put(`${this.BASE_URL}/variables`, request.payload);
     }
 }

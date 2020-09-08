@@ -1,7 +1,9 @@
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {PrettyJsonModule} from 'angular2-prettyjson';
-import {OverviewResponseRowComponent} from './overview-response-row.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+import { OverviewResponseRowComponent } from './overview-response-row.component';
+
+import { PrettyJsonModule } from 'angular2-prettyjson';
 
 @NgModule({
     imports: [

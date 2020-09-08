@@ -1,59 +1,55 @@
-import {assert, createStubInstance, SinonStub, SinonStubbedInstance, stub} from 'sinon';
+import { createSpyObj } from 'jest-createspyobj';
 
-import {MocksService} from '../mocks.service';
-import {OverviewComponent} from './overview.component';
+import { of, Subject, Subscription } from 'rxjs';
 
-import {of, Subject, Subscription} from 'rxjs';
-import {UpdateMockRequest} from '../mock-request';
+import { UpdateMockRequest } from '../mock-request';
+import { MocksService } from '../mocks.service';
+
+import { OverviewComponent } from './overview.component';
 
 describe('OverviewComponent', () => {
     let component: OverviewComponent;
-    let componentGetMocksFn: SinonStub;
-    let changeSubject: SinonStubbedInstance<Subject<any>>;
-    let mocksService: SinonStubbedInstance<MocksService>;
-    let subscription: SinonStubbedInstance<Subscription>;
-    let updateRequest: SinonStubbedInstance<UpdateMockRequest>;
+    let changeSubject: jest.Mocked<Subject<any>>;
+    let mocksService: jest.Mocked<MocksService>;
+    let request: jest.Mocked<UpdateMockRequest>;
+    let subscription: jest.Mocked<Subscription>;
 
     beforeEach(() => {
-        componentGetMocksFn = stub(OverviewComponent.prototype, 'getMocks');
-        mocksService = createStubInstance(MocksService);
-        subscription = createStubInstance(Subscription);
-        updateRequest = createStubInstance(UpdateMockRequest);
-        changeSubject = createStubInstance(Subject);
+        changeSubject = createSpyObj(Subject, ['next']);
+        mocksService = createSpyObj(MocksService, ['getMocks', 'resetMocksToDefault', 'setMocksToPassThrough']);
+        subscription = createSpyObj(Subscription);
+        request = createSpyObj(UpdateMockRequest);
+
         component = new OverviewComponent(mocksService as any);
-        component.change$ = changeSubject as any;
+        component.change$ = changeSubject;
     });
 
     describe('constructor', () => {
         it('creates a new data object', () =>
-            expect(component.data).toEqual({ mocks: [] }));
+            expect(component.data).toEqual({mocks: []}));
 
         it('creates a new subscriptions object', () =>
             expect(component.subscriptions).toEqual([]));
     });
 
-
     describe('getMocks', () => {
         beforeEach(() => {
-            componentGetMocksFn.callThrough();
-            mocksService.getMocks.returns(of({ mocks: ['one'] }));
+            mocksService.getMocks.mockReturnValue(of({mocks: ['one']}));
             component.getMocks();
         });
 
+        afterEach(() => {
+            component.subscriptions = [];
+        });
+
         it('calls getMocks', () =>
-            assert.called(mocksService.getMocks));
+            expect(mocksService.getMocks).toHaveBeenCalled());
 
         it('subscribes to getMocks and sets the data object once resolved', () =>
-            expect(component.data).toEqual({ mocks: ['one'] }));
+            expect(component.data).toEqual({mocks: ['one']}));
 
         it('adds the observable to the subscription list', () =>
             expect(component.subscriptions.length).toBe(1));
-
-        afterEach(() => {
-            component.subscriptions = [];
-            componentGetMocksFn.reset();
-            mocksService.getMocks.reset();
-        });
     });
 
     describe('ngOnDestroy', () => {
@@ -63,93 +59,74 @@ describe('OverviewComponent', () => {
         });
 
         it('unsubscribes the subscriptions', () =>
-            assert.calledWith(subscription.unsubscribe));
-
-        afterEach(() => {
-            subscription.unsubscribe.reset();
-        });
+            expect(subscription.unsubscribe).toHaveBeenCalled());
     });
 
     describe('ngOnInit', () => {
+        let getMocksFn;
+
         beforeEach(() => {
+            getMocksFn = jest.spyOn(component, 'getMocks');
+            getMocksFn.mockImplementation(() => []);
+
             component.ngOnInit();
         });
 
         it('gets the mocks', () =>
-            assert.called(componentGetMocksFn));
+            expect(getMocksFn).toHaveBeenCalled());
 
         it('creates the change subject', () =>
             expect(component.change$).toBeDefined());
-
-        afterEach(() => {
-            componentGetMocksFn.reset();
-        });
     });
 
     describe('onUpdate', () => {
         beforeEach(() => {
-            component.onUpdate(updateRequest);
+            component.onUpdate(request);
         });
 
         it('emits the change', () =>
-            assert.called(changeSubject.next));
-
-        afterEach(() => {
-            mocksService.getMocks.reset();
-        });
+            expect(component.change$.next).toHaveBeenCalled());
     });
 
     describe('resetMocksToDefaults', () => {
         beforeEach(() => {
-            mocksService.getMocks.returns(of({ mocks: ['one'] }));
-            mocksService.resetMocksToDefault.returns(of({}));
+            mocksService.getMocks.mockReturnValue(of({mocks: ['one']}));
+            mocksService.resetMocksToDefault.mockReturnValue(of({}));
+
             component.resetMocksToDefaults();
         });
 
         it('call resetMocksToDefault', () =>
-            assert.called(mocksService.resetMocksToDefault));
+            expect(mocksService.resetMocksToDefault).toHaveBeenCalled());
 
         it('subscribes to resetMocksToDefault and once resolved calls getMocks', () =>
-            assert.called(mocksService.getMocks));
+            expect(mocksService.getMocks).toHaveBeenCalled());
 
         it('subscribes to getMocks and sets the data object once resolved', () =>
-            expect(component.data).toEqual({ mocks: ['one'] }));
+            expect(component.data).toEqual({mocks: ['one']}));
 
         it('subscribes to getMocks and emits the change', () =>
-            assert.calledWith(changeSubject.next, 'All mocks have been reset to defaults.'));
-
-        afterEach(() => {
-            mocksService.resetMocksToDefault.reset();
-            mocksService.getMocks.reset();
-        });
+            expect(changeSubject.next).toHaveBeenCalledWith('All mocks have been reset to defaults.'));
     });
 
     describe('setMocksToPassThrough', () => {
         beforeEach(() => {
-            mocksService.getMocks.returns(of({ mocks: ['one'] }));
-            mocksService.setMocksToPassThrough.returns(of({}));
+            mocksService.getMocks.mockReturnValue(of({mocks: ['one']}));
+            mocksService.setMocksToPassThrough.mockReturnValue(of({}));
+
             component.setMocksToPassThrough();
         });
 
         it('call setMocksToPassThrough', () =>
-            assert.called(mocksService.setMocksToPassThrough));
+            expect(mocksService.setMocksToPassThrough).toHaveBeenCalled());
 
         it('subscribes to setMocksToPassThrough and once resolved calls getMocks', () =>
-            assert.called(mocksService.getMocks));
+            expect(mocksService.getMocks).toHaveBeenCalled());
 
         it('subscribes to getMocks and sets the data object once resolved', () =>
-            expect(component.data).toEqual({ mocks: ['one'] }));
+            expect(component.data).toEqual({mocks: ['one']}));
 
         it('subscribes to getMocks and emits the change', () =>
-            assert.calledWith(changeSubject.next, 'All mocks have been set to pass through.'));
-
-        afterEach(() => {
-            mocksService.setMocksToPassThrough.reset();
-            mocksService.getMocks.reset();
-        });
-    });
-
-    afterEach(() => {
-        componentGetMocksFn.restore();
+            expect(changeSubject.next).toHaveBeenCalledWith('All mocks have been set to pass through.'));
     });
 });

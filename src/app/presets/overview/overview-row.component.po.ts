@@ -1,10 +1,10 @@
-import {ElementFinder} from 'protractor';
+import { ElementFinder } from 'protractor';
 
 export class PresetsOverviewRowPo {
     constructor(private ef: ElementFinder = null) {
     }
 
-    get name() {
+    get name(): any {
         return this.ef.$('.name');
     }
 

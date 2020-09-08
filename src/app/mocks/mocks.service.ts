@@ -1,18 +1,19 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {MockRequest} from './mock-request';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { MockRequest } from './mock-request';
 
 /** Mocks service. */
 @Injectable()
 export class MocksService {
-    private BASE_URL = '/ngapimock';
+    private readonly BASE_URL = '/ngapimock';
 
     /**
      * Constructor.
      * @param {HttpClient} http The http client.
      */
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     /**
@@ -27,7 +28,7 @@ export class MocksService {
      * Resets the mocks to default.
      * @return {Observable<Object>} observable The observable.
      */
-    resetMocksToDefault() {
+    resetMocksToDefault(): Observable<any> {
         return this.http.put(`${this.BASE_URL}/actions`, { action: 'defaults' });
     }
 
@@ -35,7 +36,7 @@ export class MocksService {
      * Sets the mocks to passThrough.
      * @return {Observable<Object>} observable The observable.
      */
-    setMocksToPassThrough() {
+    setMocksToPassThrough(): Observable<any> {
         return this.http.put(`${this.BASE_URL}/actions`, { action: 'passThroughs' });
     }
 
@@ -44,7 +45,7 @@ export class MocksService {
      * @param {MockRequest} request The request.
      * @return {Observable<Object>} observable The observable.
      */
-    updateMock(request: MockRequest) {
+    updateMock(request: MockRequest): Observable<any> {
         return this.http.put(`${this.BASE_URL}/mocks`, request);
     }
 }

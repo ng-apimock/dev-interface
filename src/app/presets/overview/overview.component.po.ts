@@ -1,5 +1,6 @@
-import {$, browser, ElementFinder, promise} from 'protractor';
-import {PresetsOverviewRowPo} from './overview-row.component.po';
+import { $, browser, ElementFinder, promise } from 'protractor';
+
+import { PresetsOverviewRowPo } from './overview-row.component.po';
 
 const CONTAINER_SELECTOR = 'apimock-presets-overview';
 const OVERVIEW_ROW_SELECTOR = '[apimock-preset-overview-row]';
@@ -14,7 +15,7 @@ export class PresetOverviewActionsPo {
 }
 
 export class PresetsOverviewPo {
-    static get actions() {
+    static get actions(): PresetOverviewActionsPo {
         return new PresetOverviewActionsPo($(CONTAINER_SELECTOR));
     }
 
@@ -23,7 +24,7 @@ export class PresetsOverviewPo {
     }
 
     static find(name: string): PresetsOverviewRowPo {
-        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async (el) => {
+        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async el => {
             const text = await el.$('.name').getText();
             return text === name;
         }).first());

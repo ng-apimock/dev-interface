@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {RecordingsService} from '../recordings.service';
-import {Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { RecordingsService } from '../recordings.service';
 
 @Component({
     selector: 'app-recordings-overview',
@@ -16,31 +17,31 @@ export class OverviewComponent implements OnInit, OnDestroy {
      * Constructor.
      * @param {RecordingsService} recordingsService The recordings service.
      */
-    constructor(private recordingsService: RecordingsService) {
+    constructor(private readonly recordingsService: RecordingsService) {
         this.data = { recordings: [] };
         this.subscriptions = [];
     }
 
     /** Enable recording. */
-    enableRecording() {
-        this.subscriptions.push(this.recordingsService.record(true).subscribe((data) => {
+    enableRecording(): void {
+        this.subscriptions.push(this.recordingsService.record(true).subscribe(data => {
             this.data.record = true;
         }));
     }
 
     /** Disable recording. */
-    disableRecording() {
-        this.subscriptions.push(this.recordingsService.record(false).subscribe((data) => {
+    disableRecording(): void {
+        this.subscriptions.push(this.recordingsService.record(false).subscribe(data => {
             this.data.record = false;
         }));
     }
 
     /** Gets the recordings. */
-    getRecordings() {
+    getRecordings(): void {
         this.subscriptions.push(this.recordingsService.getRecordings()
-            .pipe(map((data) => {
+            .pipe(map(data => {
                     data.recordings = Object.keys(data.recordings)
-                        .map((key) => data.recordings[key].map((recording) => {
+                        .map(key => data.recordings[key].map(recording => {
                             const result = recording;
                             result.name = key;
                             result.response.data = JSON.parse(result.response.data) || {};
@@ -50,7 +51,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
                     return data;
                 }
             ))
-            .subscribe((data) => {
+            .subscribe(data => {
                 this.data.recordings = data.recordings.reverse();
                 this.data.record = data.record;
             }));
@@ -58,11 +59,11 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
     /** {@inheritDoc}. */
     ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     /** {@inheritDoc}.*/
-    ngOnInit() {
+    ngOnInit(): void {
         this.getRecordings();
     }
 }

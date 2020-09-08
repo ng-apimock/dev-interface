@@ -1,7 +1,8 @@
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {NgModule} from '@angular/core';
-import {OverviewFooterRowComponent} from './overview-footer-row.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { OverviewFooterRowComponent } from './overview-footer-row.component';
 
 @NgModule({
     imports: [

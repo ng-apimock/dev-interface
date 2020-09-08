@@ -1,29 +1,19 @@
-import {
-    assert,
-    createStubInstance,
-    match,
-    SinonFakeTimers,
-    SinonStub,
-    SinonStubbedInstance,
-    stub,
-    useFakeTimers
-} from 'sinon';
-import {OverviewRowComponent} from './overview-row.component';
-import {PresetsService} from '../presets.service';
-import {of, Subject} from 'rxjs';
-import {SelectPresetRequest} from '../select-preset-request';
+import { createSpyObj } from 'jest-createspyobj';
+
+import { of, Subject } from 'rxjs';
+
+import { PresetsService } from '../presets.service';
+
+import { OverviewRowComponent } from './overview-row.component';
 
 describe('OverviewRowComponent', () => {
     let component: OverviewRowComponent;
-    let presetsService: SinonStubbedInstance<PresetsService>;
-    let updatedEmitFn: SinonStub;
-    let subscription: SinonStubbedInstance<Subject<any>>;
-    let clock: SinonFakeTimers;
+    let presetsService: jest.Mocked<PresetsService>;
+    let subscription: jest.Mocked<Subject<any>>;
 
     beforeEach(() => {
-        clock = useFakeTimers();
-        presetsService = createStubInstance(PresetsService);
-        subscription = createStubInstance(Subject);
+        presetsService = createSpyObj(PresetsService, ['selectPreset']);
+        subscription = createSpyObj(Subject, ['next', 'unsubscribe']);
 
         component = new OverviewRowComponent(presetsService as any);
         component.preset = { name: 'preset' };
@@ -36,11 +26,7 @@ describe('OverviewRowComponent', () => {
         });
 
         it('unsubscribes the subscriptions', () =>
-            assert.called(subscription.unsubscribe));
-
-        afterEach(() => {
-            subscription.unsubscribe.reset();
-        });
+            expect(subscription.unsubscribe).toHaveBeenCalled());
     });
 
     describe('ngOnInit', () => {
@@ -73,23 +59,19 @@ describe('OverviewRowComponent', () => {
     });
 
     describe('selectPreset', () => {
+        let updatedEmitFn;
+
         beforeEach(() => {
-            updatedEmitFn = stub(component.updated, 'emit');
-            presetsService.selectPreset.returns(of({}));
+            updatedEmitFn = jest.spyOn(component.updated, 'emit');
+            presetsService.selectPreset.mockReturnValue(of({}));
+
             component.selectPreset();
         });
 
         it('calls selectPreset', () =>
-            assert.calledWith(presetsService.selectPreset, match((actual) =>
-                actual instanceof SelectPresetRequest)));
+            expect(presetsService.selectPreset).toHaveBeenCalledWith({name: 'preset'}));
 
         it('subscribes to selectPreset and emits the updated request', () =>
-            assert.calledWith(updatedEmitFn, match((actual) =>
-                actual instanceof SelectPresetRequest)));
-
-        afterEach(() => {
-            presetsService.selectPreset.reset();
-            updatedEmitFn.reset();
-        });
+            expect(updatedEmitFn).toHaveBeenCalledWith({name: 'preset'}));
     });
 });
