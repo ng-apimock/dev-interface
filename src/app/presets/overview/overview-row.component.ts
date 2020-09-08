@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {PresetsService} from '../presets.service';
-import {SelectPresetRequest} from '../select-preset-request';
-import {Subscription} from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { PresetsService } from '../presets.service';
+import { SelectPresetRequest } from '../select-preset-request';
 
 @Component({
     selector: '[apimock-preset-overview-row]',
@@ -17,33 +18,33 @@ export class OverviewRowComponent implements OnInit, OnDestroy {
      * Constructor.
      * @param {PresetsService} presetsService The presets service.
      */
-    constructor(private presetsService: PresetsService) {
+    constructor(private readonly presetsService: PresetsService) {
         this.subscriptions = [];
     }
 
     /** {@inheritDoc} */
     ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     /** {@inheritDoc} */
-    ngOnInit() {
+    ngOnInit(): void {
         this.preset.showMocksDetails = false;
         this.preset.showVariablesDetails = false;
     }
 
     /** Toggle the mocks details. */
-    toggleMocksDetails() {
+    toggleMocksDetails(): void {
         this.preset.showMocksDetails = !this.preset.showMocksDetails;
     }
 
     /** Toggle the variables details. */
-    toggleVariablesDetails() {
+    toggleVariablesDetails(): void {
         this.preset.showVariablesDetails = !this.preset.showVariablesDetails;
     }
 
     /** Select the preset. */
-    selectPreset() {
+    selectPreset(): void {
         const presetRequest = new SelectPresetRequest(this.preset.name);
         this.subscriptions.push(this.presetsService.selectPreset(presetRequest)
             .subscribe(() => this.updated.emit(presetRequest)));

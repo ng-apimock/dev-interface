@@ -1,4 +1,4 @@
-import {MockState} from './mock-state';
+import { MockState } from './mock-state';
 
 /** Mock request. */
 export class MockRequest {
@@ -11,7 +11,7 @@ export class MockRequest {
      * @param {string} name The mock name.
      * @param {MockState} state The mock state.
      */
-    constructor(public name: string, private state: MockState) {
+    constructor(public readonly name: string, private readonly state: MockState) {
         this.scenario = state.scenario;
         this.delay = state.delay;
         this.echo = state.echo;

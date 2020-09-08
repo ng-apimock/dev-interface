@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {VariablesService} from '../variables.service';
-import {Subject, Subscription} from 'rxjs';
-import {UpdateVariableRequest} from '../variable-request';
-import {map} from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { UpdateVariableRequest } from '../variable-request';
+import { VariablesService } from '../variables.service';
 
 @Component({
     selector: 'apimock-variables-overview',
@@ -17,31 +18,31 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
     /**
      * Constructor.
-     * @param {PresetsService} variablesService The mock service.
+     * @param {VariablesService} variablesService The mock service.
      */
-    constructor(private variablesService: VariablesService) {
+    constructor(private readonly variablesService: VariablesService) {
         this.data = { variables: [] };
         this.subscriptions = [];
         this.searchText = '';
     }
 
     /** Gets the variables. */
-    getVariables() {
+    getVariables(): void {
         this.subscriptions.push(this.variablesService.getVariables()
-            .pipe(map((data) => Object.keys(data.state).map((key) =>
+            .pipe(map(data => Object.keys(data.state).map(key =>
                 ({ key: key, value: data.state[key] }))))
-            .subscribe((data) => {
+            .subscribe(data => {
                 this.data.variables = data;
             }));
     }
 
     /** {@inheritDoc}. */
     ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     /** {@inheritDoc}.*/
-    ngOnInit() {
+    ngOnInit(): void {
         this.getVariables();
         this.change$ = new Subject();
     }
@@ -50,7 +51,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
      * On update show the message about the action that has been performed.
      * @param {UpdateVariableRequest} change The change.
      */
-    onUpdate(change: UpdateVariableRequest) {
+    onUpdate(change: UpdateVariableRequest): void {
         const message = ` Variable '<strong>${change.key}</strong>' has been '<strong>${change.type}</strong>'
             ${change.value ? ` to <strong>${change.value}</strong>` : ''}`;
         this.change$.next(message);

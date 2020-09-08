@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {MockRequest, UpdateMockDelayRequest, UpdateMockEchoRequest, UpdateMockScenarioRequest} from '../mock-request';
-import {MocksService} from '../mocks.service';
-import {Subject, Subscription} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map, switchMap} from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+
+import { MockRequest, UpdateMockDelayRequest, UpdateMockEchoRequest, UpdateMockScenarioRequest } from '../mock-request';
+import { MocksService } from '../mocks.service';
 
 @Component({
     selector: '[apimock-mock-overview-row]',
@@ -24,17 +25,17 @@ export class OverviewRowComponent implements OnInit, OnDestroy {
      * Constructor.
      * @param {MocksService} mockService The mocks service.
      */
-    constructor(private mockService: MocksService) {
+    constructor(private readonly mockService: MocksService) {
         this.subscriptions = [];
     }
 
     /** {@inheritDoc} */
     ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     /** {@inheritDoc} */
-    ngOnInit() {
+    ngOnInit(): void {
         this.subscriptions.push(this.delay$
             .pipe(debounceTime(500),
                 distinctUntilChanged(),

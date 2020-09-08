@@ -1,10 +1,11 @@
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {OverviewComponent} from './overview.component';
-import {RouterModule, Routes} from '@angular/router';
-import {OverviewRowModule} from './overview-row.module';
-import {OverviewRequestRowModule} from './overview-request-row.module';
-import {OverviewResponseRowModule} from './overview-response-row.module';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { OverviewRequestRowModule } from './overview-request-row.module';
+import { OverviewResponseRowModule } from './overview-response-row.module';
+import { OverviewRowModule } from './overview-row.module';
+import { OverviewComponent } from './overview.component';
 
 export const routes: Routes = [{ path: 'recordings', component: OverviewComponent }];
 

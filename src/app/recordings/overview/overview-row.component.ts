@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: '[apimock-recording-overview-row]',
@@ -15,12 +15,12 @@ export class OverviewRowComponent implements OnInit {
     }
 
     /** Toggle the request details. */
-    toggleRequestDetails() {
+    toggleRequestDetails(): void {
         this.recording.showRequestDetails = !this.recording.showRequestDetails;
     }
 
     /** Toggle the response details. */
-    toggleResponseDetails() {
+    toggleResponseDetails(): void {
         this.recording.showResponseDetails = !this.recording.showResponseDetails;
     }
 

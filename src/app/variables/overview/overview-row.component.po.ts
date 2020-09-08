@@ -1,4 +1,4 @@
-import {ElementFinder} from 'protractor';
+import { ElementFinder } from 'protractor';
 
 export class VariablesOverviewRowPo {
     constructor(private ef: ElementFinder = null) {

@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MocksService} from '../mocks.service';
-import {Subject, Subscription} from 'rxjs';
-import {UpdateMockRequest} from '../mock-request';
-import {flatMap} from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+
+import { UpdateMockRequest } from '../mock-request';
+import { MocksService } from '../mocks.service';
 
 @Component({
     selector: 'apimock-mocks-overview',
@@ -19,22 +20,22 @@ export class OverviewComponent implements OnInit, OnDestroy {
      * Constructor.
      * @param {MocksService} mocksService The mock service.
      */
-    constructor(private mocksService: MocksService) {
-        this.data = { mocks: [] };
+    constructor(private readonly mocksService: MocksService) {
+        this.data = {mocks: []};
         this.subscriptions = [];
         this.searchText = '';
     }
 
     /** Gets the mocks. */
-    getMocks() {
-        this.subscriptions.push(this.mocksService.getMocks().subscribe((data) => {
+    getMocks(): void {
+        this.subscriptions.push(this.mocksService.getMocks().subscribe(data => {
             this.data = data;
         }));
     }
 
     /** {@inheritDoc}. */
     ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     /** {@inheritDoc}.*/
@@ -54,20 +55,20 @@ export class OverviewComponent implements OnInit, OnDestroy {
     }
 
     /** Resets the mocks to defaults. */
-    resetMocksToDefaults() {
+    resetMocksToDefaults(): void {
         this.subscriptions.push(this.mocksService.resetMocksToDefault()
-            .pipe(flatMap(() => this.mocksService.getMocks()))
-            .subscribe((data) => {
+            .pipe(mergeMap(() => this.mocksService.getMocks()))
+            .subscribe(data => {
                 this.data = data;
                 this.change$.next('All mocks have been reset to defaults.');
             }));
     }
 
     /** Sets the mocks to passThroughs. */
-    setMocksToPassThrough() {
+    setMocksToPassThrough(): void {
         this.subscriptions.push(this.mocksService.setMocksToPassThrough()
-            .pipe(flatMap(() => this.mocksService.getMocks()))
-            .subscribe((data) => {
+            .pipe(mergeMap(() => this.mocksService.getMocks()))
+            .subscribe(data => {
                 this.data = data;
                 this.change$.next('All mocks have been set to pass through.');
             }));

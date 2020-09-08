@@ -1,5 +1,6 @@
-import {$, browser, by, ElementFinder, promise} from 'protractor';
-import {MocksOverviewRowPo} from './overview-row.component.po';
+import { $, browser, by, ElementFinder, promise } from 'protractor';
+
+import { MocksOverviewRowPo } from './overview-row.component.po';
 
 const CONTAINER_SELECTOR = 'apimock-mocks-overview';
 const OVERVIEW_ROW_SELECTOR = '[apimock-mock-overview-row]';
@@ -22,7 +23,7 @@ export class MockOverviewActionsPo {
 }
 
 export class MocksOverviewPo {
-    static get actions() {
+    static get actions(): MockOverviewActionsPo {
         return new MockOverviewActionsPo($(CONTAINER_SELECTOR));
     }
 
@@ -31,7 +32,7 @@ export class MocksOverviewPo {
     }
 
     static find(name: string): MocksOverviewRowPo {
-        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async (el) => {
+        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async el => {
             const text = await el.$('.name').getText();
             return text === name;
         }).first());
