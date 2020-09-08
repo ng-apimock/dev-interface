@@ -1,4 +1,4 @@
-const config = require('./protractor.conf').config;
+const { config } = require('./protractor.conf');
 
 config.multiCapabilities = [{
     browserName: 'chrome',
@@ -7,10 +7,10 @@ config.multiCapabilities = [{
     chromeOptions: {
         args: ['--no-sandbox', '--test-type=browser'],
         prefs: {
-            'download': {
-                'prompt_for_download': false,
-                'directory_upgrade': true,
-                'default_directory': '/tmp'
+            download: {
+                prompt_for_download: false,
+                directory_upgrade: true,
+                default_directory: '/tmp'
             }
         }
     }
@@ -19,4 +19,3 @@ config.multiCapabilities = [{
 config.seleniumAddress = 'http://localhost:4444/wd/hub';
 
 exports.config = config;
-
