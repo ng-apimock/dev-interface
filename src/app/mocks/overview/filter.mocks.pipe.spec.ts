@@ -1,4 +1,4 @@
-import {FilterMocksPipe} from './filter.mocks.pipe';
+import { FilterMocksPipe } from './filter.mocks.pipe';
 
 describe('FilterMocksPipe', () => {
     let pipe: FilterMocksPipe;

@@ -1,4 +1,4 @@
-import {OverviewRowComponent} from './overview-row.component';
+import { OverviewRowComponent } from './overview-row.component';
 
 describe('OverviewRowComponent', () => {
     let component: OverviewRowComponent;
@@ -39,9 +39,5 @@ describe('OverviewRowComponent', () => {
 
         it('toggles the indicator', () =>
             expect(component.recording.showResponseDetails).toBe(true));
-    });
-
-    afterAll(() => {
-        jasmine.clock().uninstall();
     });
 });

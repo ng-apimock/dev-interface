@@ -8,6 +8,7 @@ import {
 
 describe('MockRequest', () => {
     let request: MockRequest;
+
     describe('constructor', () => {
         beforeEach(() => {
             request = new MockRequest('name', {
@@ -84,4 +85,3 @@ describe('UpdateMockEchoRequest', () => {
             expect(request.type).toBe('echo'));
     });
 });
-

@@ -1,4 +1,4 @@
-import {FilterPresetsPipe} from './filter.preset.pipe';
+import { FilterPresetsPipe } from './filter.preset.pipe';
 
 describe('FilterPresetsPipe', () => {
     let pipe: FilterPresetsPipe;

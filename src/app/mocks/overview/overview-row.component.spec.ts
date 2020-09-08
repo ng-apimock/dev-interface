@@ -1,33 +1,25 @@
-import {
-    assert,
-    createStubInstance,
-    match,
-    SinonFakeTimers,
-    SinonStub,
-    SinonStubbedInstance,
-    stub,
-    useFakeTimers
-} from 'sinon';
-import {OverviewRowComponent} from './overview-row.component';
-import {MocksService} from '../mocks.service';
-import {of, Subject} from 'rxjs';
-import {MockRequest, UpdateMockDelayRequest, UpdateMockEchoRequest, UpdateMockScenarioRequest} from '../mock-request';
-import {EventEmitter} from '@angular/core';
+import { createSpyObj } from 'jest-createspyobj';
+
+import { EventEmitter } from '@angular/core';
+import { of, Subject } from 'rxjs';
+
+import { MocksService } from '../mocks.service';
+
+import { OverviewRowComponent } from './overview-row.component';
+
+jest.useFakeTimers();
 
 describe('OverviewRowComponent', () => {
     let component: OverviewRowComponent;
-    let mocksService: SinonStubbedInstance<MocksService>;
-    let updatedEmitFn: SinonStub;
-    let subscription: SinonStubbedInstance<Subject<any>>;
-    let clock: SinonFakeTimers;
+    let mocksService: jest.Mocked<MocksService>;
+    let subscription: jest.Mocked<Subject<any>>;
 
     beforeEach(() => {
-        clock = useFakeTimers();
-        mocksService = createStubInstance(MocksService);
-        subscription = createStubInstance(Subject);
+        mocksService = createSpyObj(MocksService, ['updateMock']);
+        subscription = createSpyObj(Subject, ['next', 'unsubscribe']);
 
         component = new OverviewRowComponent(mocksService as any);
-        component.mock = { name: 'mock' };
+        component.mock = {name: 'mock'};
         component.state = {
             scenario: 'scenario',
             delay: 0,
@@ -42,58 +34,70 @@ describe('OverviewRowComponent', () => {
         });
 
         it('unsubscribes the subscriptions', () =>
-            assert.called(subscription.unsubscribe));
-
-        afterEach(() => {
-            subscription.unsubscribe.reset();
-        });
+            expect(subscription.unsubscribe).toHaveBeenCalled());
     });
 
     describe('ngOnInit', () => {
+        let updatedEmitFn;
+
         beforeEach(() => {
-            updatedEmitFn = stub(component.updated, 'emit');
-            mocksService.updateMock.returns(of({}));
+            updatedEmitFn = jest.spyOn(component.updated, 'emit');
+            mocksService.updateMock.mockReturnValue(of({}));
+
             component.ngOnInit();
         });
 
         describe('delay$ on next', () => {
             beforeEach(() => {
                 component.delay$.next('2000'); // changed value
-                clock.tick(500); // debounce 500
+                jest.advanceTimersByTime(500); // debounce 500
             });
 
             it('calls updateMock', () =>
-                assert.calledWith(mocksService.updateMock, match((actual) =>
-                    actual instanceof MockRequest)));
+                expect(mocksService.updateMock).toHaveBeenCalledWith({
+                    delay: 0,
+                    echo: false,
+                    name: 'mock',
+                    scenario: 'scenario',
+                    state: {
+                        delay: 0,
+                        echo: false,
+                        scenario: 'scenario'
+                    }
+                }));
 
             it('subscribes to updateMock and emits the updated request', () =>
-                assert.calledWith(updatedEmitFn, match((actual) =>
-                    actual instanceof UpdateMockDelayRequest)));
-
-            afterEach(() => {
-                mocksService.updateMock.reset();
-                updatedEmitFn.reset();
-            });
+                expect(updatedEmitFn).toHaveBeenCalledWith({
+                    name: 'mock',
+                    type: 'delay',
+                    value: 0
+                }));
         });
 
         describe('echo$ on next', () => {
             beforeEach(() => {
                 component.echo$.next(true); // changed value
-                clock.tick(500); // debounce 500
+                jest.advanceTimersByTime(500); // debounce 500
             });
 
             it('calls updateMock', () =>
-                assert.calledWith(mocksService.updateMock, match((actual) =>
-                    actual instanceof MockRequest)));
+                expect(mocksService.updateMock).toHaveBeenCalledWith({
+                    delay: 0,
+                    echo: true,
+                    name: 'mock',
+                    scenario: 'scenario',
+                    state: {
+                        delay: 0,
+                        echo: true,
+                        scenario: 'scenario'
+                    }}));
 
             it('subscribes to updateMock and emits the updated request', () =>
-                assert.calledWith(updatedEmitFn, match((actual) =>
-                    actual instanceof UpdateMockEchoRequest)));
-
-            afterEach(() => {
-                mocksService.updateMock.reset();
-                updatedEmitFn.reset();
-            });
+                expect(updatedEmitFn).toHaveBeenCalledWith({
+                    name: 'mock',
+                    type: 'echo',
+                    value: true
+                }));
         });
 
         describe('scenario$ on next', () => {
@@ -102,25 +106,29 @@ describe('OverviewRowComponent', () => {
             });
 
             it('calls updateMock', () =>
-                assert.calledWith(mocksService.updateMock, match((actual) =>
-                    actual instanceof MockRequest)));
+                expect(mocksService.updateMock).toHaveBeenCalledWith({
+                    delay: 0,
+                    echo: false,
+                    name: 'mock',
+                    scenario: 'scenario',
+                    state: {
+                        delay: 0,
+                        echo: false,
+                        scenario: 'scenario'
+                    }
+                }));
 
             it('subscribes to updateMock and emits the updated request', () =>
-                assert.calledWith(updatedEmitFn, match((actual) =>
-                    actual instanceof UpdateMockScenarioRequest)));
-
-            afterEach(() => {
-                mocksService.updateMock.reset();
-                updatedEmitFn.reset();
-            });
-        });
-
-        afterEach(() => {
-            updatedEmitFn.restore();
+                expect(updatedEmitFn).toHaveBeenCalledWith({
+                    name: 'mock',
+                    type: 'scenario',
+                    value: 'scenario'}
+                ));
         });
     });
 
-    describe('updated', () =>
+    describe('updated', () => {
         it('is an eventEmitter', () =>
-            expect(component.updated instanceof EventEmitter).toBe(true)));
+            expect(component.updated instanceof EventEmitter).toBe(true));
+    });
 });

@@ -1,4 +1,4 @@
-import {FilterVariablesPipe} from './filter.variables.pipe';
+import { FilterVariablesPipe } from './filter.variables.pipe';
 
 describe('FilterVariablesPipe', () => {
     let pipe: FilterVariablesPipe;
