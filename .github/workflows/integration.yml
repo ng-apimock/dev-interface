@@ -19,7 +19,7 @@ jobs:
       - name: install
         run: npm ci
       - name: build
-        run: npm run compile
+        run: npm run build
       - name: sauce connect proxy download
         run: npm run sauce:download
       - name: sauce connect
