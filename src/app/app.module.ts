@@ -23,7 +23,7 @@ export const routes: Routes = [{ path: '', component: OverviewComponent }];
         PresetsModule,
         VariablesModule,
         RecordingsModule,
-        RouterModule.forRoot(routes, { useHash: true })
+        RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })
     ],
     providers: [],
     bootstrap: [AppComponent]
