@@ -2,8 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { MocksWithState } from '../mocks/mock-state';
+
+import { GetPresetResponse } from './presets.interfaces';
 import { SelectPresetRequest } from './select-preset-request';
 
+const PRESET_URI = 'presets';
 /** Presets service. */
 @Injectable()
 export class PresetsService {
@@ -18,10 +22,10 @@ export class PresetsService {
 
     /**
      * Gets the presets.
-     * @return {Observable<Object>} observable The observable.
+     * @return {Observable<GetPresetResponse>} observable The observable.
      */
-    getPresets(): Observable<any> {
-        return this.http.get(`${this.BASE_URL}/presets`);
+    getPresets(): Observable<GetPresetResponse> {
+        return this.http.get<GetPresetResponse>(`${this.BASE_URL}/${PRESET_URI}`);
     }
 
     /**
@@ -30,6 +34,15 @@ export class PresetsService {
      * @return {Observable<Object>} observable The observable.
      */
     selectPreset(request: SelectPresetRequest): Observable<any> {
-        return this.http.put(`${this.BASE_URL}/presets`, request);
+        return this.http.put(`${this.BASE_URL}/${PRESET_URI}`, request);
     }
-}
+
+    /**
+     * Creates a new preset
+     * @param presetName
+     * @returns {Observable<any>} observable The observable.
+     */
+    createPreset(presetName: string, mocks: MocksWithState): Observable<any> {
+        return this.http.post(`${this.BASE_URL}/${PRESET_URI}`, {name: presetName, mocks, variables: {}}, {responseType: 'blob'});
+    }
+ }
