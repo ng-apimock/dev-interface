@@ -1,3 +1,4 @@
+import { Preset } from '@ng-apimock/core/dist/preset/preset';
 import { createSpyObj } from 'jest-createspyobj';
 
 import { of, Subject, Subscription } from 'rxjs';
@@ -33,7 +34,7 @@ describe('OverviewComponent', () => {
 
     describe('getPresets', () => {
         beforeEach(() => {
-            presetsService.getPresets.mockReturnValue(of({ presets: ['one'] }));
+            presetsService.getPresets.mockReturnValue(of({ presets: [{ name: 'somepreset'} as  Preset] }));
             component.getPresets();
         });
 
@@ -45,7 +46,7 @@ describe('OverviewComponent', () => {
             expect(presetsService.getPresets).toHaveBeenCalled());
 
         it('subscribes to getPresets and sets the data object once resolved', () =>
-            expect(component.data).toEqual({ presets: ['one'] }));
+            expect(component.data).toEqual({ presets: [{name: 'somepreset'}] }));
 
         it('adds the observable to the subscription list', () =>
             expect(component.subscriptions.length).toBe(1));

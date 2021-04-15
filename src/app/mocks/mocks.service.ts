@@ -1,8 +1,11 @@
+import { Mock } from '@ng-apimock/core/dist/mock/mock';
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { MockRequest } from './mock-request';
+import { GetMocksResponse, MockState } from './mock-state';
 
 /** Mocks service. */
 @Injectable()
@@ -18,10 +21,10 @@ export class MocksService {
 
     /**
      * Gets the mocks.
-     * @return {Observable<Object>} observable The observable.
+     * @return {Observable<GetMocksResponse>} observable The observable.
      */
-    getMocks(): Observable<any> {
-        return this.http.get(`${this.BASE_URL}/mocks`);
+    getMocks(): Observable<GetMocksResponse> {
+        return this.http.get<GetMocksResponse>(`${this.BASE_URL}/mocks`);
     }
 
     /**
