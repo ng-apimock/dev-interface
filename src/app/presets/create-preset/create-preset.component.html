@@ -1,11 +1,30 @@
-<h2>Create Preset</h2>
-<p>This will create a preset based on the current selected scenarios</p>
-<label>Name for your preset </label>
-<input type="text" name="presetname" [formControl]="presetNameControl" />
-<div class="error" *ngIf="presetNameControl.touched && this.duplicateName">A preset with this name already exists. Please choose another one</div>
-<div class="error" *ngIf="presetNameControl.touched && presetNameControl.hasError('required')">Please fill in a presetname</div>
-<div class="alert alert-success" *ngIf="presetCreated">You preset has been created. Go to the <a routerLink="/presets">presets page</a> to view and select it.</div>
-<div>
-	<button mat-button mat-dialog-close class="btn">Cancel</button>
-	<button (click)="createPreset()" class="btn-primary">Create preset</button>
-</div>
+<form class="container" (ngSubmit)="submitForm()" [formGroup]="presetForm">
+    <h2>Create Preset</h2>
+    <span class="info">This will create a preset based on the current selected scenarios.</span>
+    <mat-form-field>
+        <input matInput formControlName="name" placeholder="Name" required/>
+    </mat-form-field>
+
+    <div class="error" *ngIf="this.duplicate">A preset with this name already exists. Please choose
+        another one.
+    </div>
+    <br/>
+    <mat-checkbox color="primary" formControlName="excludeMocks">
+        Exclude mocks*
+    </mat-checkbox>
+    <mat-checkbox color="primary" formControlName="excludeVariables">
+        Exclude variables*
+    </mat-checkbox>
+    <br/>
+    <div class="error" *ngIf="!this.hasData">A preset needs to contain at lease mocks or variables.
+        Please deselect one of the excludes.
+    </div>
+    <br/>
+
+    <div class="actions">
+        <button [disabled]="!presetForm.valid || this.duplicate || !this.hasData"
+                mat-stroked-button>Create
+        </button>
+        <button mat-stroked-button mat-dialog-close (click)="cancel()" type="cancel">Cancel</button>
+    </div>
+</form>

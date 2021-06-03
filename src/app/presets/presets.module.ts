@@ -23,7 +23,7 @@ import { PresetsService } from './presets.service';
     providers: [
         PresetsService
     ],
-    declarations: [CreatePresetComponent]
+    declarations: []
 })
 export class PresetsModule {
 }

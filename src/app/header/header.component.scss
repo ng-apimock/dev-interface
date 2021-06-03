@@ -1,19 +1,121 @@
-:host {
-  .container {
-    padding-left: 0;
-    padding-right: 0;
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$grey-palette: mat-palette($mat-grey);
+$green-palette: mat-palette($mat-green);
+
+mat-toolbar-row {
+  background: white;
+  position: relative;
+  padding: 0.5rem 3rem;
+  font-weight: normal;
+  display: block;
+  height: auto;
+
+  @media (min-width: 992px) {
+    display: flex;
   }
 
-  .navbar-brand {
-    color: #4caf50;
+  .brand {
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+
+    line-height: inherit;
+    white-space: nowrap;
+    color: mat-color($green-palette);
   }
 
-  .jumbotron {
-    background: #4caf50;
-    color: white;
-    text-align: center;
-	padding: 2rem;
+  .toggler {
+    float: right;
+    margin-top: 0px;
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    border: 1px solid mat-color($grey-palette, 300);
+    border-radius: 0.25rem;
+    background-color: transparent;
+    @media (min-width: 992px) {
+      display: none;
+    }
+
+    &-icon {
+      display: inline-block;
+      width: 1.5em;
+      height: 1.5em;
+      vertical-align: middle;
+      content: "";
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+  }
+
+  .collapse {
+    display: flex;
+    flex-basis: auto;
+
+    flex-grow: 1;
+    align-items: center;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      list-style: none;
+      margin:0;
+
+      @media (min-width: 992px) {
+        flex-direction: row;
+      }
+
+      margin-right: auto !important;
+
+      li {
+        a {
+          display: block;
+          padding: 0 1rem;
+          text-decoration: none;
+          color: mat-color($grey-palette, 500);
+
+          @media (min-width: 992px) {
+            padding: 0 0.5rem;
+          }
+        }
+        &.active a {
+          color: mat-color($grey-palette, 900);
+        }
+      }
+
+      &.active a {
+        color: mat-color($grey-palette, 900);
+      }
+    }
+
+    a {
+      font-size: 17.6px;
+    }
+
+  }
+
+  @media (max-width: 992px) {
+    .collapse:not(.show)  {
+      display:none;
+    }
+
+    .github-buttons {
+      display:none;
+    }
   }
 }
 
+.jumbotron {
+  border-radius: .3rem;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+    background: #4caf50;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+  }
 

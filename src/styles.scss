@@ -1,78 +1,206 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/scss/bootstrap";
-@import "~@angular/material/_theming";
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ngApimock-demoApplication-primary: mat-palette($mat-green);
+$ngApimock-demoApplication-secondary: mat-palette($mat-grey);
+$ngApimock-demoApplication-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$ngApimock-demoApplication-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$ngApimock-demoApplication-theme: mat-light-theme((
+        color: (
+                primary: $ngApimock-demoApplication-primary,
+                accent: $ngApimock-demoApplication-accent,
+                warn: $ngApimock-demoApplication-warn,
+        )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($ngApimock-demoApplication-theme);
+//
+///* You can add global styles to this file, and also import other style files */
+//
+//html, body { height: 100%; }
+//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+//
+///* You can add global styles to this file, and also import other style files */
+//@import "~bootstrap/scss/bootstrap";
+//@import "~@angular/material/_theming";
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+}
+
+h2 {
+  color: mat-color($ngApimock-demoApplication-primary, 400)
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; // 1
+}
+
+table {
+  border-collapse: collapse;
+}
+
+input {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  width: 100%;
+  padding-left: 10px;
+  border-radius: 2px;
+}
+
+button {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.btn-primary {
+  margin-left: 5px;
+}
+
+.text-right {
+  text-align: right !important;
 }
 
 // this loads the overlay styling. Can be removed if we move to material completly
 @include cdk-overlay();
 mat-dialog-container {
-	background-color: #fff;
+  background-color: #fff;
 }
 
 .btn-primary {
-    background: #4caf50;
-    color: white;
-    border-radius: 0.25rem;
+  background: #4caf50;
+  color: white;
+  border-radius: 0.25rem;
+  border-color: #4caf50;
+  margin-left: 5px;
+
+  &:hover {
     border-color: #4caf50;
-    margin-left: 5px;
-
-    &:hover {
-      border-color: #4caf50;
-    }
-
-    &:focus {
-      color: white;
-      background: #4caf50;
-      border-color: #4caf50;
-      outline: 0;
-    }
   }
 
+  &:focus {
+    color: white;
+    background: #4caf50;
+    border-color: #4caf50;
+    outline: 0;
+  }
+}
+
 @font-face {
-	font-family: "icomoon";
-	src: url("assets/fonts/icomoon.eot?37hrac");
-	src: url("assets/fonts/icomoon.eot?37hrac#iefix") format("embedded-opentype"),
-		url("assets/fonts/icomoon.ttf?37hrac") format("truetype"),
-		url("assets/fonts/icomoon.woff?37hrac") format("woff"),
-		url("assets/fonts/icomoon.svg?37hrac#icomoon") format("svg");
-	font-weight: normal;
-	font-style: normal;
+  font-family: "icomoon";
+  src: url("assets/fonts/icomoon.eot?37hrac");
+  src: url("assets/fonts/icomoon.eot?37hrac#iefix") format("embedded-opentype"),
+  url("assets/fonts/icomoon.ttf?37hrac") format("truetype"),
+  url("assets/fonts/icomoon.woff?37hrac") format("woff"),
+  url("assets/fonts/icomoon.svg?37hrac#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
 }
 
 [class^="icon-"],
 [class*=" icon-"] {
-	/* use !important to prevent issues with browser extensions that change fonts */
-	font-family: "icomoon" !important;
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-chevron-down:before {
-	content: "\e900";
+  content: "\e900";
 }
 
 .icon-chevron-up:before {
-	content: "\e901";
+  content: "\e901";
 }
 
 .icon-chevron-down2:before {
-	content: "\e902";
+  content: "\e902";
 }
 
 .icon-chevron-up2:before {
-	content: "\e903";
+  content: "\e903";
 }
 
 .icon-filter:before {
-	content: "\ea5b";
+  content: "\ea5b";
 }
+
+
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+mat-table {
+  border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300)
+}
+
+/* Material overrides */
+mat-select {
+  margin: 0 10px 0 0;
+  padding: 2px;
+  border-radius: 2px;
+  border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300);
+
+  .mat-select-trigger {
+    display: inline-table;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    padding-left: 10px;
+  }
+}
+
+mat-table {
+  border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300)
+}
+
+mat-row {
+  min-height: 40px !important;
+}
+
+button {
+  margin:0 5px;
+}
+

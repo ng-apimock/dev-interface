@@ -1,51 +1,83 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { forkJoin } from 'rxjs';
 
 import { MocksService } from '../../mocks/mocks.service';
+import { VariablesService } from '../../variables/variables.service';
 import { PresetsService } from '../presets.service';
 
-import { GetMocksResponse, MocksWithState } from 'src/app/mocks/mock-state';
-
-const PASSTHROUGH_KEY = 'passThrough';
+import { CreatePresetRequest } from './create-preset-request';
 
 @Component({
-  selector: 'create-preset',
-  templateUrl: './create-preset.component.html',
-  styleUrls: ['./create-preset.component.scss'],
+    selector: 'create-preset',
+    templateUrl: './create-preset.component.html',
+    styleUrls: ['./create-preset.component.scss'],
 })
 export class CreatePresetComponent implements OnInit {
-  public presetName: string;
-  public presetNameControl = new FormControl(null, Validators.required);
-  public duplicateName = false;
-  public presetCreated = false;
-  private presets: string[] = [];
+    presetForm: FormGroup;
 
-  constructor(
-    private readonly presetsService: PresetsService,
-    private readonly mockService: MocksService
-  ) {}
+    public duplicate = false;
+    public hasData = true;
+    public done = false;
 
-  ngOnInit(): void {
+    public presets: string[] = [];
 
-    this.presetsService.getPresets().subscribe(presets => {
-      this.presets = presets.presets.map(preset => preset.name);
-    });
-    this.presetNameControl.valueChanges.subscribe(newName => this.duplicateName = this.presets.indexOf(newName) > -1);
-  }
+    constructor(
+        private readonly fb: FormBuilder,
+        private readonly presetsService: PresetsService,
+        private readonly mocksService: MocksService,
+        private readonly variablesService: VariablesService,
+        public dialogRef: MatDialogRef<CreatePresetComponent>
+    ) {
+    }
 
-  createPreset(): void {
-      if (!this.duplicateName && !!this.presetNameControl.value) {
-        this.mockService.getMocks().subscribe((mockState: GetMocksResponse) => {
-            const mockedMocks: MocksWithState = {};
-            Object.keys(mockState.state).forEach(mockName => {
-                if (mockState.state[mockName].scenario !== PASSTHROUGH_KEY) {
-                    mockedMocks[mockName] = mockState.state[mockName] ;
-                }
-            });
-            this.presetsService.createPreset(this.presetNameControl.value, mockedMocks).subscribe(data => {
-                this.presetCreated = true;
-            });
+    ngOnInit(): void {
+        this.presetForm = this.fb.group({
+            name: '',
+            excludeMocks: false,
+            excludeVariables: false
         });
-      }
-  }
+
+        this.presetsService.getPresets()
+            .subscribe(presets =>
+                this.presets = presets.presets.map(preset => preset.name));
+
+        this.presetForm.get('name').valueChanges
+            .subscribe(newName =>
+                this.duplicate = this.presets.indexOf(newName) > -1);
+
+        this.presetForm.get('excludeMocks').valueChanges
+            .subscribe(newName =>
+                this.hasData = !this.presetForm.get('excludeMocks').value
+                    || !this.presetForm.get('excludeVariables').value);
+
+        this.presetForm.get('excludeVariables').valueChanges
+            .subscribe(newName =>
+                this.hasData = !this.presetForm.get('excludeMocks').value
+                    || !this.presetForm.get('excludeVariables').value);
+    }
+
+    submitForm(): void {
+        if (this.presetForm.valid) {
+            forkJoin([this.mocksService.getMocks(), this.variablesService.getVariables()])
+                .subscribe(results => {
+                    const name = this.presetForm.get('name').value;
+                    const excludeMocks = this.presetForm.get('excludeMocks').value;
+                    const excludeVariables = this.presetForm.get('excludeVariables').value;
+
+                    const mocks = excludeMocks ? {} : results[0].state;
+                    const variables = excludeVariables ? {} : results[1].state;
+
+                    const request = new CreatePresetRequest(name, mocks, variables);
+
+                    this.presetsService.createPreset(request)
+                        .subscribe(data => this.dialogRef.close());
+                });
+        }
+    }
+
+    cancel(): void {
+        this.dialogRef.close();
+    }
 }

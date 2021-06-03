@@ -1,31 +1,45 @@
 <div class="container-fluid">
 
-    <apimock-alert [change]="change$"></apimock-alert>
+    <apimock-alert [change]="changed$"></apimock-alert>
     <h2>Available variables</h2>
 
-    <div class="input-group">
-        <input type="text" [(ngModel)]="searchText" class="form-control search-variables"
-               placeholder="Filter variables">
-        <div class="input-group-append">
-            <span class="input-group-text icon-filter"></span>
-        </div>
-    </div>
+    <apimock-mat-table-filter class="filter" placeholder="Filter variables"
+                              (changed)="filter($event)"></apimock-mat-table-filter>
     <br/>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Key</th>
-            <th>Value</th>
-            <th>Options</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let variable of data.variables | filter:searchText" apimock-variable-overview-row
-            [variable]="variable" (updated)="onUpdate($event)"></tr>
-        </tbody>
-        <tfoot>
-        <tr apimock-variable-overview-footer-row (updated)="onUpdate($event)"></tr>
-        </tfoot>
-    </table>
+    <mat-table [dataSource]="dataSource" matSort class="variables">
+        <ng-container matColumnDef="key">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Key</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <input *ngIf="!element.exists; else elseBlock" matInput type="text" placeholder="key"
+                       [(ngModel)]="element.key">
+                <ng-template #elseBlock>{{element.key}}</ng-template>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Value</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <input matInput type="text" placeholder="value"
+                       [(ngModel)]="element.value" (keyup)="onUpdateVariableValue(element)"
+                       [(ngModel)]="element.value"></mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button *ngIf="!element.exists; else elseBlock" mat-stroked-button
+                        [disabled]="!element.exists && (element.key === undefined || element.value === undefined)"
+                        (click)="onAddVariable(element)">Add variable
+                </button>
+                <ng-template #elseBlock>
+                    <button (click)="delete$.next(element)" mat-stroked-button>x</button>
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
 </div>

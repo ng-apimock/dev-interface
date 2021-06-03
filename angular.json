@@ -3,16 +3,19 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "dev-interface": {
+        "ngApimock/dev-interface": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
                     "style": "scss"
+                },
+                "@schematics/angular:application": {
+                    "strict": true
                 }
             },
             "root": "",
             "sourceRoot": "src",
-            "prefix": "",
+            "prefix": "apimock",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
@@ -67,11 +70,11 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "dev-interface:build"
+                        "browserTarget": "ngApimock/dev-interface:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "dev-interface:build:production"
+                            "browserTarget": "ngApimock/dev-interface:build:production"
                         }
                     }
                 },
@@ -91,7 +94,7 @@
             }
         }
     },
-    "defaultProject": "dev-interface",
+    "defaultProject": "ngApimock/dev-interface",
     "cli": {
         "warnings": {
             "typescriptMismatch": false

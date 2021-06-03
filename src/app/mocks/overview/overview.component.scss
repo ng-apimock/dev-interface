@@ -1,38 +1,79 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/tables";
-@import "~bootstrap/scss/input-group";
+@import '~src/styles';
 
 :host {
-  h2 {
-    font-size: 1.25rem;
-    color: #4caf50;
+  /* badge */
+  span {
+    padding-top: 7px;
   }
 
-  input, span {
-    margin: -0.175rem 0;
-    height: calc(1.8rem + 2px);
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    padding: 0.175rem 0.75rem 0.175rem 0.75rem;
-  }
+  .mat-badge {
 
-  table {
-    @extend .table;
-    @extend .table-striped;
-    @extend .table-bordered;
-    @extend .table-hover;
-    @extend .table-sm;
+    &-content {
+      border-radius: 3px;
+      width: auto !important;
+      padding: 0 7px;
+      position: unset;
+      color: white;
+    }
 
-    thead {
-      color: #4caf50;
+    &-delete {
+      .mat-badge-content {
+        background: crimson;
+      }
+    }
 
-      th {
-        padding: 0.175rem 0.75rem;
-        font-weight: normal;
+    &-get {
+      .mat-badge-content {
+        background: mat-color($ngApimock-demoApplication-primary, 500);
+      }
+    }
+
+    &-post, &-put, &-patch {
+      .mat-badge-content {
+        background: mat-color($ngApimock-demoApplication-primary, 800);
       }
     }
   }
 
- }
+  mat-header-row {
+    min-height: 30px;
+    padding-left: 0px;
+
+    mat-header-cell {
+      padding-left: 10px;
+      font-size: 16px;
+      color: mat-color($ngApimock-demoApplication-primary);
+    }
+  }
+
+  mat-footer-cell {
+    display: flex; justify-content: flex-end
+  }
+
+  mat-cell {
+    padding: 0 10px 0 10px;
+  }
+
+  .mat-column-name, .mat-column-url,  .mat-column-scenario {
+    flex: 0 0 24%;
+  }
+  .mat-column-method, .mat-column-delay, {
+    flex: 0 0 10%;
+  }
+  .mat-column-echo {
+    flex: 0 0 8%;
+  }
+
+  input {
+    border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300);
+  }
+
+  input:focus {
+    z-index: 10;
+    outline: none !important;
+    box-shadow: 0 0 0 0.2rem mat-color($ngApimock-demoApplication-primary, 300);
+  }
+
+}
+
+

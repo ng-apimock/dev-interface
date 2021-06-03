@@ -1,167 +1,266 @@
 import { Mock } from '@ng-apimock/core/dist/mock/mock';
 import { createSpyObj } from 'jest-createspyobj';
 
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NavigationStart, Router, RouterEvent } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
 import { of, Subject, Subscription } from 'rxjs';
 
-import { CreatePresetComponent } from '../../presets/create-preset/create-preset.component';
-import { UpdateMockRequest } from '../mock-request';
 import { GetMocksResponse } from '../mock-state';
 import { MocksService } from '../mocks.service';
 
 import { OverviewComponent } from './overview.component';
+
+jest.useFakeTimers();
+
 describe('OverviewComponent', () => {
-  let component: OverviewComponent;
-  let changeSubject: jest.Mocked<Subject<any>>;
-  let mocksService: jest.Mocked<MocksService>;
-  let request: jest.Mocked<UpdateMockRequest>;
-  let subscription: jest.Mocked<Subscription>;
-  let router: jest.Mocked<Router>;
-  let dialog: jest.Mocked<MatDialog>;
-  const routerSubject = new Subject<RouterEvent>();
-
-  const getMocksResponse: GetMocksResponse = {
-    state: {},
-    mocks: [{ name: 'mock' } as Mock],
-  };
-  beforeEach(() => {
-    changeSubject = createSpyObj(Subject, ['next']);
-    mocksService = createSpyObj(MocksService, [
-      'getMocks',
-      'resetMocksToDefault',
-      'setMocksToPassThrough',
-    ]);
-    subscription = createSpyObj(Subscription);
-    request = createSpyObj(UpdateMockRequest);
-    router = createSpyObj(Router);
-    dialog = createSpyObj(MatDialog);
-    (router.events as any) = routerSubject.asObservable();
-    component = new OverviewComponent(router, mocksService as any, dialog);
-    component.change$ = changeSubject;
-  });
-
-  describe('constructor', () => {
-    it('creates a new data object', () =>
-      expect(component.data).toEqual({ state: {}, mocks: [] }));
-
-    it('creates a new subscriptions object', () =>
-      expect(component.subscriptions).toEqual([]));
-  });
-
-  describe('getMocks', () => {
-    beforeEach(() => {
-      mocksService.getMocks.mockReturnValue(of(getMocksResponse));
-      component.getMocks();
-    });
-
-    afterEach(() => {
-      component.subscriptions = [];
-    });
-
-    it('calls getMocks', () =>
-      expect(mocksService.getMocks).toHaveBeenCalled());
-
-    it('subscribes to getMocks and sets the data object once resolved', () =>
-      expect(component.data).toEqual(getMocksResponse));
-
-    it('adds the observable to the subscription list', () =>
-      expect(component.subscriptions.length).toBe(1));
-  });
-
-  describe('ngOnDestroy', () => {
-    beforeEach(() => {
-      component.subscriptions.push(subscription as any);
-      component.ngOnDestroy();
-    });
-
-    it('unsubscribes the subscriptions', () =>
-      expect(subscription.unsubscribe).toHaveBeenCalled());
-  });
-
-  describe('ngOnInit', () => {
-    let getMocksFn;
+    let component: OverviewComponent;
+    let changeSubject: jest.Mocked<Subject<any>>;
+    let mockResponse: GetMocksResponse;
+    let mocksService: jest.Mocked<MocksService>;
+    let subscription: jest.Mocked<Subscription>;
 
     beforeEach(() => {
-      getMocksFn = jest.spyOn(component, 'getMocks');
-      getMocksFn.mockImplementation(() => []);
-      component.dialogRef = ({
-        close: jest.fn(),
-      } as unknown) as MatDialogRef<any>;
-      component.ngOnInit();
+        changeSubject = createSpyObj(Subject, ['next']);
+        mocksService = createSpyObj(MocksService, [
+            'getMocks',
+            'resetMocksToDefault',
+            'setMocksToPassThrough',
+            'updateMock'
+        ]);
+        subscription = createSpyObj(Subscription);
+        component = new OverviewComponent(mocksService as any);
+
+        mockResponse = {
+            state: {mock: {delay: 0, echo: false, scenario: 'some'}},
+            mocks: [
+                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
+                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+            ]
+        };
+
+        component.dataSource.data = mockResponse.mocks;
+        component.state = mockResponse.state;
     });
 
-    it('gets the mocks', () => expect(getMocksFn).toHaveBeenCalled());
+    describe('constructor', () => {
+        it('creates a new datasource', () =>
+            expect(component.dataSource).toBeInstanceOf(MatTableDataSource));
 
-    it('creates the change subject', () =>
-      expect(component.change$).toBeDefined());
-
-    it('should close the dialog on router events', () => {
-      const event = new NavigationStart(1, '/');
-      routerSubject.next(event);
-      expect(component.dialogRef.close).toHaveBeenCalled();
-    });
-  });
-
-  describe('onUpdate', () => {
-    beforeEach(() => {
-      component.onUpdate(request);
+        it('creates a new subscriptions object', () =>
+            expect(component.subscriptions).toEqual([]));
     });
 
-    it('emits the change', () =>
-      expect(component.change$.next).toHaveBeenCalled());
-  });
+    describe('filter', () => {
+        it('filters by name', () => {
+            component.filter('to/some');
 
-  describe('resetMocksToDefaults', () => {
-    beforeEach(() => {
-      mocksService.getMocks.mockReturnValue(of(getMocksResponse));
-      mocksService.resetMocksToDefault.mockReturnValue(of({}));
+            expect(component.dataSource._filterData(component.dataSource.data)).toEqual([{
+                name: 'some',
+                request: {
+                    url: 'path/to/some-url'
+                }
+            } as Mock]);
+        });
 
-      component.resetMocksToDefaults();
+        it('filters by url', () => {
+            component.filter('s');
+
+            expect(component.dataSource._filterData(component.dataSource.data)).toEqual([{
+                name: 'some',
+                request: {
+                    url: 'path/to/some-url'
+                }
+            } as Mock]);
+        });
     });
 
-    it('call resetMocksToDefault', () =>
-      expect(mocksService.resetMocksToDefault).toHaveBeenCalled());
+    describe('onResetMocksToDefaults', () => {
+        beforeEach(() => {
+            mocksService.getMocks.mockReturnValue(of(mockResponse));
+            mocksService.resetMocksToDefault.mockReturnValue(of({}));
 
-    it('subscribes to resetMocksToDefault and once resolved calls getMocks', () =>
-      expect(mocksService.getMocks).toHaveBeenCalled());
+            component.dataSource.data = [];
+            component.state = {};
+            component.changed$ = changeSubject;
 
-    it('subscribes to getMocks and sets the data object once resolved', () =>
-      expect(component.data).toEqual(getMocksResponse));
+            component.onResetMocksToDefaults();
+        });
 
-    it('subscribes to getMocks and emits the change', () =>
-      expect(changeSubject.next).toHaveBeenCalledWith(
-        'All mocks have been reset to defaults.'
-      ));
-  });
+        it('resets the mock to default', () =>
+            expect(mocksService.resetMocksToDefault).toHaveBeenCalled());
 
-  describe('setMocksToPassThrough', () => {
-    beforeEach(() => {
-      mocksService.getMocks.mockReturnValue(of(getMocksResponse));
-      mocksService.setMocksToPassThrough.mockReturnValue(of({}));
+        it('updates the datasource', () =>
+            expect(component.dataSource.data).toEqual([
+                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
+                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+            ]));
 
-      component.setMocksToPassThrough();
+        it('updates the state', () =>
+            expect(component.state).toEqual({
+                mock: {
+                    delay: 0,
+                    echo: false,
+                    scenario: 'some'
+                }
+            }));
+
+        it('notifies that the mocks have been reset to defaults', () => {
+            const message = 'All mocks have been reset to defaults.';
+            expect(changeSubject.next).toHaveBeenCalledWith(message);
+        });
+
+        it('adds the observable to the subscription list', () =>
+            expect(component.subscriptions.length).toBe(1));
     });
 
-    it('call setMocksToPassThrough', () =>
-      expect(mocksService.setMocksToPassThrough).toHaveBeenCalled());
+    describe('onSetMocksToPassThrough', () => {
+        beforeEach(() => {
+            mocksService.getMocks.mockReturnValue(of(mockResponse));
+            mocksService.setMocksToPassThrough.mockReturnValue(of({}));
 
-    it('subscribes to setMocksToPassThrough and once resolved calls getMocks', () =>
-      expect(mocksService.getMocks).toHaveBeenCalled());
+            component.dataSource.data = [];
+            component.state = {};
+            component.changed$ = changeSubject;
 
-    it('subscribes to getMocks and sets the data object once resolved', () =>
-      expect(component.data).toEqual(getMocksResponse));
+            component.onSetMocksToPassThrough();
+        });
 
-    it('subscribes to getMocks and emits the change', () =>
-      expect(changeSubject.next).toHaveBeenCalledWith(
-        'All mocks have been set to pass through.'
-      ));
-  });
+        it('sets the mocks to pass through', () =>
+            expect(mocksService.setMocksToPassThrough).toHaveBeenCalled());
 
-  describe('saveAsPreset', () => {
-    it('should open the dialog with the proper component', () => {
-      component.saveAsPreset();
-      expect(dialog.open).toHaveBeenCalledWith(CreatePresetComponent);
+        it('updates the datasource', () =>
+            expect(component.dataSource.data).toEqual([
+                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
+                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+            ]));
+
+        it('updates the state', () =>
+            expect(component.state).toEqual({
+                mock: {
+                    delay: 0,
+                    echo: false,
+                    scenario: 'some'
+                }
+            }));
+
+        it('notifies that the mocks have been set to pass through', () => {
+            const message = 'All mocks have been set to pass through.';
+            expect(changeSubject.next).toHaveBeenCalledWith(message);
+        });
+
+        it('adds the observable to the subscription list', () =>
+            expect(component.subscriptions.length).toBe(1));
     });
-  });
+
+    describe('ngOnDestroy', () => {
+        beforeEach(() => {
+            component.subscriptions.push(subscription as any);
+            component.ngOnDestroy();
+        });
+
+        it('unsubscribes the subscriptions', () =>
+            expect(subscription.unsubscribe).toHaveBeenCalled());
+    });
+
+    describe('ngOnInit', () => {
+        beforeEach(() => {
+            mocksService.getMocks.mockReturnValue(of(mockResponse));
+            component.ngOnInit();
+            component.changed$ = changeSubject;
+        });
+
+        it('gets the mocks', () =>
+            expect(mocksService.getMocks).toHaveBeenCalled());
+
+        it('subscribes to getMocks and sets the data object once resolved', () =>
+            expect(component.dataSource.data).toEqual([
+                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
+                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+            ]));
+
+        it('adds the observable to the subscription list', () =>
+            expect(component.subscriptions.length).toBe(4));
+
+        describe('delay$ on next', () => {
+            beforeEach(() => {
+                mocksService.updateMock.mockReturnValue(of({}));
+                component.state['mock'].delay = 2000; // changed value
+                component.delay$.next('mock');
+                jest.advanceTimersByTime(500); // debounce 500
+            });
+
+            it('updates the mock', () => {
+                expect(mocksService.updateMock).toHaveBeenCalledWith({
+                    delay: 2000,
+                    echo: false,
+                    name: 'mock',
+                    scenario: 'some',
+                    state: {
+                        delay: 2000,
+                        echo: false,
+                        scenario: 'some'
+                    }
+                });
+            });
+
+            it('notifies that the mock has changed delay', () => {
+                const message = 'Mock \'<strong>mock</strong>\' has changed the \'<strong>delay</strong>\' to \'<strong>2000</strong>\'';
+                expect(changeSubject.next).toHaveBeenCalledWith(message);
+            });
+        });
+
+        describe('echo$ on next', () => {
+            beforeEach(() => {
+                mocksService.updateMock.mockReturnValue(of({}));
+                component.state['mock'].echo = true; // changed value
+                component.echo$.next('mock');
+            });
+
+            it('updates the mock', () => {
+                expect(mocksService.updateMock).toHaveBeenCalledWith({
+                    delay: 0,
+                    echo: true,
+                    name: 'mock',
+                    scenario: 'some',
+                    state: {
+                        delay: 0,
+                        echo: true,
+                        scenario: 'some'
+                    }
+                });
+            });
+
+            it('notifies that the mock has changed echo indicator', () => {
+                const message = 'Mock \'<strong>mock</strong>\' has changed the \'<strong>echo</strong>\' to \'<strong>true</strong>\'';
+                expect(changeSubject.next).toHaveBeenCalledWith(message);
+            });
+        });
+
+        describe('scenario$ on next', () => {
+            beforeEach(() => {
+                mocksService.updateMock.mockReturnValue(of({}));
+                component.state['mock'].scenario = 'other'; // changed value
+                component.scenario$.next('mock');
+            });
+
+            it('updates the mock', () => {
+                expect(mocksService.updateMock).toHaveBeenCalledWith({
+                    delay: 0,
+                    echo: false,
+                    name: 'mock',
+                    scenario: 'other',
+                    state: {
+                        delay: 0,
+                        echo: false,
+                        scenario: 'other'
+                    }
+                });
+            });
+
+            it('notifies that the mock has changed scenario', () => {
+                const message = 'Mock \'<strong>mock</strong>\' has changed ' +
+                    'the \'<strong>scenario</strong>\' to \'<strong>other</strong>\'';
+                expect(changeSubject.next).toHaveBeenCalledWith(message);
+            });
+        });
+    });
 });

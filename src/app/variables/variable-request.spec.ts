@@ -1,4 +1,4 @@
-import { UpdateVariableRequest, VariableRequest } from './variable-request';
+import { VariableRequest } from './variable-request';
 
 describe('VariableRequest', () => {
     let request: VariableRequest;
@@ -6,7 +6,7 @@ describe('VariableRequest', () => {
     describe('constructor', () => {
         describe('default', () => {
             beforeEach(() => {
-                request = new VariableRequest({ key: 'some', value: 'thing' });
+                request = new VariableRequest({key: 'some', value: 'thing'});
             });
 
             it('sets the payload', () =>
@@ -21,7 +21,7 @@ describe('VariableRequest', () => {
 
         describe('number', () => {
             beforeEach(() => {
-                request = new VariableRequest({ key: 'some', value: 123 });
+                request = new VariableRequest({key: 'some', value: 123});
             });
 
             it('sets the value as a number', () =>
@@ -30,7 +30,7 @@ describe('VariableRequest', () => {
 
         describe('string true', () => {
             beforeEach(() => {
-                request = new VariableRequest({ key: 'some', value: 'true' });
+                request = new VariableRequest({key: 'some', value: 'true'});
             });
 
             it('sets the value as a boolean', () =>
@@ -38,22 +38,4 @@ describe('VariableRequest', () => {
         });
     });
 
-});
-
-describe('UpdateVariableRequest', () => {
-    let request: UpdateVariableRequest;
-
-    describe('constructor', () => {
-        beforeEach(() => {
-            request = new UpdateVariableRequest('key', 'type', 'value');
-        });
-        it('sets the type', () =>
-            expect(request.type).toBe('type'));
-
-        it('sets the key', () =>
-            expect(request.key).toBe('key'));
-
-        it('sets the value', () =>
-            expect(request.value).toBe('value'));
-    });
 });

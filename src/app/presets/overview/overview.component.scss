@@ -1,37 +1,40 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/tables";
-@import "~bootstrap/scss/input-group";
+@import '~src/styles';
 
 :host {
-  h2 {
-    font-size: 1.25rem;
-    color: #4caf50;
-  }
+  mat-header-row {
+    min-height: 30px;
+    padding-left: 0px;
 
-  input, span {
-    margin: -0.175rem 0;
-    height: calc(1.8rem + 2px);
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    padding: 0.175rem 0.75rem 0.175rem 0.75rem;
-  }
-
-  table {
-    @extend .table;
-    @extend .table-striped;
-    @extend .table-bordered;
-    @extend .table-hover;
-    @extend .table-sm;
-
-    thead {
-      color: #4caf50;
-
-      th {
-        padding: 0.175rem 0.75rem;
-        font-weight: normal;
-      }
+    mat-header-cell {
+      padding-left: 10px;
+      font-size: 16px;
+      color: mat-color($ngApimock-demoApplication-primary);
     }
+  }
+  mat-footer-cell {
+    display: flex; justify-content: flex-end
+  }
+
+
+  mat-cell {
+    padding: 0 10px 0 10px;
+  }
+
+  .mat-column-key, .mat-column-value  {
+    flex: 0 0 45%;
+  }
+
+  .mat-column-options {
+    flex: 0 0 10%;
+  }
+
+  input {
+    border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300);
+  }
+
+  input:focus {
+    z-index: 10;
+    outline: none !important;
+    box-shadow: 0 0 0 0.2rem mat-color($ngApimock-demoApplication-primary, 300);
   }
 }
