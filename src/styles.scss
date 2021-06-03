@@ -1,46 +1,31 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
+//// Custom Theming for Angular Material
+//// For more information: https://material.angular.io/guide/theming
+//@use '~@angular/cdk' as cdk;
+//// Plus imports for other components in your app.
+//
+//// Include the common styles for Angular Material. We include this here so that you only
+//// have to load a single css file for Angular Material in your app.
+//// Be sure that you only ever include this mixin once!
+@use '~@angular/material' as mat;
+@include mat.core();
+//
+//// Define the palettes for your theme using the Material Design palettes available in palette.scss
+//// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+//// hue. Available color palettes: https://material.io/design/color/
+$ngApimock-demoApplication-primary: mat.define-palette(mat.$green-palette);
+$ngApimock-demoApplication-secondary: mat.define-palette(mat.$grey-palette);
+$ngApimock-demoApplication-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$ngApimock-demoApplication-warn: mat.define-palette(mat.$red-palette);
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$ngApimock-demoApplication-primary: mat-palette($mat-green);
-$ngApimock-demoApplication-secondary: mat-palette($mat-grey);
-$ngApimock-demoApplication-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$ngApimock-demoApplication-warn: mat-palette($mat-red);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$ngApimock-demoApplication-theme: mat-light-theme((
+$ngApimock-demoApplication-theme: mat.define-light-theme((
         color: (
                 primary: $ngApimock-demoApplication-primary,
                 accent: $ngApimock-demoApplication-accent,
                 warn: $ngApimock-demoApplication-warn,
         )
 ));
+@include mat.all-component-themes($ngApimock-demoApplication-theme);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($ngApimock-demoApplication-theme);
-//
-///* You can add global styles to this file, and also import other style files */
-//
-//html, body { height: 100%; }
-//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-//
-///* You can add global styles to this file, and also import other style files */
-//@import "~bootstrap/scss/bootstrap";
-//@import "~@angular/material/_theming";
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
@@ -53,7 +38,7 @@ body {
 }
 
 h2 {
-  color: mat-color($ngApimock-demoApplication-primary, 400)
+  color: mat.get-color-from-palette($ngApimock-demoApplication-primary, 400)
 }
 
 *,
@@ -83,6 +68,7 @@ button {
   line-height: inherit;
 }
 
+// TODO
 .btn-primary {
   margin-left: 5px;
 }
@@ -91,8 +77,6 @@ button {
   text-align: right !important;
 }
 
-// this loads the overlay styling. Can be removed if we move to material completly
-@include cdk-overlay();
 mat-dialog-container {
   background-color: #fff;
 }
@@ -173,7 +157,7 @@ mat-dialog-container {
 }
 
 mat-table {
-  border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300)
+  border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300)
 }
 
 /* Material overrides */
@@ -181,7 +165,7 @@ mat-select {
   margin: 0 10px 0 0;
   padding: 2px;
   border-radius: 2px;
-  border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300);
+  border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
 
   .mat-select-trigger {
     display: inline-table;
@@ -193,7 +177,7 @@ mat-select {
 }
 
 mat-table {
-  border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300)
+  border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300)
 }
 
 mat-row {

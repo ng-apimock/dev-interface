@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '~src/styles';
 
 :host {
@@ -27,20 +28,20 @@
     .icon-filter {
       display: inherit;
       padding: .375rem .75rem;
-      background-color: mat-color($ngApimock-demoApplication-secondary, 100);
-      border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300);
+      background-color: mat.get-color-from-palette($ngApimock-demoApplication-secondary, 100);
+      border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
       border-radius: 0 .25rem .25rem 0;
     }
   }
 
   input {
-    border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300);
+    border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
   }
 
   input:focus {
     z-index: 10;
     outline: none !important;
-    box-shadow: 0 0 0 0.2rem mat-color($ngApimock-demoApplication-primary, 300);
+    box-shadow: 0 0 0 0.2rem mat.get-color-from-palette($ngApimock-demoApplication-primary, 300);
   }
 }
 

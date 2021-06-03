@@ -1,9 +1,8 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
+@include mat.core();
 
-@include mat-core();
-
-$grey-palette: mat-palette($mat-grey);
-$green-palette: mat-palette($mat-green);
+$grey-palette: mat.define-palette(mat.$grey-palette);
+$green-palette: mat.define-palette(mat.$green-palette);
 
 mat-toolbar-row {
   background: white;
@@ -26,7 +25,7 @@ mat-toolbar-row {
 
     line-height: inherit;
     white-space: nowrap;
-    color: mat-color($green-palette);
+    color: mat.get-color-from-palette($green-palette);
   }
 
   .toggler {
@@ -34,7 +33,7 @@ mat-toolbar-row {
     margin-top: 0px;
     padding: 0.25rem 0.75rem;
     font-size: 1.25rem;
-    border: 1px solid mat-color($grey-palette, 300);
+    border: 1px solid mat.get-color-from-palette($grey-palette, 300);
     border-radius: 0.25rem;
     background-color: transparent;
     @media (min-width: 992px) {
@@ -76,19 +75,19 @@ mat-toolbar-row {
           display: block;
           padding: 0 1rem;
           text-decoration: none;
-          color: mat-color($grey-palette, 500);
+          color: mat.get-color-from-palette($grey-palette, 500);
 
           @media (min-width: 992px) {
             padding: 0 0.5rem;
           }
         }
         &.active a {
-          color: mat-color($grey-palette, 900);
+          color: mat.get-color-from-palette($grey-palette, 900);
         }
       }
 
       &.active a {
-        color: mat-color($grey-palette, 900);
+        color: mat.get-color-from-palette($grey-palette, 900);
       }
     }
 

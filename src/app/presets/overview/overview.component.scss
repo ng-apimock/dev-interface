@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '~src/styles';
 
 :host {
@@ -8,7 +9,7 @@
     mat-header-cell {
       padding-left: 10px;
       font-size: 16px;
-      color: mat-color($ngApimock-demoApplication-primary);
+      color: mat.get-color-from-palette($ngApimock-demoApplication-primary);
     }
   }
   mat-footer-cell {
@@ -29,12 +30,12 @@
   }
 
   input {
-    border: 1px solid mat-color($ngApimock-demoApplication-secondary, 300);
+    border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
   }
 
   input:focus {
     z-index: 10;
     outline: none !important;
-    box-shadow: 0 0 0 0.2rem mat-color($ngApimock-demoApplication-primary, 300);
+    box-shadow: 0 0 0 0.2rem mat.get-color-from-palette($ngApimock-demoApplication-primary, 300);
   }
 }

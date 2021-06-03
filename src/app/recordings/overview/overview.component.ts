@@ -43,6 +43,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     disableRecording(): void {
         this.subscriptions.push(this.recordingsService.record(false).subscribe(data => {
             this.record = false;
+            this.changed$.next('Recording of request/response has been  \'<strong>disabled</strong>\'');
         }));
     }
 
@@ -50,6 +51,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     enableRecording(): void {
         this.subscriptions.push(this.recordingsService.record(true).subscribe(data => {
             this.record = true;
+            this.changed$.next('Recording of request/response has been  \'<strong>enabled</strong>\'');
         }));
     }
 
