@@ -5,20 +5,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-
-import { CreatePresetComponent } from './create-preset/create-preset.component';
 import { OverviewModule } from './overview/overview.module';
 import { PresetsService } from './presets.service';
 
 @NgModule({
     imports: [
-    BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([]),
-    OverviewModule,
-    MatDialogModule,
+        BrowserModule,
+        CommonModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([]),
+        OverviewModule,
+        MatDialogModule,
     ],
     providers: [
         PresetsService

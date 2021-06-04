@@ -1,17 +1,6 @@
-//// Custom Theming for Angular Material
-//// For more information: https://material.angular.io/guide/theming
-//@use '~@angular/cdk' as cdk;
-//// Plus imports for other components in your app.
-//
-//// Include the common styles for Angular Material. We include this here so that you only
-//// have to load a single css file for Angular Material in your app.
-//// Be sure that you only ever include this mixin once!
 @use '~@angular/material' as mat;
 @include mat.core();
-//
-//// Define the palettes for your theme using the Material Design palettes available in palette.scss
-//// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-//// hue. Available color palettes: https://material.io/design/color/
+
 $ngApimock-demoApplication-primary: mat.define-palette(mat.$green-palette);
 $ngApimock-demoApplication-secondary: mat.define-palette(mat.$grey-palette);
 $ngApimock-demoApplication-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
@@ -62,15 +51,10 @@ input {
 }
 
 button {
-  margin: 0;
+  margin:0 5px;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-}
-
-// TODO
-.btn-primary {
-  margin-left: 5px;
 }
 
 .text-right {
@@ -176,15 +160,6 @@ mat-select {
   }
 }
 
-mat-table {
-  border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300)
-}
-
 mat-row {
   min-height: 40px !important;
 }
-
-button {
-  margin:0 5px;
-}
-

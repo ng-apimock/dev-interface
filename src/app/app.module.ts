@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
