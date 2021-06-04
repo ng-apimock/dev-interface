@@ -8,6 +8,12 @@ test
 # configs
 tsconfig.json
 tslint.json
+angular.json
+commitlint.config.js
+jest.config.js
+proxy.config.json
+sonar-project.properties
+tsconfig.*.json
 
 # idea
 .idea
@@ -15,3 +21,6 @@ tslint.json
 
 # ci
 .circleci
+
+# other
+images
