@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "ng": "ng",
-    "ngapimock": "node test/serve.js",
+    "ngapimock": "node test/server.js",
     "prebuild": "rimraf dist",
     "build": "ng build --configuration=production",
     "lint": "ng lint",

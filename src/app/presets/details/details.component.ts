@@ -3,8 +3,7 @@ import { Preset } from '@ng-apimock/core/dist/preset/preset';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-
-import { MockState } from '../../../../../core/src/core/state/mock.state';
+import { MockState } from "@ng-apimock/core/dist/state/mock.state";
 
 @Component({
     selector: 'apimock-presets-details',

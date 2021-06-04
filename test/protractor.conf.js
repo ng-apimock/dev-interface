@@ -9,7 +9,7 @@ exports.config = {
         default_directory: '/tmp'
     },
     specs: [
-        path.join(__dirname, 'features', '**','*.feature')
+        path.join(__dirname, 'features', '**', '*.feature')
     ],
     plugins: [{
         package: '@ng-apimock/protractor-plugin',
