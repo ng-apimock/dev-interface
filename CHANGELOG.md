@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/ng-apimock/dev-interface/compare/v1.2.0...v2.0.0) (2021-06-04)
+
+
+### Code Refactoring
+
+* update dev interface to  angular-material ([#22](https://github.com/ng-apimock/dev-interface/issues/22)) ([17a4521](https://github.com/ng-apimock/dev-interface/commit/17a4521659e87a671ef0657d76beb671b1153cc1))
+
+
+### BREAKING CHANGES
+
+* 🧨 Upgrade to Angular-material
+
+* refactor: 💡 refactor dev interface
+
+- update to angular-material
+
+- feat: Create preset
+
 # [1.2.0](https://github.com/ng-apimock/dev-interface/compare/v1.1.0...v1.2.0) (2021-04-15)
 
 
