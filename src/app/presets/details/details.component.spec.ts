@@ -28,13 +28,13 @@ describe('PresetDetailsComponent', () => {
     describe('constructor', () => {
         it('creates a new mock datasource data', () =>
             expect(component.mocksDataSource.data).toEqual([
-                {name: 'get repositories', scenario: 'dummy', 'echo': true, 'delay': 3000},
-                {name: 'create repository', scenario: 'unauthorized'}
+                { name: 'get repositories', scenario: 'dummy', 'echo': true, 'delay': 3000 },
+                { name: 'create repository', scenario: 'unauthorized' }
             ]));
 
         it('creates a new variables datasource data', () =>
             expect(component.variablesDataSource.data).toEqual([
-                {key: 'dummy-description', value: 'dummy description'}
+                { key: 'dummy-description', value: 'dummy description' }
             ]));
     });
 });

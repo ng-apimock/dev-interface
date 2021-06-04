@@ -35,21 +35,21 @@ describe('OverviewComponent', () => {
     describe('filter', () => {
         beforeEach(() => {
             component.dataSource.data = [
-                {key: 'one', value: 'first', exists: true},
-                {key: 'two', value: 'second', exists: true}
+                { key: 'one', value: 'first', exists: true },
+                { key: 'two', value: 'second', exists: true }
             ];
         });
 
         it('filters by key', () => {
             component.filter('one');
             expect(component.dataSource._filterData(component.dataSource.data))
-                .toEqual([{key: 'one', value: 'first', exists: true}]);
+                .toEqual([{ key: 'one', value: 'first', exists: true }]);
         });
 
         it('filters by value', () => {
             component.filter('second');
             expect(component.dataSource._filterData(component.dataSource.data))
-                .toEqual([{key: 'two', value: 'second', exists: true}]);
+                .toEqual([{ key: 'two', value: 'second', exists: true }]);
         });
     });
 
@@ -59,9 +59,9 @@ describe('OverviewComponent', () => {
 
         beforeEach(() => {
             component.dataSource.data = [
-                {key: 'one', value: 'first', exists: true},
-                {key: 'two', value: 'second', exists: true},
-                {key: 'three', value: 'third', exists: false}
+                { key: 'one', value: 'first', exists: true },
+                { key: 'two', value: 'second', exists: true },
+                { key: 'three', value: 'third', exists: false }
             ];
 
             create$NextFn = jest.spyOn(component.create$, 'next');
@@ -69,7 +69,7 @@ describe('OverviewComponent', () => {
         });
 
         it('adds the variable', () => {
-            component.onAddVariable({key: 'three', value: 'third', exists: false});
+            component.onAddVariable({ key: 'three', value: 'third', exists: false });
 
             expect(create$NextFn).toHaveBeenCalledWith({
                 key: 'three', value: 'third', exists: false
@@ -77,7 +77,7 @@ describe('OverviewComponent', () => {
         });
 
         it('updates the variable', () => {
-            component.onAddVariable({key: 'one', value: 'uno', exists: true});
+            component.onAddVariable({ key: 'one', value: 'uno', exists: true });
 
             expect(update$NextFn).toHaveBeenCalledWith({
                 key: 'one', value: 'uno', exists: true
@@ -93,7 +93,7 @@ describe('OverviewComponent', () => {
         });
 
         it('updates the variable', () => {
-            component.onUpdateVariableValue({key: 'one', value: 'uno', exists: true});
+            component.onUpdateVariableValue({ key: 'one', value: 'uno', exists: true });
 
             expect(update$NextFn).toHaveBeenCalledWith({
                 key: 'one', value: 'uno', exists: true
@@ -101,7 +101,7 @@ describe('OverviewComponent', () => {
         });
 
         it('does not update the variable', () => {
-            component.onUpdateVariableValue({key: 'three', value: 'third', exists: false});
+            component.onUpdateVariableValue({ key: 'three', value: 'third', exists: false });
 
             expect(update$NextFn).not.toHaveBeenCalled();
         });
@@ -124,9 +124,9 @@ describe('OverviewComponent', () => {
         beforeEach(() => {
             getVariablesFn = jest.spyOn(component, 'getVariables');
             getVariablesFn.mockImplementation(() => of([
-                {key: 'one', value: 'first', exists: true},
-                {key: 'two', value: 'second', exists: true},
-                {key: 'three', value: 'third', exists: false}
+                { key: 'one', value: 'first', exists: true },
+                { key: 'two', value: 'second', exists: true },
+                { key: 'three', value: 'third', exists: false }
             ]));
             changed$NextFn = jest.spyOn(component.changed$, 'next');
 
@@ -139,40 +139,40 @@ describe('OverviewComponent', () => {
         it('call getVariables', () => {
             expect(getVariablesFn).toHaveBeenCalled();
             expect(component.dataSource.data).toEqual([
-                {key: 'one', value: 'first', exists: true},
-                {key: 'two', value: 'second', exists: true},
-                {key: 'three', value: 'third', exists: false}
+                { key: 'one', value: 'first', exists: true },
+                { key: 'two', value: 'second', exists: true },
+                { key: 'three', value: 'third', exists: false }
             ]);
         });
 
         it('registers create variable listener', () => {
-            component.create$.next({key: 'three', value: 'third', exists: false});
+            component.create$.next({ key: 'three', value: 'third', exists: false });
 
             expect(variablesService.updateVariable).toHaveBeenCalledWith({
                 key: 'three',
-                payload: {three: 'third'},
+                payload: { three: 'third' },
                 value: 'third',
-                variable: {exists: false, key: 'three', value: 'third'}
+                variable: { exists: false, key: 'three', value: 'third' }
             });
             expect(changed$NextFn).toHaveBeenCalledWith('Variable \'<strong>three</strong>\' has been \'<strong>created</strong>\' to \'<strong>third</strong>\'');
         });
 
         it('registers delete variable listener', () => {
-            component.delete$.next({key: 'two', value: 'second', exists: true});
+            component.delete$.next({ key: 'two', value: 'second', exists: true });
 
             expect(variablesService.deleteVariable).toHaveBeenCalledWith('two');
             expect(changed$NextFn).toHaveBeenCalledWith('Variable \'<strong>two</strong>\' has been deleted\'');
         });
 
         it('registers update variable listener', () => {
-            component.update$.next({key: 'one', value: 'uno', exists: true});
+            component.update$.next({ key: 'one', value: 'uno', exists: true });
             jest.advanceTimersByTime(500); // debounce 500
 
             expect(variablesService.updateVariable).toHaveBeenCalledWith({
                 key: 'one',
-                payload: {one: 'uno'},
+                payload: { one: 'uno' },
                 value: 'uno',
-                variable: {exists: true, key: 'one', value: 'uno'}
+                variable: { exists: true, key: 'one', value: 'uno' }
             });
             expect(changed$NextFn).toHaveBeenCalledWith('Variable \'<strong>one</strong>\' has been \'<strong>updated</strong>\' to \'<strong>uno</strong>\'');
         });
@@ -183,16 +183,16 @@ describe('OverviewComponent', () => {
             expect(getVariablesFn).toBeCalledTimes(2);
             expect(getVariablesFn).toHaveBeenCalled();
             expect(component.dataSource.data).toEqual([
-                {key: 'one', value: 'first', exists: true},
-                {key: 'two', value: 'second', exists: true},
-                {key: 'three', value: 'third', exists: false}
+                { key: 'one', value: 'first', exists: true },
+                { key: 'two', value: 'second', exists: true },
+                { key: 'three', value: 'third', exists: false }
             ]);
         });
     });
 
     describe('getVariables', () => {
         beforeEach(() => {
-            variablesService.getVariables.mockReturnValue(of({state: {one: 'first'}}));
+            variablesService.getVariables.mockReturnValue(of({ state: { one: 'first' } }));
         });
 
         afterEach(() => {
@@ -211,8 +211,8 @@ describe('OverviewComponent', () => {
 
             expect(variables).toEqual(
                 [
-                    {key: 'one', value: 'first', exists: true},
-                    {key: undefined, value: undefined, exists: false}
+                    { key: 'one', value: 'first', exists: true },
+                    { key: undefined, value: undefined, exists: false }
                 ]
             );
 

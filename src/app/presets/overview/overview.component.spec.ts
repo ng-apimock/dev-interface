@@ -43,7 +43,7 @@ describe('OverviewComponent', () => {
 
             dialogRef.afterClosed.mockReturnValue(of({}));
             dialog.open.mockReturnValue(dialogRef);
-            presetsService.getPresets.mockReturnValue(of({presets: [{name: 'somepreset'} as Preset]}));
+            presetsService.getPresets.mockReturnValue(of({ presets: [{ name: 'somepreset' } as Preset] }));
 
             component.createPreset();
         });
@@ -55,25 +55,25 @@ describe('OverviewComponent', () => {
             dialogRef.afterClosed();
 
             expect(presetsService.getPresets).toHaveBeenCalled();
-            expect(component.dataSource.data).toEqual([{name: 'somepreset'} as Preset]);
+            expect(component.dataSource.data).toEqual([{ name: 'somepreset' } as Preset]);
         });
     });
 
     describe('filter', () => {
         beforeEach(() => {
-            component.dataSource.data = [{name: 'somepreset'} as Preset];
+            component.dataSource.data = [{ name: 'somepreset' } as Preset];
         });
 
         it('filters by name', () => {
             component.filter('somepreset');
 
-            expect(component.dataSource._filterData(component.dataSource.data)).toEqual([{name: 'somepreset'} as Preset]);
+            expect(component.dataSource._filterData(component.dataSource.data)).toEqual([{ name: 'somepreset' } as Preset]);
         });
     });
 
     describe('getPresets', () => {
         beforeEach(() => {
-            presetsService.getPresets.mockReturnValue(of({presets: [{name: 'somepreset'} as Preset]}));
+            presetsService.getPresets.mockReturnValue(of({ presets: [{ name: 'somepreset' } as Preset] }));
             component.getPresets();
         });
 
@@ -85,7 +85,7 @@ describe('OverviewComponent', () => {
             expect(presetsService.getPresets).toHaveBeenCalled());
 
         it('subscribes to getPresets and sets the data object once resolved', () =>
-            expect(component.dataSource.data).toEqual([{name: 'somepreset'}]));
+            expect(component.dataSource.data).toEqual([{ name: 'somepreset' }]));
 
         it('adds the observable to the subscription list', () =>
             expect(component.subscriptions.length).toBe(1));
@@ -118,11 +118,11 @@ describe('OverviewComponent', () => {
     describe('selectPreset', () => {
         beforeEach(() => {
             presetsService.selectPreset.mockReturnValue(of({}));
-            component.selectPreset({name: 'somepreset'} as Preset);
+            component.selectPreset({ name: 'somepreset' } as Preset);
         });
 
         it('selects the preset', () =>
-            expect(presetsService.selectPreset).toHaveBeenCalledWith({name: 'somepreset'}));
+            expect(presetsService.selectPreset).toHaveBeenCalledWith({ name: 'somepreset' }));
 
         it('emits the change', () =>
             expect(component.changed$.next).toHaveBeenCalledWith('Preset \'<strong>somepreset</strong>\' has been selected'));
@@ -130,13 +130,13 @@ describe('OverviewComponent', () => {
 
     describe('showPresetDetails', () => {
         beforeEach(() => {
-            component.showPresetDetails({name: 'somepreset'} as Preset);
+            component.showPresetDetails({ name: 'somepreset' } as Preset);
         });
 
         it('opens the details', () =>
             expect(dialog.open).toHaveBeenCalledWith(PresetDetailsComponent, {
                 width: '80%',
-                data: {name: 'somepreset'}
+                data: { name: 'somepreset' }
             }));
     });
 });

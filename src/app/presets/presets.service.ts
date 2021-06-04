@@ -25,7 +25,7 @@ export class PresetsService {
      * @returns {Observable<any>} observable The observable.
      */
     createPreset(request: CreatePresetRequest): Observable<any> {
-        return this.http.post(`${this.BASE_URL}/${PRESET_URI}`, request, {responseType: 'blob'});
+        return this.http.post(`${this.BASE_URL}/${PRESET_URI}`, request, { responseType: 'blob' });
     }
 
     /**

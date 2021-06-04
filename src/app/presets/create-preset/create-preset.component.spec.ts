@@ -35,9 +35,9 @@ describe('CreatePresetComponent', () => {
     describe('ngOnInit', () => {
         const existingPresets: GetPresetResponse = {
             presets: [
-                {name: 'preset1', mocks: {}, variables: {}},
-                {name: 'preset2', mocks: {}, variables: {}},
-                {name: 'preset3', mocks: {}, variables: {}},
+                { name: 'preset1', mocks: {}, variables: {} },
+                { name: 'preset2', mocks: {}, variables: {} },
+                { name: 'preset3', mocks: {}, variables: {} },
             ],
         };
         beforeEach(() => {
@@ -106,14 +106,14 @@ describe('CreatePresetComponent', () => {
 
         beforeEach(() => {
             mocksService.getMocks.mockImplementation(() => of({
-                state: {mock: {delay: 0, echo: false, scenario: 'some'}},
+                state: { mock: { delay: 0, echo: false, scenario: 'some' } },
                 mocks: [
-                    {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
-                    {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+                    { name: 'some', request: { url: 'path/to/some-url' } } as Mock,
+                    { name: 'other', request: { url: 'path/to/other-url' } } as Mock
                 ]
             }));
             variableService.getVariables.mockImplementation(() => of(
-                {state: {one: 'first', two: 'second', three: 'third'}}
+                { state: { one: 'first', two: 'second', three: 'third' } }
             ));
 
             presetsService.createPreset.mockImplementation(() => of({}));

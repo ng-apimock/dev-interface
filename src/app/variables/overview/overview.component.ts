@@ -100,8 +100,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
     getVariables(): Observable<{ key: string, value: string, exists: boolean }[]> {
         return this.variablesService.getVariables()
             .pipe(map(data => Object.keys(data.state).map(key =>
-                    ({key: key, value: data.state[key], exists: true}))),
-                map(data => [...data, {key: undefined, value: undefined, exists: false}])
+                    ({ key: key, value: data.state[key], exists: true }))),
+                map(data => [...data, { key: undefined, value: undefined, exists: false }])
             );
     }
 }

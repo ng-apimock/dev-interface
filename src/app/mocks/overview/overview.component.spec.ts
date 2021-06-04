@@ -30,10 +30,10 @@ describe('OverviewComponent', () => {
         component = new OverviewComponent(mocksService as any);
 
         mockResponse = {
-            state: {mock: {delay: 0, echo: false, scenario: 'some'}},
+            state: { mock: { delay: 0, echo: false, scenario: 'some' } },
             mocks: [
-                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
-                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+                { name: 'some', request: { url: 'path/to/some-url' } } as Mock,
+                { name: 'other', request: { url: 'path/to/other-url' } } as Mock
             ]
         };
 
@@ -90,8 +90,8 @@ describe('OverviewComponent', () => {
 
         it('updates the datasource', () =>
             expect(component.dataSource.data).toEqual([
-                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
-                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+                { name: 'some', request: { url: 'path/to/some-url' } } as Mock,
+                { name: 'other', request: { url: 'path/to/other-url' } } as Mock
             ]));
 
         it('updates the state', () =>
@@ -129,8 +129,8 @@ describe('OverviewComponent', () => {
 
         it('updates the datasource', () =>
             expect(component.dataSource.data).toEqual([
-                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
-                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+                { name: 'some', request: { url: 'path/to/some-url' } } as Mock,
+                { name: 'other', request: { url: 'path/to/other-url' } } as Mock
             ]));
 
         it('updates the state', () =>
@@ -173,8 +173,8 @@ describe('OverviewComponent', () => {
 
         it('subscribes to getMocks and sets the data object once resolved', () =>
             expect(component.dataSource.data).toEqual([
-                {name: 'some', request: {url: 'path/to/some-url'}} as Mock,
-                {name: 'other', request: {url: 'path/to/other-url'}} as Mock
+                { name: 'some', request: { url: 'path/to/some-url' } } as Mock,
+                { name: 'other', request: { url: 'path/to/other-url' } } as Mock
             ]));
 
         it('adds the observable to the subscription list', () =>

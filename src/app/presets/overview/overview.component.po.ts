@@ -8,11 +8,11 @@ export class PresetOverviewActionsPo {
     constructor(private container: ElementFinder = null) {
     }
 
-    async search(query: string): promise.Promise<void> {
+    async search(query: string): Promise<void> {
         await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
     }
 
-    async createPreset(name: string, excludeMocks: boolean, excludeVariables: boolean): promise.Promise<void> {
+    async createPreset(name: string, excludeMocks: boolean, excludeVariables: boolean): Promise<void> {
         await this.container.element(by.buttonText('Create preset')).click();
 
         await CreatePresetPo.create(name, excludeMocks, excludeVariables);

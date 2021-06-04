@@ -11,7 +11,7 @@ import { MatTableFilterModule } from '../../common/mat-table-filter/filter.modul
 import { FilterVariablesPipe } from './filter.variables.pipe';
 import { OverviewComponent } from './overview.component';
 
-export const routes: Routes = [{path: 'variables', component: OverviewComponent}];
+export const routes: Routes = [{ path: 'variables', component: OverviewComponent }];
 
 @NgModule({
     imports: [

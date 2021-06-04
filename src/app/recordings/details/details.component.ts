@@ -20,17 +20,17 @@ export class RecordingDetailsComponent {
     ) {
         this.requestDataSource = new MatTableDataSource([] as { [name: string]: any; }[]);
         this.requestDataSource.data = [
-            {key: 'Url', value: data.request.url},
-            {key: 'Method', value: data.request.method},
-            {key: 'Headers', value: data.request.headers},
-            {key: 'Body', value: data.request.payload}
+            { key: 'Url', value: data.request.url },
+            { key: 'Method', value: data.request.method },
+            { key: 'Headers', value: data.request.headers },
+            { key: 'Body', value: data.request.payload }
         ];
 
         this.responseDataSource = new MatTableDataSource([] as { [name: string]: any; }[]);
         this.responseDataSource.data = [
-            {key: 'Status', value: data.response.status},
-            {key: 'Headers', value: data.response.headers},
-            {key: 'Data', value: data.response.data}
+            { key: 'Status', value: data.response.status },
+            { key: 'Headers', value: data.response.headers },
+            { key: 'Data', value: data.response.data }
         ];
     }
 }

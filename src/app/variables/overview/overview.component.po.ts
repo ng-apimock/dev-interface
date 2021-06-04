@@ -6,7 +6,7 @@ export class VariablesOverviewActionsPo {
     constructor(private container: ElementFinder = null) {
     }
 
-    async add(key: string, value: string): promise.Promise<void> {
+    async add(key: string, value: string): Promise<void> {
         await this.container.$$('.key').last().sendKeys(key);
         await this.container.$$('.value').last().sendKeys(value);
         await this.container.element(by.buttonText('Add variable')).click();
@@ -14,7 +14,7 @@ export class VariablesOverviewActionsPo {
         await browser.sleep(1000); // wait until the command has been finished
     }
 
-    async search(query: string): promise.Promise<void> {
+    async search(query: string): Promise<void> {
         await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
     }
 }

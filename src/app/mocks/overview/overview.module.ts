@@ -14,7 +14,7 @@ import { CreatePresetModule } from '../../presets/create-preset/create-preset.mo
 import { FilterMocksPipe } from './filter.mocks.pipe';
 import { OverviewComponent } from './overview.component';
 
-export const routes: Routes = [{path: 'mocks', component: OverviewComponent}];
+export const routes: Routes = [{ path: 'mocks', component: OverviewComponent }];
 
 @NgModule({
     imports: [

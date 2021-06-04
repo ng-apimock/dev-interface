@@ -10,7 +10,7 @@ export class VariableRequest {
      */
     constructor(private readonly variable: { key: string, value: any }) {
         this.payload = {};
-        // tslint:disable-next-line:radix
+        // eslint-disable-next-line radix
         this.payload[variable.key] = !Number.isNaN(Number.parseInt(variable.value))
             ? Number(variable.value)
             : /^(true|false)$/.test(variable.value)

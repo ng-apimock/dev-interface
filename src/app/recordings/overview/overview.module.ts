@@ -10,7 +10,7 @@ import { RecordingDetailsModule } from '../details/details.module';
 
 import { OverviewComponent } from './overview.component';
 
-export const routes: Routes = [{path: 'recordings', component: OverviewComponent}];
+export const routes: Routes = [{ path: 'recordings', component: OverviewComponent }];
 
 @NgModule({
     imports: [

@@ -15,13 +15,13 @@ describe('PresetsService', () => {
 
     describe('createPreset', () => {
         it('selects the preset', () => {
-            service.createPreset({name: 'somepreset', mocks: {}, variables: {}});
+            service.createPreset({ name: 'somepreset', mocks: {}, variables: {} });
 
             expect(http.post).toHaveBeenCalledWith('/ngapimock/presets', {
                 name: 'somepreset',
                 mocks: {},
                 variables: {}
-            }, {responseType: 'blob'});
+            }, { responseType: 'blob' });
         });
     });
 
@@ -34,9 +34,9 @@ describe('PresetsService', () => {
 
     describe('selectPreset', () => {
         it('selects the preset', () => {
-            service.selectPreset({name: 'somepreset'});
+            service.selectPreset({ name: 'somepreset' });
 
-            expect(http.put).toHaveBeenCalledWith('/ngapimock/presets', {name: 'somepreset'});
+            expect(http.put).toHaveBeenCalledWith('/ngapimock/presets', { name: 'somepreset' });
         });
     });
 });

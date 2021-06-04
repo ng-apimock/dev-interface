@@ -79,13 +79,13 @@ describe('OverviewComponent', () => {
                 request: {
                     url: '/some/url',
                     method: 'GET',
-                    headers: {record: 'true'},
+                    headers: { record: 'true' },
                     payload: {}
                 },
                 response: {
-                    data: [{some: 'thing'}],
+                    data: [{ some: 'thing' }],
                     status: 200,
-                    headers: {'content-type': ['application/json']}
+                    headers: { 'content-type': ['application/json'] }
                 }
             }];
         });
@@ -99,13 +99,13 @@ describe('OverviewComponent', () => {
                 request: {
                     url: '/some/url',
                     method: 'GET',
-                    headers: {record: 'true'},
+                    headers: { record: 'true' },
                     payload: {}
                 },
                 response: {
-                    data: [{some: 'thing'}],
+                    data: [{ some: 'thing' }],
                     status: 200,
-                    headers: {'content-type': ['application/json']}
+                    headers: { 'content-type': ['application/json'] }
                 }
             }]);
         });
@@ -119,13 +119,13 @@ describe('OverviewComponent', () => {
                 request: {
                     url: '/some/url',
                     method: 'GET',
-                    headers: {record: 'true'},
+                    headers: { record: 'true' },
                     payload: {}
                 },
                 response: {
-                    data: [{some: 'thing'}],
+                    data: [{ some: 'thing' }],
                     status: 200,
-                    headers: {'content-type': ['application/json']}
+                    headers: { 'content-type': ['application/json'] }
                 }
             }]);
         });
@@ -145,7 +145,7 @@ describe('OverviewComponent', () => {
                             payload: {}
                         },
                         response: {
-                            data: JSON.stringify([{'some': 'thing'}]),
+                            data: JSON.stringify([{ 'some': 'thing' }]),
                             status: 200,
                             headers: {
                                 'content-type': ['application/json']
@@ -173,13 +173,13 @@ describe('OverviewComponent', () => {
                 request: {
                     url: '/some/url',
                     method: 'GET',
-                    headers: {record: 'true'},
+                    headers: { record: 'true' },
                     payload: {}
                 },
                 response: {
-                    data: [{some: 'thing'}],
+                    data: [{ some: 'thing' }],
                     status: 200,
-                    headers: {'content-type': ['application/json']}
+                    headers: { 'content-type': ['application/json'] }
                 }
             }]));
 
@@ -219,13 +219,13 @@ describe('OverviewComponent', () => {
                 request: {
                     url: '/some/url',
                     method: 'GET',
-                    headers: {record: 'true'},
+                    headers: { record: 'true' },
                     payload: {}
                 },
                 response: {
-                    data: [{some: 'thing'}],
+                    data: [{ some: 'thing' }],
                     status: 200,
-                    headers: {'content-type': ['application/json']}
+                    headers: { 'content-type': ['application/json'] }
                 }
             });
         });
@@ -239,13 +239,13 @@ describe('OverviewComponent', () => {
                     request: {
                         url: '/some/url',
                         method: 'GET',
-                        headers: {record: 'true'},
+                        headers: { record: 'true' },
                         payload: {}
                     },
                     response: {
-                        data: [{some: 'thing'}],
+                        data: [{ some: 'thing' }],
                         status: 200,
-                        headers: {'content-type': ['application/json']}
+                        headers: { 'content-type': ['application/json'] }
                     }
                 },
                 height: '80%'

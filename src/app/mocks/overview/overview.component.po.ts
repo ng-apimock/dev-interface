@@ -6,19 +6,19 @@ export class MockOverviewActionsPo {
     constructor(private container: ElementFinder = null) {
     }
 
-    async resetToDefaults(): promise.Promise<void> {
+    async resetToDefaults(): Promise<void> {
         await this.container.element(by.buttonText('Reset to defaults')).click();
 
         await browser.sleep(1000); // wait until the command has been finished
     }
 
-    async setToPassThroughs(): promise.Promise<void> {
+    async setToPassThroughs(): Promise<void> {
         await this.container.element(by.buttonText('All to passThrough')).click();
 
         await browser.sleep(1000); // wait until the command has been finished
     }
 
-    async search(query: string): promise.Promise<void> {
+    async search(query: string): Promise<void> {
         await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
     }
 }

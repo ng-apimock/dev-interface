@@ -71,7 +71,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     }
 
     selectPreset(preset: Preset): void {
-        this.subscriptions.push(this.presetsService.selectPreset({name: preset.name})
+        this.subscriptions.push(this.presetsService.selectPreset({ name: preset.name })
             .subscribe(() => {
                 const message = `Preset '<strong>${preset.name}</strong>' has been selected`;
                 this.changed$.next(message);

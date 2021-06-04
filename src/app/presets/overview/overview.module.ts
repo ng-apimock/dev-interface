@@ -11,7 +11,7 @@ import { PresetDetailsModule } from '../details/details.module';
 import { FilterPresetsPipe } from './filter.preset.pipe';
 import { OverviewComponent } from './overview.component';
 
-export const routes: Routes = [{path: 'presets', component: OverviewComponent}];
+export const routes: Routes = [{ path: 'presets', component: OverviewComponent }];
 
 @NgModule({
     imports: [

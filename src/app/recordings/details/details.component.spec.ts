@@ -12,13 +12,13 @@ describe('RecordingDetailsComponent', () => {
             request: {
                 url: '/some/url',
                 method: 'GET',
-                headers: {record: 'true'},
+                headers: { record: 'true' },
                 payload: {}
             },
             response: {
-                data: [{some: 'thing'}],
+                data: [{ some: 'thing' }],
                 status: 200,
-                headers: {'content-type': ['application/json']}
+                headers: { 'content-type': ['application/json'] }
             }
         };
         component = new RecordingDetailsComponent(data);
@@ -27,17 +27,17 @@ describe('RecordingDetailsComponent', () => {
     describe('constructor', () => {
         it('creates a new request datasource data', () =>
             expect(component.requestDataSource.data).toEqual([
-                {key: 'Url', value: '/some/url'},
-                {key: 'Method', value: 'GET'},
-                {key: 'Headers', value: {record: 'true'}},
-                {key: 'Body', value: {}},
+                { key: 'Url', value: '/some/url' },
+                { key: 'Method', value: 'GET' },
+                { key: 'Headers', value: { record: 'true' } },
+                { key: 'Body', value: {} },
             ]));
 
         it('creates a new response datasource data', () =>
             expect(component.responseDataSource.data).toEqual([
-                {key: 'Status', value: 200},
-                {key: 'Headers', value: {'content-type': ['application/json']}},
-                {key: 'Data', value: [{some: 'thing'}]}
+                { key: 'Status', value: 200 },
+                { key: 'Headers', value: { 'content-type': ['application/json'] } },
+                { key: 'Data', value: [{ some: 'thing' }] }
             ]));
     });
 });
