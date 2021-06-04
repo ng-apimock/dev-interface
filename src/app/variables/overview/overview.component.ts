@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/internal/operators';
+import { map, switchMap } from 'rxjs/operators';
 
-import { UpdateVariableRequest } from '../variable-request';
+import { VariableRequest } from '../variable-request';
 import { VariablesService } from '../variables.service';
 
 @Component({
@@ -13,27 +15,46 @@ import { VariablesService } from '../variables.service';
 export class OverviewComponent implements OnInit, OnDestroy {
     data: any;
     subscriptions: Subscription[];
-    searchText: string;
-    change$: Subject<any>;
+    changed$ = new Subject<any>();
+    create$ = new Subject<any>();
+    update$ = new Subject<any>();
+    delete$ = new Subject<any>();
+
+    dataSource: MatTableDataSource<{ key: string, value: string, exists: boolean }>;
+    displayedColumns = ['key', 'value', 'options'];
 
     /**
      * Constructor.
      * @param {VariablesService} variablesService The mock service.
      */
     constructor(private readonly variablesService: VariablesService) {
-        this.data = { variables: [] };
+        this.dataSource = new MatTableDataSource([] as { key: string, value: string, exists: boolean }[]);
+        this.dataSource.filterPredicate =
+            (data: { key: string, value: string }, text: string) =>
+                data.key === undefined ||
+                data.key.indexOf(text) > -1 ||
+                data.value.indexOf(text) > -1;
+
         this.subscriptions = [];
-        this.searchText = '';
     }
 
-    /** Gets the variables. */
-    getVariables(): void {
-        this.subscriptions.push(this.variablesService.getVariables()
-            .pipe(map(data => Object.keys(data.state).map(key =>
-                ({ key: key, value: data.state[key] }))))
-            .subscribe(data => {
-                this.data.variables = data;
-            }));
+    filter(text: string): void {
+        this.dataSource.filter = text;
+    }
+
+    onAddVariable(element: { key: string, value: string, exists: boolean }): void {
+        if (this.dataSource.data.find(value => value.key === element.key).exists) {
+            element.exists = true;
+            this.onUpdateVariableValue(element);
+        } else {
+            this.create$.next(element);
+        }
+    }
+
+    onUpdateVariableValue(element: { key: string, value: string, exists: boolean }): void {
+        if (element.exists) {
+            this.update$.next(element);
+        }
     }
 
     /** {@inheritDoc}. */
@@ -43,18 +64,44 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
     /** {@inheritDoc}.*/
     ngOnInit(): void {
-        this.getVariables();
-        this.change$ = new Subject();
+        this.subscriptions.push(this.getVariables()
+            .subscribe(data => this.dataSource.data = data));
+
+        this.subscriptions.push(this.create$
+            .pipe(map((variable: { key: string, value: any }) => new VariableRequest(variable)),
+                switchMap((request: VariableRequest) =>
+                    this.variablesService.updateVariable(request).pipe(map(() => request)))
+            )
+            .subscribe((request: VariableRequest) =>
+                this.changed$.next(`Variable '<strong>${request.key}</strong>' has been '<strong>created</strong>' to '<strong>${request.value}</strong>'`)));
+
+        this.subscriptions.push(this.delete$
+            .pipe(map((variable: { key: string, value: any }) => new VariableRequest(variable)),
+                switchMap((request: VariableRequest) =>
+                    this.variablesService.deleteVariable(request.key).pipe(map(() => request)))
+            )
+            .subscribe((request: VariableRequest) =>
+                this.changed$.next(`Variable '<strong>${request.key}</strong>' has been deleted'`)));
+
+        this.subscriptions.push(this.update$
+            .pipe(debounceTime(500),
+                map((variable: { key: string, value: any }) => new VariableRequest(variable)),
+                switchMap((request: VariableRequest) =>
+                    this.variablesService.updateVariable(request).pipe(map(() => request)))
+            )
+            .subscribe((request: VariableRequest) =>
+                this.changed$.next(`Variable '<strong>${request.key}</strong>' has been '<strong>updated</strong>' to '<strong>${request.value}</strong>'`)));
+
+        this.subscriptions.push(this.changed$
+            .pipe(switchMap(() => this.getVariables()))
+            .subscribe(data => this.dataSource.data = data));
     }
 
-    /**
-     * On update show the message about the action that has been performed.
-     * @param {UpdateVariableRequest} change The change.
-     */
-    onUpdate(change: UpdateVariableRequest): void {
-        const message = ` Variable '<strong>${change.key}</strong>' has been '<strong>${change.type}</strong>'
-            ${change.value ? ` to <strong>${change.value}</strong>` : ''}`;
-        this.change$.next(message);
-        this.getVariables();
+    getVariables(): Observable<{ key: string, value: string, exists: boolean }[]> {
+        return this.variablesService.getVariables()
+            .pipe(map(data => Object.keys(data.state).map(key =>
+                    ({ key: key, value: data.state[key], exists: true }))),
+                map(data => [...data, { key: undefined, value: undefined, exists: false }])
+            );
     }
 }

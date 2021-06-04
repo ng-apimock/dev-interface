@@ -8,5 +8,5 @@ if (environment.production) {
     enableProdMode();
 }
 
-// tslint:disable-next-line:no-console
+// eslint-disable-next-line no-console
 platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.log(err));

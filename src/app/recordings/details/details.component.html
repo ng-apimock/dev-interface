@@ -1,0 +1,36 @@
+<h2>Recording</h2>
+<article>
+    <header><strong>Matching mock name: </strong>{{data.name}}</header>
+    <section><strong>Timestamp:</strong> {{data.datetime  | date: 'MM/dd/yyyy - HH:mm:ss'}}</section>
+</article>
+
+
+<h4>Request details</h4>
+<mat-table [dataSource]="requestDataSource" matSort class="request">
+    <ng-container matColumnDef="key">
+        <mat-cell *matCellDef="let element">{{element.key}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+        <mat-cell *matCellDef="let element">
+            <pre [innerHtml]="element.value | prettyjson:2"></pre>
+            </mat-cell>
+    </ng-container>
+
+    <mat-row *matRowDef="let row; columns: requestDisplayedColumns;"></mat-row>
+</mat-table>
+
+<h4>Response details</h4>
+<mat-table [dataSource]="responseDataSource" matSort class="response">
+    <ng-container matColumnDef="key">
+        <mat-cell *matCellDef="let element">{{element.key}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+        <mat-cell *matCellDef="let element">
+            <pre [innerHtml]="element.value | prettyjson:2"></pre>
+        </mat-cell>
+    </ng-container>
+
+    <mat-row *matRowDef="let row; columns: responseDisplayedColumns;"></mat-row>
+</mat-table>

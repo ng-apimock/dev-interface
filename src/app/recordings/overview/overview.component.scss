@@ -1,42 +1,69 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/tables";
+@use '~@angular/material' as mat;
+@import '~src/styles';
 
 :host {
-  h2 {
-    font-size: 1.25rem;
-    color: #4caf50;
+  /* badge */
+  span {
+    padding-top: 7px;
   }
 
-  table {
-    @extend .table;
-    @extend .table-striped;
-    @extend .table-bordered;
-    @extend .table-hover;
-    @extend .table-sm;
+  .mat-badge {
 
-    thead {
-      color: #4caf50;
+    &-content {
+      border-radius: 3px;
+      width: auto !important;
+      padding: 0 7px;
+      position: unset;
+      color: white;
+    }
 
-      th {
-        padding: 0.175rem 0.75rem;
-        font-weight: normal;
+    &-delete {
+      .mat-badge-content {
+        background: crimson;
+      }
+    }
+
+    &-get {
+      .mat-badge-content {
+        background: mat.get-color-from-palette($ngApimock-demoApplication-primary, 500);
+      }
+    }
+
+    &-post, &-put, &-patch {
+      .mat-badge-content {
+        background: mat.get-color-from-palette($ngApimock-demoApplication-primary, 800);
       }
     }
   }
 
-  .btn-primary {
-    background: #4caf50;
-    color: white;
-    border-radius: 0.25rem;
-    margin-left: 5px;
+  mat-header-row {
+    min-height: 30px;
+    padding-left: 0px;
 
-    &:focus {
-      color: white;
-      background: #4caf50;
-      border-color: #4caf50;
-      outline: 0;
+    mat-header-cell {
+      padding-left: 10px;
+      font-size: 16px;
+      color: mat.get-color-from-palette($ngApimock-demoApplication-primary);
     }
   }
+
+  mat-footer-cell {
+    display: flex; justify-content: flex-end
+  }
+
+  mat-cell {
+    padding: 0 10px 0 10px;
+  }
+
+  .mat-column-name, .mat-column-url, .mat-column-timestamp {
+    flex: 0 0 28%;
+  }
+
+  .mat-column-method {
+    flex: 0 0 5%;
+  }
+  .mat-column-options {
+    flex: 0 0 11%;
+  }
+
 }

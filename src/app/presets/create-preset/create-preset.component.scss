@@ -1,7 +1,26 @@
+@use '~@angular/material' as mat;
+@import '~src/styles';
+
 :host {
-	h2 {
-		color: #4caf50;
+	.container {
+		display: flex;
+		flex-direction: column;
 	}
+
+	.container > * {
+		width: 80%;
+		margin: auto;
+	}
+
+	h2 {
+		color: mat.get-color-from-palette($ngApimock-demoApplication-primary);
+		margin: 0;
+	}
+
+	.info {
+		padding: 10px 0;
+	}
+
 	.error {
 		color: red;
 	}

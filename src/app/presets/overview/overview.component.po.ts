@@ -1,16 +1,21 @@
-import { $, browser, ElementFinder, promise } from 'protractor';
+import { $, $$, browser, by, ElementFinder, promise } from 'protractor';
 
-import { PresetsOverviewRowPo } from './overview-row.component.po';
+import { CreatePresetPo } from '../create-preset/create-preset-component.po';
 
 const CONTAINER_SELECTOR = 'apimock-presets-overview';
-const OVERVIEW_ROW_SELECTOR = '[apimock-preset-overview-row]';
 
 export class PresetOverviewActionsPo {
-    constructor(private ef: ElementFinder = null) {
+    constructor(private container: ElementFinder = null) {
     }
 
-    async search(query: string): promise.Promise<void> {
-        await this.ef.$('.search-presets').sendKeys(query);
+    async search(query: string): Promise<void> {
+        await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
+    }
+
+    async createPreset(name: string, excludeMocks: boolean, excludeVariables: boolean): Promise<void> {
+        await this.container.element(by.buttonText('Create preset')).click();
+
+        await CreatePresetPo.create(name, excludeMocks, excludeVariables);
     }
 }
 
@@ -20,14 +25,15 @@ export class PresetsOverviewPo {
     }
 
     static row(index: number): PresetsOverviewRowPo {
-        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).get(index));
+        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-row').get(index));
     }
 
     static find(name: string): PresetsOverviewRowPo {
-        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async el => {
-            const text = await el.$('.name').getText();
-            return text === name;
-        }).first());
+        return new PresetsOverviewRowPo($$('.mat-row')
+            .filter(async el => {
+                const text = await el.$('.mat-column-name').getText();
+                return text === name;
+            }).first());
     }
 
     static navigateTo(): promise.Promise<any> {
@@ -36,5 +42,21 @@ export class PresetsOverviewPo {
 
     static isActive(): promise.Promise<any> {
         return $(CONTAINER_SELECTOR).isPresent();
+    }
+}
+
+export class PresetsOverviewRowPo {
+    constructor(private container: ElementFinder) {
+    }
+
+    get name(): any {
+        return this.container.$('.mat-column-name');
+    }
+
+    async selectPreset(): Promise<void> {
+        await this.container.element(by.buttonText('Select')).click();
+
+        // wait until the command has been finished
+        await browser.sleep(100);
     }
 }

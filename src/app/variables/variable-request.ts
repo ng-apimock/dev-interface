@@ -10,33 +10,18 @@ export class VariableRequest {
      */
     constructor(private readonly variable: { key: string, value: any }) {
         this.payload = {};
-        // tslint:disable-next-line:radix
-        this.payload[variable.key] = !Number.isNaN(Number.parseInt(variable.value))
-            ? Number(variable.value)
-            : /^(true|false)$/.test(variable.value)
-                ? variable.value === 'true'
-                : variable.value;
+        // eslint-disable-next-line radix
+        if (!Number.isNaN(Number.parseInt(variable.value))) {
+            this.payload[variable.key] = Number(variable.value);
+        } else {
+            if (/^(true|false)$/.test(variable.value)) {
+                this.payload[variable.key] = variable.value === 'true';
+            } else {
+                this.payload[variable.key] = variable.value;
+            }
+        }
 
         this.key = variable.key;
         this.value = variable.value;
-    }
-}
-
-/** Update mock request. */
-export class UpdateVariableRequest {
-    type: string;
-    key: string;
-    value: string;
-
-    /**
-     * Constructor.
-     * @param {string} key The key.
-     * @param {string} type The type.
-     * @param {string} value The value.
-     */
-    constructor(key: string, type: string, value: string) {
-        this.key = key;
-        this.type = type;
-        this.value = value;
     }
 }

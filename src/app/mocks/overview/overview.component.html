@@ -1,40 +1,77 @@
 <div class="container-fluid">
 
-    <apimock-alert [change]="change$"></apimock-alert>
+    <apimock-alert [change]="changed$"></apimock-alert>
     <h2>Available mocks</h2>
 
-    <div class="input-group">
-        <input type="text" [(ngModel)]="searchText" class="form-control search-mocks" placeholder="Filter mocks">
-        <div class="input-group-append">
-            <span class="input-group-text icon-filter"></span>
-        </div>
-    </div>
+    <apimock-mat-table-filter class="filter" placeholder="Filter mocks"
+                              (changed)="filter($event)"></apimock-mat-table-filter>
     <br/>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Criteria</th>
-            <th>Scenario</th>
-            <th>Delay</th>
-            <th>Echo</th>
-        </tr>
-        </thead>
-        <tbody>
-        <ng-container *ngFor="let mock of data.mocks | filter:searchText">
-            <tr apimock-mock-overview-row [mock]="mock" [state]="data.state[mock.name]"
-                (updated)="onUpdate($event)"></tr>
+    <mat-table [dataSource]="dataSource" matSort class="mocks"
+               *ngIf="dataSource.data.length > 0">
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
         </ng-container>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="5" class="text-right">
-                <button (click)="resetMocksToDefaults()" class="btn-primary">Reset to defaults</button>
-                <button (click)="setMocksToPassThrough()" class="btn-primary">All to passThrough</button>
-				<button (click)="saveAsPreset()" class="btn-primary">Save mocked state as Preset</button>
-            </td>
-        </tr>
-        </tfoot>
-    </table>
+
+        <ng-container matColumnDef="url">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Url</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.request.url}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="method">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Method</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span matBadge="{{element.request.method }}"
+                      matBadgeColor="{{element.request.method | lowercase }}"></span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="scenario">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Scenario</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-select name="{{element.name}}" [(ngModel)]="state[element.name].scenario"
+                            (selectionChange)="this.scenario$.next(element.name)">
+                    <mat-option *ngFor="let response of element.responses" [value]="response"
+                                [innerHtml]="response"></mat-option>
+                    <mat-option value="passThrough" class="">passThrough</mat-option>
+                </mat-select>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delay">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Delay</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <input matInput type="number" class="delay"
+                       (keyup)="this.delay$.next(element.name)"
+                       (change)="this.delay$.next(element.name)"
+                       [(ngModel)]="state[element.name].delay">
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="echo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Echo</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-checkbox class="echo"
+                              (change)="this.echo$.next(element.name)"
+                              color="primary"
+                              [(ngModel)]="state[element.name].echo">
+                </mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-footer-cell *matFooterCellDef>
+                <button (click)="onResetMocksToDefaults()" mat-stroked-button>Reset to defaults
+                </button>
+                <button (click)="onSetMocksToPassThrough()" mat-stroked-button>All to passThrough
+                </button>
+            </mat-footer-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <mat-footer-row *matFooterRowDef="displayedFooterColumns; sticky: true"></mat-footer-row>
+    </mat-table>
 </div>

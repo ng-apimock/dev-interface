@@ -1,101 +1,108 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NavigationStart, Router, RouterEvent } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { filter, mergeMap } from 'rxjs/operators';
+import { Mock } from '@ng-apimock/core/dist/mock/mock';
 
-import { CreatePresetComponent } from '../../presets/create-preset/create-preset.component';
-import { UpdateMockRequest } from '../mock-request';
-import { GetMocksResponse } from '../mock-state';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+
+import { MockRequest } from '../mock-request';
 import { MocksService } from '../mocks.service';
 
 @Component({
-  selector: 'apimock-mocks-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
+    selector: 'apimock-mocks-overview',
+    templateUrl: './overview.component.html',
+    styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit, OnDestroy {
+    changed$ = new Subject<any>();
+    delay$ = new Subject<any>();
     dialogRef: MatDialogRef<any>;
-    data: GetMocksResponse;
+    echo$ = new Subject<any>();
     subscriptions: Subscription[];
-    searchText: string;
-    change$: Subject<string>;
+    scenario$ = new Subject<any>();
 
-  /**
-   * Constructor.
-   * @param {MocksService} mocksService The mock service.
-   */
-    constructor(
-      private readonly router: Router,
-      private readonly mocksService: MocksService,
-      private readonly dialog: MatDialog
-  ) {
-    this.data = { mocks: [], state: {} };
-    this.subscriptions = [];
-    this.searchText = '';
-  }
+    dataSource: MatTableDataSource<Mock>;
+    displayedColumns = ['name', 'url', 'method', 'scenario', 'delay', 'echo'];
+    displayedFooterColumns = ['actions'];
+    state: any;
 
-  /** Gets the mocks. */
-    getMocks(): void {
-    this.subscriptions.push(
-      this.mocksService.getMocks().subscribe(data => this.data = data)
-    );
-  }
+    constructor(private readonly mocksService: MocksService) {
+        this.dataSource = new MatTableDataSource([] as Mock[]);
+        this.dataSource.filterPredicate =
+            (data: Mock, text: string) =>
+                data.name.indexOf(text) > -1 ||
+                data.request.url.indexOf(text) > -1;
+        this.subscriptions = [];
+    }
 
-  /** {@inheritDoc}. */
+    filter(text: string): void {
+        this.dataSource.filter = text;
+    }
+
+    onResetMocksToDefaults(): void {
+        this.subscriptions.push(this.mocksService.resetMocksToDefault()
+            .pipe(mergeMap(() => this.mocksService.getMocks()))
+            .subscribe(data => {
+                this.dataSource.data = data.mocks;
+                this.state = data.state;
+                this.changed$.next('All mocks have been reset to defaults.');
+            })
+        );
+    }
+
+    onSetMocksToPassThrough(): void {
+        this.subscriptions.push(this.mocksService.setMocksToPassThrough()
+            .pipe(mergeMap(() => this.mocksService.getMocks()))
+            .subscribe(data => {
+                this.dataSource.data = data.mocks;
+                this.state = data.state;
+                this.changed$.next('All mocks have been set to pass through.');
+            })
+        );
+    }
+
     ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    }
 
-  /** {@inheritDoc}.*/
     ngOnInit(): void {
-    this.getMocks();
-    this.change$ = new Subject();
-    this.subscriptions.push(
-        this.router.events
+        this.subscriptions.push(this.mocksService.getMocks()
+            .subscribe(responses => {
+                this.dataSource.data = responses.mocks;
+                this.state = responses.state;
+            })
+        );
+        this.changed$ = new Subject();
+
+        this.subscriptions.push(this.delay$
+            .pipe(debounceTime(500),
+                map(name => new MockRequest(name, this.state[name])),
+                switchMap((request: MockRequest) =>
+                    this.mocksService.updateMock(request)
+                        .pipe(tap(() =>
+                            this.changed$.next(`Mock '<strong>${request.name}</strong>' has changed the '<strong>delay</strong>' to '<strong>${this.state[request.name].delay}</strong>'`))
+                        )))
+            .subscribe());
+
+        this.subscriptions.push(this.echo$
             .pipe(
-                filter((event: RouterEvent) => event instanceof NavigationStart),
-                filter(() => !!this.dialogRef))
-            .subscribe(() => this.dialogRef.close()));
-  }
+                map(name => new MockRequest(name, this.state[name])),
+                switchMap((request: MockRequest) =>
+                    this.mocksService.updateMock(request)
+                        .pipe(tap(() =>
+                            this.changed$.next(`Mock '<strong>${request.name}</strong>' has changed the '<strong>echo</strong>' to '<strong>${this.state[request.name].echo}</strong>'`))
+                        )))
+            .subscribe());
 
-  /**
-   * On update show the message about the action that has been performed.
-   * @param {UpdateMockRequest} change The change.
-   */
-    onUpdate(change: UpdateMockRequest): void {
-    const message = `Mock '<strong>${change.name}</strong>' has changed the '<strong>${change.type}</strong>'
-        to '<strong>${change.value}</strong>'`;
-    this.change$.next(message);
-  }
-
-  /** Resets the mocks to defaults. */
-    resetMocksToDefaults(): void {
-    this.subscriptions.push(
-      this.mocksService
-        .resetMocksToDefault()
-        .pipe(mergeMap(() => this.mocksService.getMocks()))
-        .subscribe(data => {
-          this.data = data;
-          this.change$.next('All mocks have been reset to defaults.');
-        })
-    );
-  }
-
-  /** Sets the mocks to passThroughs. */
-    setMocksToPassThrough(): void {
-    this.subscriptions.push(
-      this.mocksService
-        .setMocksToPassThrough()
-        .pipe(mergeMap(() => this.mocksService.getMocks()))
-        .subscribe(data => {
-          this.data = data;
-          this.change$.next('All mocks have been set to pass through.');
-        })
-    );
-  }
-
-    saveAsPreset(): void {
-    this.dialogRef = this.dialog.open(CreatePresetComponent);
-  }
+        this.subscriptions.push(this.scenario$
+            .pipe(
+                map(name => new MockRequest(name, this.state[name])),
+                switchMap((request: MockRequest) =>
+                    this.mocksService.updateMock(request)
+                        .pipe(tap(() =>
+                            this.changed$.next(`Mock '<strong>${request.name}</strong>' has changed the '<strong>scenario</strong>' to '<strong>${this.state[request.name].scenario}</strong>'`))
+                        )))
+            .subscribe());
+    }
 }

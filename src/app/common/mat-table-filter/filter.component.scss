@@ -1,0 +1,47 @@
+@use '~@angular/material' as mat;
+@import '~src/styles';
+
+:host {
+  span {
+    padding-top: 7px;
+  }
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+
+  .filter {
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    margin-bottom: 0;
+    border-radius: 2px 2px 2px 2px;
+  }
+
+  .filter-append {
+    margin-left: -1px;
+    display: flex;
+    align-items: center;
+
+    .icon-filter {
+      display: inherit;
+      padding: .375rem .75rem;
+      background-color: mat.get-color-from-palette($ngApimock-demoApplication-secondary, 100);
+      border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
+      border-radius: 0 .25rem .25rem 0;
+    }
+  }
+
+  input {
+    border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
+  }
+
+  input:focus {
+    z-index: 10;
+    outline: none !important;
+    box-shadow: 0 0 0 0.2rem mat.get-color-from-palette($ngApimock-demoApplication-primary, 300);
+  }
+}
+

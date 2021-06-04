@@ -1,24 +1,25 @@
-import { $, browser, by, ElementFinder, promise } from 'protractor';
-
-import { MocksOverviewRowPo } from './overview-row.component.po';
+import { $, $$, browser, by, ElementFinder, promise } from 'protractor';
 
 const CONTAINER_SELECTOR = 'apimock-mocks-overview';
-const OVERVIEW_ROW_SELECTOR = '[apimock-mock-overview-row]';
 
 export class MockOverviewActionsPo {
-    constructor(private ef: ElementFinder = null) {
+    constructor(private container: ElementFinder = null) {
     }
 
-    async resetToDefaults(): promise.Promise<void> {
-        await this.ef.element(by.buttonText('Reset to defaults')).click();
+    async resetToDefaults(): Promise<void> {
+        await this.container.element(by.buttonText('Reset to defaults')).click();
+
+        await browser.sleep(1000); // wait until the command has been finished
     }
 
-    async setToPassThroughs(): promise.Promise<void> {
-        await this.ef.element(by.buttonText('All to passThrough')).click();
+    async setToPassThroughs(): Promise<void> {
+        await this.container.element(by.buttonText('All to passThrough')).click();
+
+        await browser.sleep(1000); // wait until the command has been finished
     }
 
-    async search(query: string): promise.Promise<void> {
-        await this.ef.$('.search-mocks').sendKeys(query);
+    async search(query: string): Promise<void> {
+        await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
     }
 }
 
@@ -27,22 +28,80 @@ export class MocksOverviewPo {
         return new MockOverviewActionsPo($(CONTAINER_SELECTOR));
     }
 
+    static isActive(): promise.Promise<any> {
+        return $(CONTAINER_SELECTOR).isPresent();
+    }
+
     static row(index: number): MocksOverviewRowPo {
-        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).get(index));
+        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-row').get(index));
+    }
+
+    static async selectScenario(name: string, scenario: string): Promise<void> {
+        // Open mat-select
+        await MocksOverviewPo.find(name).selectScenario(scenario);
     }
 
     static find(name: string): MocksOverviewRowPo {
-        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async el => {
-            const text = await el.$('.name').getText();
-            return text === name;
-        }).first());
+        return new MocksOverviewRowPo($$('.mat-row')
+            .filter(async el => {
+                const text = await el.$('.mat-column-name').getText();
+                return text === name;
+            }).first());
     }
 
     static navigateTo(): promise.Promise<any> {
         return browser.get('/dev-interface/#/mocks');
     }
+}
 
-    static isActive(): promise.Promise<any> {
-        return $(CONTAINER_SELECTOR).isPresent();
+export class MocksOverviewRowPo {
+    constructor(private container: ElementFinder) {
+    }
+
+    get delay(): any {
+        return this.container.$('.delay');
+    }
+
+    get echo(): any {
+        return this.container.$('.echo');
+    }
+
+    get name(): any {
+        return this.container.$('.mat-column-name').getText();
+    }
+
+    get scenario(): any {
+        return this.container.$('.mat-select-value-text').getText();
+    }
+
+    async delayResponse(delay: string): Promise<void> {
+        await this.delay.sendKeys(delay);
+
+        // wait until the command has been finished
+        await browser.sleep(1000);
+    }
+
+    async toggleEcho(): Promise<void> {
+        await this.echo.click();
+
+        // wait until the command has been finished
+        await browser.sleep(1000);
+    }
+
+    async selectScenario(scenario: string): Promise<void> {
+        // Open the mat-select
+        this.container.$('mat-select')
+            .click();
+
+        // Select the scenario
+        await $$('mat-option')
+            .filter(async el => {
+                const text = await el.getText();
+                return text === scenario;
+            }).first()
+            .click();
+
+        // wait until the command has been finished
+        await browser.sleep(100);
     }
 }

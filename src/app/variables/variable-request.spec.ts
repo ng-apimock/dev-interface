@@ -1,4 +1,4 @@
-import { UpdateVariableRequest, VariableRequest } from './variable-request';
+import { VariableRequest } from './variable-request';
 
 describe('VariableRequest', () => {
     let request: VariableRequest;
@@ -38,22 +38,4 @@ describe('VariableRequest', () => {
         });
     });
 
-});
-
-describe('UpdateVariableRequest', () => {
-    let request: UpdateVariableRequest;
-
-    describe('constructor', () => {
-        beforeEach(() => {
-            request = new UpdateVariableRequest('key', 'type', 'value');
-        });
-        it('sets the type', () =>
-            expect(request.type).toBe('type'));
-
-        it('sets the key', () =>
-            expect(request.key).toBe('key'));
-
-        it('sets the value', () =>
-            expect(request.value).toBe('value'));
-    });
 });

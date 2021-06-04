@@ -2,12 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { MocksWithState } from '../mocks/mock-state';
-
+import { CreatePresetRequest } from './create-preset/create-preset-request';
 import { GetPresetResponse } from './presets.interfaces';
-import { SelectPresetRequest } from './select-preset-request';
 
 const PRESET_URI = 'presets';
+
 /** Presets service. */
 @Injectable()
 export class PresetsService {
@@ -18,6 +17,15 @@ export class PresetsService {
      * @param {HttpClient} http The http client.
      */
     constructor(private readonly http: HttpClient) {
+    }
+
+    /**
+     * Creates a new preset
+     * @param {CreatePresetRequest} request The request.
+     * @returns {Observable<any>} observable The observable.
+     */
+    createPreset(request: CreatePresetRequest): Observable<any> {
+        return this.http.post(`${this.BASE_URL}/${PRESET_URI}`, request, { responseType: 'blob' });
     }
 
     /**
@@ -33,16 +41,7 @@ export class PresetsService {
      * @param {SelectPresetRequest} request The request.
      * @return {Observable<Object>} observable The observable.
      */
-    selectPreset(request: SelectPresetRequest): Observable<any> {
+    selectPreset(request: { name: string}): Observable<any> {
         return this.http.put(`${this.BASE_URL}/${PRESET_URI}`, request);
     }
-
-    /**
-     * Creates a new preset
-     * @param presetName
-     * @returns {Observable<any>} observable The observable.
-     */
-    createPreset(presetName: string, mocks: MocksWithState): Observable<any> {
-        return this.http.post(`${this.BASE_URL}/${PRESET_URI}`, {name: presetName, mocks, variables: {}}, {responseType: 'blob'});
-    }
- }
+}

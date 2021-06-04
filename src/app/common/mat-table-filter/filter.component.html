@@ -1,0 +1,5 @@
+<input matInput type="text" [(ngModel)]="searchText" class="form-control filter"
+       placeholder="{{placeholder}}" (keyup)="this.changed.next(this.searchText)">
+<div class="filter-append">
+    <span class="icon-filter"></span>
+</div>

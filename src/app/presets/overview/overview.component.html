@@ -1,30 +1,35 @@
 <div class="container-fluid">
 
-    <apimock-alert [change]="change$"></apimock-alert>
+    <apimock-alert [change]="changed$"></apimock-alert>
     <h2>Available presets</h2>
 
-    <div class="input-group">
-        <input type="text" [(ngModel)]="searchText" class="form-control search-presets" placeholder="Filter presets">
-        <div class="input-group-append">
-            <span class="input-group-text icon-filter"></span>
-        </div>
-    </div>
+    <apimock-mat-table-filter class="filter" placeholder="Filter variables"
+                              (changed)="filter($event)"></apimock-mat-table-filter>
     <br/>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Options</th>
-            <th>Details</th>
-        </tr>
-        </thead>
-        <tbody>
-        <ng-container *ngFor="let preset of data.presets | filter:searchText">
-            <tr apimock-preset-overview-row [preset]="preset" (updated)="onUpdate($event)"></tr>
-            <tr apimock-preset-overview-mocks-row [preset]="preset" *ngIf="preset.showMocksDetails"></tr>
-            <tr apimock-preset-overview-variables-row [preset]="preset" *ngIf="preset.showVariablesDetails"></tr>
+    <mat-table [dataSource]="dataSource" matSort class="presets">
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
         </ng-container>
-        </tbody>
-    </table>
+
+        <ng-container matColumnDef="options">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-stroked-button (click)="selectPreset(element)">Select</button>
+                <button mat-stroked-button (click)="showPresetDetails(element)">Details</button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-footer-cell *matFooterCellDef>
+                <button mat-stroked-button (click)="createPreset()">Create preset</button>
+            </mat-footer-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <mat-footer-row *matFooterRowDef="displayedFooterColumns; sticky: true"></mat-footer-row>
+    </mat-table>
 </div>
