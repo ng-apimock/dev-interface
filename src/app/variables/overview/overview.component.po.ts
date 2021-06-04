@@ -1,22 +1,21 @@
-import { $, browser, by, ElementFinder, promise } from 'protractor';
-
-import { VariablesOverviewRowPo } from './overview-row.component.po';
+import { $, $$, browser, by, ElementFinder, promise } from 'protractor';
 
 const CONTAINER_SELECTOR = 'apimock-variables-overview';
-const OVERVIEW_ROW_SELECTOR = '[apimock-variable-overview-row]';
 
 export class VariablesOverviewActionsPo {
-    constructor(private ef: ElementFinder = null) {
+    constructor(private container: ElementFinder = null) {
     }
 
     async add(key: string, value: string): promise.Promise<void> {
-        await this.ef.$('.newKey').$('input').sendKeys(key);
-        await this.ef.$('.newValue').$('input').sendKeys(value);
-        await this.ef.element(by.buttonText('Add variable')).click();
+        await this.container.$$('.key').last().sendKeys(key);
+        await this.container.$$('.value').last().sendKeys(value);
+        await this.container.element(by.buttonText('Add variable')).click();
+
+        await browser.sleep(1000); // wait until the command has been finished
     }
 
     async search(query: string): promise.Promise<void> {
-        await this.ef.$('.search-variables').sendKeys(query);
+        await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
     }
 }
 
@@ -26,14 +25,15 @@ export class VariablesOverviewPo {
     }
 
     static row(index: number): VariablesOverviewRowPo {
-        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).get(index));
+        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-row').get(index));
     }
 
     static find(name: string): VariablesOverviewRowPo {
-        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$(OVERVIEW_ROW_SELECTOR).filter(async el => {
-            const text = await el.$('.key').getText();
-            return text === name;
-        }).first());
+        return new VariablesOverviewRowPo($$('.mat-row')
+            .filter(async el => {
+                const text = await el.$('.mat-column-key').getText();
+                return text === name;
+            }).first());
     }
 
     static navigateTo(): promise.Promise<any> {
@@ -42,5 +42,33 @@ export class VariablesOverviewPo {
 
     static isActive(): promise.Promise<any> {
         return $(CONTAINER_SELECTOR).isPresent();
+    }
+}
+
+export class VariablesOverviewRowPo {
+    constructor(private container: ElementFinder) {
+    }
+
+    get key(): any {
+        return this.container.$('.mat-column-key');
+    }
+
+    get value(): any {
+        return this.container.$('.mat-column-value').$('input');
+    }
+
+    async updateValue(value: string): Promise<void> {
+        await this.value.clear();
+        await this.value.sendKeys(value);
+
+        // wait until the command has been finished
+        await browser.sleep(1000);
+    }
+
+    async delete(): Promise<void> {
+        await this.container.$('.delete').click();
+
+        // wait until the command has been finished
+        await browser.sleep(1000);
     }
 }

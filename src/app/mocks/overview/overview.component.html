@@ -42,7 +42,7 @@
         <ng-container matColumnDef="delay">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Delay</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <input matInput type="number"
+                <input matInput type="number" class="delay"
                        (keyup)="this.delay$.next(element.name)"
                        (change)="this.delay$.next(element.name)"
                        [(ngModel)]="state[element.name].delay">
@@ -52,7 +52,7 @@
         <ng-container matColumnDef="echo">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Echo</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <mat-checkbox class="example-margin"
+                <mat-checkbox class="echo"
                               (change)="this.echo$.next(element.name)"
                               color="primary"
                               [(ngModel)]="state[element.name].echo">

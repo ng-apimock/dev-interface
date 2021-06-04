@@ -1,4 +1,4 @@
-@mocks
+@mocksw
 @reset-to-defaults
 Feature: Reset to defaults
 

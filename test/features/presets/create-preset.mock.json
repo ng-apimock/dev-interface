@@ -1,0 +1,18 @@
+{
+  "name": "create preset",
+  "request": {
+    "url": "/ngapimock-intercept/presets",
+    "method": "POST"
+  },
+  "responses": {
+    "success": {
+      "status": 200,
+      "data": {
+      },
+      "default": true
+    },
+    "server-error": {
+      "status": 500
+    }
+  }
+}

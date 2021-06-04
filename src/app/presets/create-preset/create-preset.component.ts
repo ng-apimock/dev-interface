@@ -10,7 +10,7 @@ import { PresetsService } from '../presets.service';
 import { CreatePresetRequest } from './create-preset-request';
 
 @Component({
-    selector: 'create-preset',
+    selector: 'apimock-create-preset',
     templateUrl: './create-preset.component.html',
     styleUrls: ['./create-preset.component.scss'],
 })

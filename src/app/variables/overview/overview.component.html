@@ -11,7 +11,7 @@
         <ng-container matColumnDef="key">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Key</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <input *ngIf="!element.exists; else elseBlock" matInput type="text" placeholder="key"
+                <input *ngIf="!element.exists; else elseBlock" matInput type="text" placeholder="key" class="key"
                        [(ngModel)]="element.key">
                 <ng-template #elseBlock>{{element.key}}</ng-template>
             </mat-cell>
@@ -20,7 +20,7 @@
         <ng-container matColumnDef="value">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Value</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <input matInput type="text" placeholder="value"
+                <input matInput type="text" class="value" placeholder="value"
                        [(ngModel)]="element.value" (keyup)="onUpdateVariableValue(element)"
                        [(ngModel)]="element.value"></mat-cell>
         </ng-container>
@@ -33,7 +33,7 @@
                         (click)="onAddVariable(element)">Add variable
                 </button>
                 <ng-template #elseBlock>
-                    <button (click)="delete$.next(element)" mat-stroked-button>x</button>
+                    <button class="delete" (click)="delete$.next(element)" mat-stroked-button>x</button>
                 </ng-template>
             </mat-cell>
         </ng-container>
