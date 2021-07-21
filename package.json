@@ -90,7 +90,7 @@
     "lint-staged": "11.0.1",
     "p-iteration": "1.1.8",
     "protractor": "7.0.0",
-    "protractor-cucumber-framework": "6.2.1",
+    "protractor-cucumber-framework": "8.2.1",
     "rimraf": "3.0.2",
     "semantic-release": "17.4.4",
     "serve-static": "1.14.1",
