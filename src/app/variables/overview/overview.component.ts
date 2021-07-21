@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/internal/operators';
-import { map, switchMap } from 'rxjs/operators';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 
 import { VariableRequest } from '../variable-request';
 import { VariablesService } from '../variables.service';
