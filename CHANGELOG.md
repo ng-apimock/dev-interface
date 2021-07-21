@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/ng-apimock/dev-interface/compare/v2.0.0...v3.0.0) (2021-07-21)
+
+
+### chore
+
+* 🤖 update dependencies ([b64309c](https://github.com/ng-apimock/dev-interface/commit/b64309c82518d0ecc57df8563689d6178078cda3))
+
+
+### BREAKING CHANGES
+
+* 🧨  Drop support for IE 11
+
 # [2.0.0](https://github.com/ng-apimock/dev-interface/compare/v1.2.0...v2.0.0) (2021-06-04)
 
 
