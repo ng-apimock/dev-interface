@@ -31,7 +31,7 @@ exports.config = {
     framework: 'custom',
     frameworkPath: require.resolve('protractor-cucumber-framework'),
     cucumberOpts: {
-        requireModule: require('ts-node')
+        compiler: require('ts-node')
             .register({
                 project: path.posix.join(process.cwd(), 'test', 'tsconfig.e2e.json')
             }),
