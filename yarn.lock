@@ -2091,23 +2091,23 @@
     lodash "^4.17.4"
     read-pkg-up "^7.0.0"
 
-"@serenity-js/assertions@2.29.6":
-  version "2.29.6"
-  resolved "https://registry.yarnpkg.com/@serenity-js/assertions/-/assertions-2.29.6.tgz#dfdc0b8af29238c1e4252ad4e928dcb78745a9e0"
-  integrity sha512-WaZJqE466kmZ+BRXl5/yohdmYJR9RXvC/brjpG8qNJh81TkKqysHlhGww33/VJl5me/P69F+GFfTOV6XqyrLlQ==
+"@serenity-js/assertions@2.29.8":
+  version "2.29.8"
+  resolved "https://registry.yarnpkg.com/@serenity-js/assertions/-/assertions-2.29.8.tgz#11fb03d1d22cbc3938751f5ea2382bc931057f91"
+  integrity sha512-UmsHwPY915lq6YPWzJjVwiztd5Y2dQ2L2Ej9J4C4WbjDsORINt0iXSZL51rfWdLFD7AZrhnn2rOuuXkdlcKTrQ==
   dependencies:
-    "@serenity-js/core" "2.29.6"
+    "@serenity-js/core" "2.29.8"
     tiny-types "^1.16.1"
 
-"@serenity-js/core@2.29.6", "@serenity-js/core@^2.29.5":
-  version "2.29.6"
-  resolved "https://registry.yarnpkg.com/@serenity-js/core/-/core-2.29.6.tgz#51ebe82abf67e8928ca14fa46a1f843d39312f6d"
-  integrity sha512-WIogj14llA2wQfxjrdvVoTRwWHCvuLiNDYRe2X9ITnG1J5MsU5HhDYptVkIFqoxffMsQsdqug8VPtHVdWi9Geg==
+"@serenity-js/core@2.29.8", "@serenity-js/core@^2.29.7":
+  version "2.29.8"
+  resolved "https://registry.yarnpkg.com/@serenity-js/core/-/core-2.29.8.tgz#5f718003b2f92913b1380da09c25ad05664acf9e"
+  integrity sha512-la9sJd7b6ZYDncIRXPMSwFmyyOrbKt4FQcKejLPgmH4BZQcvNMyW4yn01r3h6DD0fwQzDB6xHmM9mCjsSzMn4A==
   dependencies:
     cuid "^2.1.8"
     diff "^5.0.0"
     error-stack-parser "^2.0.6"
-    fast-glob "^3.2.6"
+    fast-glob "^3.2.7"
     filenamify "^4.3.0"
     graceful-fs "^4.2.6"
     moment "^2.29.1"
@@ -2115,24 +2115,24 @@
     tiny-types "^1.16.1"
     upath "^2.0.1"
 
-"@serenity-js/cucumber@^2.29.5":
-  version "2.29.6"
-  resolved "https://registry.yarnpkg.com/@serenity-js/cucumber/-/cucumber-2.29.6.tgz#10d4389215f59efe7a231ce372ff03e90db7046a"
-  integrity sha512-ggYaAIWGN17dEyDmUmvU9DGBnOb8lRFoAFI0ExmLTUlP9uzP8p27Lqmkbq63ywLxWGE6Aj2+093oylVwU661zw==
+"@serenity-js/cucumber@^2.29.7":
+  version "2.29.8"
+  resolved "https://registry.yarnpkg.com/@serenity-js/cucumber/-/cucumber-2.29.8.tgz#5aed0194d1874b497eb14ca09e6094f3ed2e446f"
+  integrity sha512-BLNsGmzNlxbdhaKuGVWZK6a09ekEWoYFGdb5uPhrWVBC/mmBW8YkVxUu9p1ESuM6i+BGbaolUQBSP5EhRjT5Yw==
   dependencies:
     "@cucumber/messages" "^16.0.1"
-    "@serenity-js/core" "2.29.6"
+    "@serenity-js/core" "2.29.8"
     cli-table3 "^0.6.0"
     gherkin "5.1.0"
     tiny-types "^1.16.1"
 
-"@serenity-js/protractor@^2.29.5":
-  version "2.29.6"
-  resolved "https://registry.yarnpkg.com/@serenity-js/protractor/-/protractor-2.29.6.tgz#c566d1eaf68144279fbbff4089a5d01848886bb5"
-  integrity sha512-xh/PaEx886jXbHItuQwGt6AV8zSW6nOFbbXEFLIvUDMIsA6v50z79ma8KPjWvZyJIxV5WtcBCLGcS8LKuTjmXg==
+"@serenity-js/protractor@^2.29.7":
+  version "2.29.8"
+  resolved "https://registry.yarnpkg.com/@serenity-js/protractor/-/protractor-2.29.8.tgz#afc55e3b214772e77892bcfd80c385385d43973e"
+  integrity sha512-sCH+l0d4fdcJDYa1cugdaloKL28lKSMUlkinCHvNlH/DIapubOZGvl5uTbvzA0ebSYeO6Bk/dHbWkFEzyg0B5A==
   dependencies:
-    "@serenity-js/assertions" "2.29.6"
-    "@serenity-js/core" "2.29.6"
+    "@serenity-js/assertions" "2.29.8"
+    "@serenity-js/core" "2.29.8"
     deepmerge "^4.2.2"
     is-plain-object "^5.0.0"
     tiny-types "^1.16.1"
@@ -5423,7 +5423,7 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
-fast-glob@^3.1.1, fast-glob@^3.2.5, fast-glob@^3.2.6:
+fast-glob@^3.1.1, fast-glob@^3.2.5, fast-glob@^3.2.7:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.7.tgz#fd6cb7a2d7e9aa7a7846111e85a196d6b2f766a1"
   integrity sha512-rYGMRwip6lUMvYD3BTScMwT1HtAs2d71SMv66Vrxs0IekGZEjhM0pcMfjQPnknBt2zeCwQMEupiN02ZP4DiT1Q==
@@ -10120,14 +10120,14 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-protractor-cucumber-framework@8.2.1:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/protractor-cucumber-framework/-/protractor-cucumber-framework-8.2.1.tgz#ed4a1aaf86ad412fcbdbcfddad8ccb2287396346"
-  integrity sha512-OleaBNl1sfoobDCUipuHk+PDVGQoNRqehwSdqW9QYPTWcK5fJxOD/UZXLWz9yGzBYWs0FU5yfNwTcE/QkgTYAw==
+protractor-cucumber-framework@8.2.2:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/protractor-cucumber-framework/-/protractor-cucumber-framework-8.2.2.tgz#7443d1349271f494686a3db95191e53159aaa854"
+  integrity sha512-FctmvMoicTyp3/cd4U07q31POeGXPSXquxHwzhHKP3JMRpb6oBhRlZlsvvKQ7utEj/RCGjpVeunk7Dzcjy1R4Q==
   dependencies:
-    "@serenity-js/core" "^2.29.5"
-    "@serenity-js/cucumber" "^2.29.5"
-    "@serenity-js/protractor" "^2.29.5"
+    "@serenity-js/core" "^2.29.7"
+    "@serenity-js/cucumber" "^2.29.7"
+    "@serenity-js/protractor" "^2.29.7"
 
 protractor@7.0.0:
   version "7.0.0"
