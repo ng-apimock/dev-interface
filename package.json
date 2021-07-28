@@ -62,7 +62,7 @@
     "@commitlint/config-conventional": "13.1.0",
     "@ng-apimock/base-client": "3.1.0",
     "@ng-apimock/core": "3.0.3",
-    "@ng-apimock/protractor-plugin": "1.1.0",
+    "@ng-apimock/protractor-plugin": "2.0.0",
     "@semantic-release/changelog": "5.0.1",
     "@semantic-release/commit-analyzer": "8.0.1",
     "@semantic-release/git": "9.0.0",

@@ -1736,15 +1736,6 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.7.0"
 
-"@ng-apimock/base-client@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@ng-apimock/base-client/-/base-client-2.0.0.tgz#cc736d504f7180bec80c0921f00d1bf7f927d50c"
-  integrity sha512-Zwk+kpkZgDogunmcugANKWmK7Xm64MEvzjznu80/WaGMYmaQ4AMda28nvi7XTDnBcwx7hfWiSjcfnhsVPPv1XQ==
-  dependencies:
-    node-fetch "2.6.0"
-    url-join "4.0.1"
-    uuid "8.2.0"
-
 "@ng-apimock/base-client@3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@ng-apimock/base-client/-/base-client-3.1.0.tgz#39446c6e5ae83f91050588f1a24094e83cf234f7"
@@ -1769,12 +1760,12 @@
     reflect-metadata "0.1.13"
     uuid "8.3.2"
 
-"@ng-apimock/protractor-plugin@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@ng-apimock/protractor-plugin/-/protractor-plugin-1.1.0.tgz#55d5967d6027e5ba24da001b7fa47dd1df89f7cd"
-  integrity sha512-TlTEhC6i13h7W6SZ8RPzXqNo2ZgvoTbO7/Zya2XjGbypTEgV8HpLnhxxSYaxmrM2+TcATDOSMt4zIUlcp68qsg==
+"@ng-apimock/protractor-plugin@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ng-apimock/protractor-plugin/-/protractor-plugin-2.0.0.tgz#4e92b36980ae2412bfb37cbdae290eadbb7eb7cc"
+  integrity sha512-GDmEM/dgcGoCV9tu25edj/mGybhRDq7TcY2iWcPqiLbjM4JCW/b/UrUptFGykX/pz544R3oaHDGakAw5B0cKVw==
   dependencies:
-    "@ng-apimock/base-client" "2.0.0"
+    "@ng-apimock/base-client" "3.1.0"
 
 "@ngtools/webpack@12.1.3":
   version "12.1.3"
@@ -8720,11 +8711,6 @@ node-emoji@^1.10.0:
   dependencies:
     lodash.toarray "^4.4.0"
 
-node-fetch@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
-
 node-fetch@2.6.1, node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
@@ -12458,11 +12444,6 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
-
-uuid@8.2.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.2.0.tgz#cb10dd6b118e2dada7d0cd9730ba7417c93d920e"
-  integrity sha512-CYpGiFTUrmI6OBMkAdjSDM0k5h8SkkiTP4WAjQgDgNB1S3Ou9VBEvr6q0Kv2H1mMk7IWfxYGpMH5sd5AvcIV2Q==
 
 uuid@8.3.2:
   version "8.3.2"
