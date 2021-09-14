@@ -73,7 +73,7 @@
     "@types/cucumber": "6.0.1",
     "@types/jest": "26.0.24",
     "@types/node": "16.4.5",
-    "@typescript-eslint/eslint-plugin": "4.28.5",
+    "@typescript-eslint/eslint-plugin": "4.31.1",
     "@typescript-eslint/parser": "4.28.5",
     "angular2-prettyjson": "3.0.1",
     "body-parser": "1.19.0",
