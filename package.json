@@ -94,7 +94,7 @@
     "rimraf": "3.0.2",
     "semantic-release": "17.4.4",
     "serve-static": "1.14.1",
-    "ts-node": "10.1.0",
+    "ts-node": "10.3.1",
     "typescript": "4.3.5",
     "wait-on": "6.0.0"
   },
