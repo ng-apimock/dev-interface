@@ -1,20 +1,27 @@
-@use '~@angular/material' as mat;
-@include mat.core();
+@import '~@angular/material/theming';
 
-$ngApimock-demoApplication-primary: mat.define-palette(mat.$green-palette);
-$ngApimock-demoApplication-secondary: mat.define-palette(mat.$grey-palette);
-$ngApimock-demoApplication-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$ngApimock-demoApplication-warn: mat.define-palette(mat.$red-palette);
+@include mat-core();
 
-$ngApimock-demoApplication-theme: mat.define-light-theme((
-        color: (
-                primary: $ngApimock-demoApplication-primary,
-                accent: $ngApimock-demoApplication-accent,
-                warn: $ngApimock-demoApplication-warn,
-        )
-));
-@include mat.all-component-themes($ngApimock-demoApplication-theme);
+$ngapimock-app-primary: mat-palette($mat-green);
+$ngapimock-app-secondary: mat-palette($mat-grey);
+$ngapimock-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$ngapimock-app-warn:    mat-palette($mat-red);
+$ngapimock-app-theme: mat-light-theme($ngapimock-app-primary, $ngapimock-app-accent, $ngapimock-app-warn);
 
+@include angular-material-theme($ngapimock-app-theme);
+
+@font-face {
+  font-family: "icomoon";
+  src: url("assets/fonts/icomoon.eot?37hrac");
+  src: url("assets/fonts/icomoon.eot?37hrac#iefix") format("embedded-opentype"),
+  url("assets/fonts/icomoon.ttf?37hrac") format("truetype"),
+  url("assets/fonts/icomoon.woff?37hrac") format("woff"),
+  url("assets/fonts/icomoon.svg?37hrac#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+// typography styles --------------------------------------------------------
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
@@ -27,7 +34,7 @@ body {
 }
 
 h2 {
-  color: mat.get-color-from-palette($ngApimock-demoApplication-primary, 400)
+  color: mat-color($ngapimock-app-primary, 400);
 }
 
 *,
@@ -57,14 +64,6 @@ button {
   line-height: inherit;
 }
 
-.text-right {
-  text-align: right !important;
-}
-
-mat-dialog-container {
-  background-color: #fff;
-}
-
 .btn-primary {
   background: #4caf50;
   color: white;
@@ -82,17 +81,6 @@ mat-dialog-container {
     border-color: #4caf50;
     outline: 0;
   }
-}
-
-@font-face {
-  font-family: "icomoon";
-  src: url("assets/fonts/icomoon.eot?37hrac");
-  src: url("assets/fonts/icomoon.eot?37hrac#iefix") format("embedded-opentype"),
-  url("assets/fonts/icomoon.ttf?37hrac") format("truetype"),
-  url("assets/fonts/icomoon.woff?37hrac") format("woff"),
-  url("assets/fonts/icomoon.svg?37hrac#icomoon") format("svg");
-  font-weight: normal;
-  font-style: normal;
 }
 
 [class^="icon-"],
@@ -131,6 +119,12 @@ mat-dialog-container {
   content: "\ea5b";
 }
 
+// Utilities ----------------------------------------------------------------
+
+.text-right {
+  text-align: right !important;
+}
+
 
 .container-fluid {
   width: 100%;
@@ -140,8 +134,14 @@ mat-dialog-container {
   margin-left: auto;
 }
 
+
+// Material overrides  ------------------------------------------------------
+mat-dialog-container {
+  background-color: #fff;
+}
+
 mat-table {
-  border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300)
+  border: 1px solid mat-color($ngapimock-app-secondary, 300)
 }
 
 /* Material overrides */
@@ -149,7 +149,7 @@ mat-select {
   margin: 0 10px 0 0;
   padding: 2px;
   border-radius: 2px;
-  border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
+  border: 1px solid mat-color($ngapimock-app-secondary, 300);
 
   .mat-select-trigger {
     display: inline-table;

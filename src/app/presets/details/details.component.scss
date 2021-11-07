@@ -1,15 +1,14 @@
-@use '~@angular/material' as mat;
-@import '~src/styles';
+@import '../../../theme';
 
 :host {
-  mat-header-row {
+  mat-color-header-row {
     min-height: 30px;
     padding-left: 0px;
 
-    mat-header-cell {
+    mat-color-header-cell {
       padding-left: 10px;
       font-size: 16px;
-      color: mat.get-color-from-palette($ngApimock-demoApplication-primary);
+      color: mat-color($ngapimock-app-primary);
     }
   }
 

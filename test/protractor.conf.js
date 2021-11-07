@@ -17,7 +17,7 @@ exports.config = {
     beforeLaunch: () => {
         const childProcess = require('child_process');
         server = childProcess.spawn('node',
-            [path.join(__dirname, 'server.js')],
+            [path.join(__dirname, 'serve.js')],
             {
                 cwd: __dirname,
                 stdio: 'inherit'
