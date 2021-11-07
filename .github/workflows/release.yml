@@ -10,14 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
           registry-url: https://registry.npmjs.org
       - name: install
         run: yarn install --frozen-lockfile
       - name: build
-        run: yarn run build
+        run: yarn build
       - name: publish
         run: yarn semantic-release
         env:

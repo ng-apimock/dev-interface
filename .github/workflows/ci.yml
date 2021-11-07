@@ -12,7 +12,8 @@ jobs:
       fail-fast: true
       matrix:
         node_version:
-          - 12
+          - 14
+          - 16
         os:
           - ubuntu-latest
         architecture:
