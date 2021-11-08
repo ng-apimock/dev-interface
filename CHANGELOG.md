@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/ng-apimock/dev-interface/compare/v3.0.0...v3.1.0) (2021-11-08)
+
+
+### Features
+
+* upgrade to angular 13 ([#133](https://github.com/ng-apimock/dev-interface/issues/133)) ([f6fa08e](https://github.com/ng-apimock/dev-interface/commit/f6fa08e1e22d235f41b5b4c0733a79dadaa1453b)), closes [#132](https://github.com/ng-apimock/dev-interface/issues/132) [#131](https://github.com/ng-apimock/dev-interface/issues/131) [#129](https://github.com/ng-apimock/dev-interface/issues/129) [#128](https://github.com/ng-apimock/dev-interface/issues/128) [#126](https://github.com/ng-apimock/dev-interface/issues/126) [#112](https://github.com/ng-apimock/dev-interface/issues/112) [#108](https://github.com/ng-apimock/dev-interface/issues/108) [#106](https://github.com/ng-apimock/dev-interface/issues/106) [#46](https://github.com/ng-apimock/dev-interface/issues/46) [#132](https://github.com/ng-apimock/dev-interface/issues/132) [#131](https://github.com/ng-apimock/dev-interface/issues/131) [#129](https://github.com/ng-apimock/dev-interface/issues/129) [#128](https://github.com/ng-apimock/dev-interface/issues/128) [#126](https://github.com/ng-apimock/dev-interface/issues/126) [#112](https://github.com/ng-apimock/dev-interface/issues/112) [#108](https://github.com/ng-apimock/dev-interface/issues/108) [#106](https://github.com/ng-apimock/dev-interface/issues/106) [#46](https://github.com/ng-apimock/dev-interface/issues/46)
+
 # [3.0.0](https://github.com/ng-apimock/dev-interface/compare/v2.0.0...v3.0.0) (2021-07-21)
 
 
