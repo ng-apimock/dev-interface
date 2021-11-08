@@ -70,7 +70,7 @@
     "@semantic-release/npm": "8.0.3",
     "@semantic-release/release-notes-generator": "10.0.2",
     "@types/chai": "4.2.22",
-    "@types/cucumber": "6.0.1",
+    "@types/cucumber": "7.0.0",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.6",
     "@typescript-eslint/eslint-plugin": "5.3.1",
