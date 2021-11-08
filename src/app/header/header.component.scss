@@ -1,8 +1,4 @@
-@use '~@angular/material' as mat;
-@include mat.core();
-
-$grey-palette: mat.define-palette(mat.$grey-palette);
-$green-palette: mat.define-palette(mat.$green-palette);
+@import '../../theme';
 
 mat-toolbar-row {
   background: white;
@@ -10,7 +6,7 @@ mat-toolbar-row {
   padding: 0.5rem 3rem;
   font-weight: normal;
   display: block;
-  height: auto;
+  height: auto !important;
 
   @media (min-width: 992px) {
     display: flex;
@@ -25,7 +21,7 @@ mat-toolbar-row {
 
     line-height: inherit;
     white-space: nowrap;
-    color: mat.get-color-from-palette($green-palette);
+    color: mat-color($ngapimock-app-primary);
   }
 
   .toggler {
@@ -33,7 +29,7 @@ mat-toolbar-row {
     margin-top: 0px;
     padding: 0.25rem 0.75rem;
     font-size: 1.25rem;
-    border: 1px solid mat.get-color-from-palette($grey-palette, 300);
+    border: 1px solid mat-color($ngapimock-app-secondary, 300);
     border-radius: 0.25rem;
     background-color: transparent;
     @media (min-width: 992px) {
@@ -75,19 +71,19 @@ mat-toolbar-row {
           display: block;
           padding: 0 1rem;
           text-decoration: none;
-          color: mat.get-color-from-palette($grey-palette, 500);
+          color: mat-color($ngapimock-app-secondary, 500);
 
           @media (min-width: 992px) {
             padding: 0 0.5rem;
           }
         }
         &.active a {
-          color: mat.get-color-from-palette($grey-palette, 900);
+          color: mat-color($ngapimock-app-secondary, 900);
         }
       }
 
       &.active a {
-        color: mat.get-color-from-palette($grey-palette, 900);
+        color: mat-color($ngapimock-app-secondary, 900);
       }
     }
 

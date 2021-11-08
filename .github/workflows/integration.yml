@@ -16,20 +16,20 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 14
           registry-url: https://registry.npmjs.org
       - name: install
         run: yarn install --frozen-lockfile
       - name: build
-        run: yarn run build
+        run: yarn build
       - name: sauce connect proxy download
-        run: yarn run sauce:download
+        run: yarn sauce:download
       - name: sauce connect
-        run: nohup yarn run sauce:start -- --user=${{ secrets.SAUCE_USERNAME }} --api-key=${{ secrets.SAUCE_ACCESS_KEY }} --tunnel-identifier=${{ github.run_id }} --readyfile=/tmp/sc-started &
+        run: nohup yarn sauce:start -- --user=${{ secrets.SAUCE_USERNAME }} --api-key=${{ secrets.SAUCE_ACCESS_KEY }} --tunnel-identifier=${{ github.run_id }} --readyfile=/tmp/sc-started &
       - name: sauce connected check
-        run: yarn run sauce:started
+        run: yarn sauce:started
       - name: integration test
-        run: yarn run protractor-ci
+        run: yarn protractor-ci
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}

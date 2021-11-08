@@ -1,5 +1,5 @@
-@use '~@angular/material' as mat;
-@import '~src/styles';
+@import '~@angular/material/theming';
+@import '../../../theme';
 
 :host {
   mat-header-row {
@@ -9,7 +9,7 @@
     mat-header-cell {
       padding-left: 10px;
       font-size: 16px;
-      color: mat.get-color-from-palette($ngApimock-demoApplication-primary);
+      color: mat-color($ngapimock-app-primary);
     }
   }
   mat-footer-cell {
@@ -21,21 +21,33 @@
     padding: 0 10px 0 10px;
   }
 
-  .mat-column-key, .mat-column-value  {
-    flex: 0 0 45%;
+  .mat-column-name  {
+    flex: 0 0 75%;
   }
 
   .mat-column-options {
-    flex: 0 0 10%;
+    flex: 0 0 25%;
+  }
+
+  mat-header-cell.mat-column-options {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 28px;
+  }
+
+  mat-cell.mat-column-options {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 24px;
   }
 
   input {
-    border: 1px solid mat.get-color-from-palette($ngApimock-demoApplication-secondary, 300);
+    border: 1px solid mat-color($ngapimock-app-secondary, 300);
   }
 
   input:focus {
     z-index: 10;
     outline: none !important;
-    box-shadow: 0 0 0 0.2rem mat.get-color-from-palette($ngApimock-demoApplication-primary, 300);
+    box-shadow: 0 0 0 0.2rem mat-color($ngapimock-app-primary, 300);
   }
 }

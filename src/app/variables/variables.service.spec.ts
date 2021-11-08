@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { VariableRequest } from './variable-request';
 import { VariablesService } from './variables.service';
 
-describe('MocksService', () => {
+describe('VariablesService', () => {
     let http: jest.Mocked<HttpClient>;
     let service: VariablesService;
     let variableRequest: jest.Mocked<VariableRequest>;
