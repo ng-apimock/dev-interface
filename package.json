@@ -59,7 +59,7 @@
     "@angular/cli": "13.0.1",
     "@angular/compiler-cli": "13.0.0",
     "@commitlint/cli": "14.1.0",
-    "@commitlint/config-conventional": "14.1.0",
+    "@commitlint/config-conventional": "15.0.0",
     "@ng-apimock/base-client": "3.1.0",
     "@ng-apimock/core": "3.3.0",
     "@ng-apimock/protractor-plugin": "2.0.0",
