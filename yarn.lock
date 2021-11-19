@@ -133,6 +133,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-13.0.0-alpha.0.tgz#782606ceb2f5ab4086cb325e354ef8f2f1ac38d4"
   integrity sha512-HIrQMC/S8tbBw5ZXa5GL4l1+vg0SagQPyk+ZEeoGEbHp1bebEzOFOsw8orUyQJU5TDTmDLIDvS4OR1yMC00HPQ==
 
+"@angular-eslint/bundled-angular-compiler@13.0.1":
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-13.0.1.tgz#fc0a568f915948fc4eb701abb331dc2f0e3ebc71"
+  integrity sha512-Eih9Kh0hxHO4+3in9mgjksQecym0p+3p+287y3LLihIc7gCkAO4xZeHGVGiC8qUX72PNUXkDlyskI9oHjK9Axw==
+
 "@angular-eslint/eslint-plugin-template@13.0.0-alpha.0":
   version "13.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-13.0.0-alpha.0.tgz#db59a07eeacbf7bd7dfa2d778f731e85e874d5be"
@@ -149,6 +154,14 @@
   integrity sha512-tq7NG2uc0BFKy1+FhZEApi/rHU/P/ApzMu3dOLQvNgjEUn5+bc46fXzULA7pev/MkGPZO1GIVPFP/AWjjvw3WA==
   dependencies:
     "@angular-eslint/utils" "13.0.0-alpha.0"
+    "@typescript-eslint/experimental-utils" "5.3.0"
+
+"@angular-eslint/eslint-plugin@13.0.1":
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-13.0.1.tgz#fd737c8a97a5e65ab92e71b5fab1ffd45ed295f6"
+  integrity sha512-WxqgMLTfE45dqjzg/Nq0dOEDwzpdB+zYOWrA41MT3jt0UbukFEx8+FMrAgBLIeDaHzwWomiAEV5Tm5mQAKA4VA==
+  dependencies:
+    "@angular-eslint/utils" "13.0.1"
     "@typescript-eslint/experimental-utils" "5.3.0"
 
 "@angular-eslint/schematics@13.0.0-alpha.0":
@@ -176,6 +189,14 @@
   integrity sha512-rsvpoowDhLN+s1HhRy6MYmR7w4tq+1XIhwEqlelECpk1FjkUfE4FVGgzwGQ5UjYvbSBLkJZntYQO+VbtW/VYuA==
   dependencies:
     "@angular-eslint/bundled-angular-compiler" "13.0.0-alpha.0"
+    "@typescript-eslint/experimental-utils" "5.3.0"
+
+"@angular-eslint/utils@13.0.1":
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-13.0.1.tgz#e45085987b86a18ff567b4104b11fd03aa886c0a"
+  integrity sha512-makSpu8kr5yHIz0c6WaWwix+tk5DN5Uix9vQulVisZWchTmSqEovJih/UC+4XspM9kQbjcbWHohYKiBbBEQpbA==
+  dependencies:
+    "@angular-eslint/bundled-angular-compiler" "13.0.1"
     "@typescript-eslint/experimental-utils" "5.3.0"
 
 "@angular/animations@13.0.0":
