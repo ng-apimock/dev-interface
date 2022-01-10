@@ -58,7 +58,7 @@
     "@angular-eslint/template-parser": "13.0.0-alpha.0",
     "@angular/cli": "13.0.1",
     "@angular/compiler-cli": "13.0.0",
-    "@commitlint/cli": "14.1.0",
+    "@commitlint/cli": "16.0.2",
     "@commitlint/config-conventional": "14.1.0",
     "@ng-apimock/base-client": "3.1.0",
     "@ng-apimock/core": "3.3.0",
