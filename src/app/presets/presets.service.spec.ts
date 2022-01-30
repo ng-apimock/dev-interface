@@ -36,7 +36,8 @@ describe('PresetsService', () => {
         it('selects the preset', () => {
             service.selectPreset({ name: 'somepreset' });
 
-            expect(http.put).toHaveBeenCalledWith('/ngapimock/presets', { name: 'somepreset' });
+            expect(http.put).toHaveBeenCalledWith('/ngapimock/presets', { name: 'somepreset' }, { "responseType": "text" });
         });
     });
 });
+-
