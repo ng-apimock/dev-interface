@@ -6754,10 +6754,10 @@ jest-pnp-resolver@^1.2.2:
   resolved "https://registry.yarnpkg.com/jest-pnp-resolver/-/jest-pnp-resolver-1.2.2.tgz#b704ac0ae028a89108a4d040b3f919dfddc8e33c"
   integrity sha512-olV41bKSMm8BdnuMsewT4jqlZ8+3TCARAXjZGT9jcoSnrfUnRCqnMoF9XEeoWjbzObpqF9dRhHQj0Xb9QdF6/w==
 
-jest-preset-angular@11.0.0-rc.2:
-  version "11.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-11.0.0-rc.2.tgz#5a5ea65fad85056b13be068c9d6ee486cf31f6a0"
-  integrity sha512-ZY7yBlXeKPyb2siUgj6UTC/9Cg0w+D2veiP15w+YvtMbh36xROBF8mdKONsJVuwxwFwtngM0joCR25oY/icqKA==
+jest-preset-angular@11.0.0-rc.3:
+  version "11.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-11.0.0-rc.3.tgz#ef689b19c23574bad4627b43d669096d6d924370"
+  integrity sha512-BI3qDaGraDYKi0SgphBRz0MdHbiX6RpJL/Yq1MYeddLHjcVpQtOWcDaM5K7157ZuSyn7gRGKKMPxvIriIjL38g==
   dependencies:
     esbuild "0.13.12"
     jest-environment-jsdom "^27.0.0"
