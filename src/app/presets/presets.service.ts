@@ -41,7 +41,7 @@ export class PresetsService {
      * @param {SelectPresetRequest} request The request.
      * @return {Observable<Object>} observable The observable.
      */
-    selectPreset(request: { name: string}): Observable<any> {
-        return this.http.put(`${this.BASE_URL}/${PRESET_URI}`, request);
+    selectPreset(request: { name: string }): Observable<any> {
+        return this.http.put(`${this.BASE_URL}/${PRESET_URI}`, request, { responseType: 'text' });
     }
 }
