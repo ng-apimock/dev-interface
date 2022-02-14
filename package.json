@@ -87,7 +87,7 @@
     "jest": "27.4.7",
     "jest-createspyobj": "2.0.0",
     "jest-preset-angular": "11.1.0",
-    "lint-staged": "12.3.2",
+    "lint-staged": "12.3.4",
     "p-iteration": "1.1.8",
     "protractor": "7.0.0",
     "protractor-cucumber-framework": "8.2.11",
