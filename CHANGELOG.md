@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/ng-apimock/dev-interface/compare/v3.1.1...v3.2.0) (2022-12-09)
+
+
+### Bug Fixes
+
+* 🐛 budgets for angular css ([a225af4](https://github.com/ng-apimock/dev-interface/commit/a225af41047ecde809909a3e83a48f0c9939f67c))
+* 🐛 incorrect dependency versions ([56ef822](https://github.com/ng-apimock/dev-interface/commit/56ef8223b93c4cf226fb5f81714c3cfadb38ae71))
+* 🐛 incorrect versions ([792b929](https://github.com/ng-apimock/dev-interface/commit/792b929788c5c59b0f1d9dd8df0861af549b66cc))
+
+
+### Features
+
+* 🎸 update to latest angular version ([8d74df0](https://github.com/ng-apimock/dev-interface/commit/8d74df089ed14fca5c8c598a7e25450c493e9343))
+
 ## [3.1.1](https://github.com/ng-apimock/dev-interface/compare/v3.1.0...v3.1.1) (2022-01-30)
 
 
