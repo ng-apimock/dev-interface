@@ -1,4 +1,6 @@
-@import '../../../theme';
+@use '@angular/material' as mat;
+@use '../../../theme.scss';
+@import '../../../style.scss';
 
 :host {
   /* badge */
@@ -24,13 +26,13 @@
 
     &-get {
       .mat-badge-content {
-        background: mat-color($ngapimock-app-primary, 500);
+        background: mat.get-color-from-palette(theme.$ngapimock-primary, 500);
       }
     }
 
     &-post, &-put, &-patch {
       .mat-badge-content {
-        background: mat-color($ngapimock-app-primary, 800);
+        background: mat.get-color-from-palette(theme.$ngapimock-primary, 800);
       }
     }
   }
@@ -42,7 +44,7 @@
     mat-header-cell {
       padding-left: 10px;
       font-size: 16px;
-      color: mat-color($ngapimock-app-primary);
+      color: mat.get-color-from-palette(theme.$ngapimock-primary);
     }
   }
 
@@ -65,13 +67,13 @@
   }
 
   input {
-    border: 1px solid mat-color($ngapimock-app-secondary, 300);
+    border: 1px solid mat.get-color-from-palette(theme.$ngapimock-secondary, 300);
   }
 
   input:focus {
     z-index: 10;
     outline: none !important;
-    box-shadow: 0 0 0 0.2rem mat-color($ngapimock-app-primary, 300);
+    box-shadow: 0 0 0 0.2rem mat.get-color-from-palette(theme.$ngapimock-primary, 300);
   }
 
 }

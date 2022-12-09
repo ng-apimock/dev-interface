@@ -1,4 +1,6 @@
-@import '../../../theme';
+@use '@angular/material' as mat;
+@use '../../../theme.scss';
+@import '../../../style.scss';
 
 :host {
 	.container {
@@ -12,7 +14,7 @@
 	}
 
 	h2 {
-		color: mat-color($ngapimock-app-primary);
+		color: mat.get-color-from-palette(theme.$ngapimock-primary);
 		margin: 0;
 	}
 

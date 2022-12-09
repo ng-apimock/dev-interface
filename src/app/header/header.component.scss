@@ -1,4 +1,5 @@
-@import '../../theme';
+@use '@angular/material' as mat;
+@use '../../theme.scss';
 
 mat-toolbar-row {
   background: white;
@@ -21,7 +22,7 @@ mat-toolbar-row {
 
     line-height: inherit;
     white-space: nowrap;
-    color: mat-color($ngapimock-app-primary);
+    color: mat.get-color-from-palette(theme.$ngapimock-primary);
   }
 
   .toggler {
@@ -29,7 +30,7 @@ mat-toolbar-row {
     margin-top: 0px;
     padding: 0.25rem 0.75rem;
     font-size: 1.25rem;
-    border: 1px solid mat-color($ngapimock-app-secondary, 300);
+    border: 1px solid mat.get-color-from-palette(theme.$ngapimock-secondary, 300);;
     border-radius: 0.25rem;
     background-color: transparent;
     @media (min-width: 992px) {
@@ -71,19 +72,19 @@ mat-toolbar-row {
           display: block;
           padding: 0 1rem;
           text-decoration: none;
-          color: mat-color($ngapimock-app-secondary, 500);
+          color: mat.get-color-from-palette(theme.$ngapimock-secondary, 500);
 
           @media (min-width: 992px) {
             padding: 0 0.5rem;
           }
         }
         &.active a {
-          color: mat-color($ngapimock-app-secondary, 900);
+          color: mat.get-color-from-palette(theme.$ngapimock-secondary, 900);
         }
       }
 
       &.active a {
-        color: mat-color($ngapimock-app-secondary, 900);
+        color: mat.get-color-from-palette(theme.$ngapimock-secondary, 900);
       }
     }
 
@@ -105,12 +106,11 @@ mat-toolbar-row {
 }
 
 .jumbotron {
-  border-radius: .3rem;
   margin-bottom: 2rem;
   font-size: 1.5rem;
     background: #4caf50;
     color: white;
     text-align: center;
-    padding: 2rem;
+    padding: 1rem;
   }
 

@@ -1,4 +1,5 @@
-@import '../../../theme';
+@use '@angular/material' as mat;
+@use '../../../theme.scss';
 
 :host {
   span {
@@ -27,20 +28,20 @@
     .icon-filter {
       display: inherit;
       padding: .375rem .75rem;
-      background-color: mat-color($ngapimock-app-secondary, 100);
-      border: 1px solid mat-color($ngapimock-app-secondary, 300);
+      background-color: mat.get-color-from-palette(theme.$ngapimock-secondary, 100);
+      border: 1px solid mat.get-color-from-palette(theme.$ngapimock-secondary, 300);
       border-radius: 0 .25rem .25rem 0;
     }
   }
 
   input {
-    border: 1px solid mat-color($ngapimock-app-secondary, 300);
+    border: 1px solid mat.get-color-from-palette(theme.$ngapimock-secondary, 300);
   }
 
   input:focus {
     z-index: 10;
     outline: none !important;
-    box-shadow: 0 0 0 0.2rem mat-color($ngapimock-app-primary, 300);
+    box-shadow: 0 0 0 0.2rem mat.get-color-from-palette(theme.$ngapimock-secondary, 300);
   }
 }
 

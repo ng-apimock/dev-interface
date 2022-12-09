@@ -1,0 +1,18 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$ngapimock-primary: mat.define-palette(mat.$green-palette, 500);
+$ngapimock-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$ngapimock-secondary: mat.define-palette(mat.$gray-palette);
+$ngapimock-warn: mat.define-palette(mat.$red-palette);
+
+$ngapimock-theme: mat.define-light-theme((
+        color: (
+                primary: $ngapimock-primary,
+                accent: $ngapimock-accent,
+                warn: $ngapimock-warn
+        )
+));
+
+@include mat.all-component-themes($ngapimock-theme);

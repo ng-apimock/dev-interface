@@ -1,7 +1,8 @@
-@import '../../../theme';
+@use '@angular/material' as mat;
+@use '../../../theme.scss';
+@import '../../../style.scss';
 
 :host {
-
 
   /* badge */
   span {
@@ -26,13 +27,13 @@
 
     &-get {
       .mat-badge-content {
-        background: mat-color($ngapimock-app-primary, 500);
+        background: mat.get-color-from-palette(theme.$ngapimock-primary, 500);
       }
     }
 
     &-post, &-put, &-patch {
       .mat-badge-content {
-        background: mat-color($ngapimock-app-primary, 800);
+        background: mat.get-color-from-palette(theme.$ngapimock-primary, 800);
       }
     }
   }
@@ -44,7 +45,7 @@
     mat-header-cell {
       padding-left: 10px;
       font-size: 16px;
-      color: mat-color($ngapimock-app-primary);
+      color: mat.get-color-from-palette(theme.$ngapimock-primary);
     }
   }
 

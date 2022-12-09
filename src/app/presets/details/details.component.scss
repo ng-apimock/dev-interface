@@ -1,4 +1,6 @@
-@import '../../../theme';
+@use '@angular/material' as mat;
+@use '../../../theme.scss';
+@import '../../../style.scss';
 
 :host {
   mat-color-header-row {
@@ -8,7 +10,7 @@
     mat-color-header-cell {
       padding-left: 10px;
       font-size: 16px;
-      color: mat-color($ngapimock-app-primary);
+      color: mat.get-color-from-palette(theme.$ngapimock-primary);
     }
   }
 
