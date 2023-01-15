@@ -25,11 +25,11 @@ export class VariablesOverviewPo {
     }
 
     static row(index: number): VariablesOverviewRowPo {
-        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-row').get(index));
+        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-mdc-row').get(index));
     }
 
     static find(name: string): VariablesOverviewRowPo {
-        return new VariablesOverviewRowPo($$('.mat-row')
+        return new VariablesOverviewRowPo($$('.mat-mdc-row')
             .filter(async el => {
                 const text = await el.$('.mat-column-key').getText();
                 return text === name;

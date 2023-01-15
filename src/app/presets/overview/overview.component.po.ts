@@ -25,11 +25,11 @@ export class PresetsOverviewPo {
     }
 
     static row(index: number): PresetsOverviewRowPo {
-        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-row').get(index));
+        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-mdc-row').get(index));
     }
 
     static find(name: string): PresetsOverviewRowPo {
-        return new PresetsOverviewRowPo($$('.mat-row')
+        return new PresetsOverviewRowPo($$('.mat-mdc-row')
             .filter(async el => {
                 const text = await el.$('.mat-column-name').getText();
                 return text === name;

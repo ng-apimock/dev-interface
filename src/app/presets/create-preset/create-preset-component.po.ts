@@ -6,11 +6,11 @@ export class CreatePresetPo {
         await $('.name').sendKeys(name);
 
         if (excludeMocks) {
-            await $('.excludeMocks').$('.mat-checkbox-inner-container').click();
+            await $('.excludeMocks').$('.mdc-checkbox__native-control').click();
         }
 
         if (excludeVariables) {
-            await $('.excludeVariables').$('.mat-checkbox-inner-container').click();
+            await $('.excludeVariables').$('.mdc-checkbox__native-control').click();
         }
 
         await element(by.buttonText('Create')).click();

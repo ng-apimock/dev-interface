@@ -33,7 +33,7 @@ export class MocksOverviewPo {
     }
 
     static row(index: number): MocksOverviewRowPo {
-        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-row').get(index));
+        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-mdc-row').get(index));
     }
 
     static async selectScenario(name: string, scenario: string): Promise<void> {
@@ -42,7 +42,7 @@ export class MocksOverviewPo {
     }
 
     static find(name: string): MocksOverviewRowPo {
-        return new MocksOverviewRowPo($$('.mat-row')
+        return new MocksOverviewRowPo($$('.mat-mdc-row')
             .filter(async el => {
                 const text = await el.$('.mat-column-name').getText();
                 return text === name;
@@ -71,7 +71,7 @@ export class MocksOverviewRowPo {
     }
 
     get scenario(): any {
-        return this.container.$('.mat-select-value-text').getText();
+        return this.container.$('.mat-mdc-select-value-text').getText();
     }
 
     async delayResponse(delay: string): Promise<void> {

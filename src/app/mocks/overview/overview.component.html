@@ -32,8 +32,8 @@
             <mat-cell *matCellDef="let element">
                 <mat-select name="{{element.name}}" [(ngModel)]="state[element.name].scenario"
                             (selectionChange)="this.scenario$.next(element.name)">
-                    <mat-option *ngFor="let response of element.responses" [value]="response"
-                                [innerHtml]="response"></mat-option>
+                    <mat-option *ngFor="let response of element.responses" [value]="response">
+                        {{response}}</mat-option>
                     <mat-option value="passThrough" class="">passThrough</mat-option>
                 </mat-select>
             </mat-cell>
