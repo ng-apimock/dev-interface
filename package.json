@@ -90,7 +90,7 @@
     "body-parser": "1.20.1",
     "chai": "4.3.7",
     "commitizen": "4.2.6",
-    "cucumber": "6.0.5",
+    "cucumber": "6.0.7",
     "eslint": "8.32.0",
     "express": "4.18.2",
     "husky": "8.0.3",
