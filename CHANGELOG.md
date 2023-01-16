@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.1](https://github.com/ng-apimock/dev-interface/compare/v3.2.0...v3.2.1) (2023-01-16)
+
+
+### Bug Fixes
+
+* 🐛 mock selection bug ([53f3f4e](https://github.com/ng-apimock/dev-interface/commit/53f3f4e05c81538c4f021c5b81d7ba2875abc7cf))
+
 # [3.2.0](https://github.com/ng-apimock/dev-interface/compare/v3.1.1...v3.2.0) (2022-12-09)
 
 
