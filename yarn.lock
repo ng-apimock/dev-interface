@@ -6793,15 +6793,10 @@ es6-symbol@^3.1.1, es6-symbol@~3.1.3:
     d "^1.0.1"
     ext "^1.1.2"
 
-esbuild-wasm@0.16.17:
+esbuild-wasm@0.16.17, esbuild-wasm@>=0.13.8:
   version "0.16.17"
   resolved "https://registry.yarnpkg.com/esbuild-wasm/-/esbuild-wasm-0.16.17.tgz#b8d41ab99a9b725765a138f0f1d2381e891f913d"
   integrity sha512-Tn7NuMqRcM+T/qCOxbQRq0qrwWl1sUWp6ARfJRakE8Bepew6zata4qrKgH2YqovNC5e/2fcTa7o+VL/FAOZC1Q==
-
-esbuild-wasm@>=0.13.8:
-  version "0.16.3"
-  resolved "https://registry.yarnpkg.com/esbuild-wasm/-/esbuild-wasm-0.16.3.tgz#0c04e66848cb67bde420c398534a0f1fd72f28ec"
-  integrity sha512-rLDIM64R9Pc3hKAxQbFSsXdBIkquZN0w29od5/sSaQs2F8gnnRupu02XN6y/+d/odDuquwy6Dy3J+Prr8IhUaQ==
 
 esbuild@0.16.17:
   version "0.16.17"
@@ -8937,10 +8932,10 @@ jest-pnp-resolver@^1.2.2:
   resolved "https://registry.yarnpkg.com/jest-pnp-resolver/-/jest-pnp-resolver-1.2.2.tgz#b704ac0ae028a89108a4d040b3f919dfddc8e33c"
   integrity sha512-olV41bKSMm8BdnuMsewT4jqlZ8+3TCARAXjZGT9jcoSnrfUnRCqnMoF9XEeoWjbzObpqF9dRhHQj0Xb9QdF6/w==
 
-jest-preset-angular@12.2.3:
-  version "12.2.3"
-  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-12.2.3.tgz#2a0db250f6e1c83b451a21f5ca4136925f17d5b1"
-  integrity sha512-9vgawXuki/lg4IRPtl5k83krWLKADTal7BBm06xNAWOK09AbHK1foXqZdVOMObsWbaMDeQ1cjba60vS/aEVY4Q==
+jest-preset-angular@12.2.5:
+  version "12.2.5"
+  resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-12.2.5.tgz#08fc64866e89327507f6170a9845f098d6af56ed"
+  integrity sha512-TNWzvG9lZzkqsmQz8pkH3S7YVGE6mK2xmfyeGTKX9Lp9Y8C0H4ucHG7FFq4tqp/DWHkJuwAgu5YMY51ml4KDPQ==
   dependencies:
     bs-logger "^0.2.6"
     esbuild-wasm ">=0.13.8"
