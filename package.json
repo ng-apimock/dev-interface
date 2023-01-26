@@ -96,7 +96,7 @@
     "husky": "8.0.3",
     "jest": "29.3.1",
     "jest-createspyobj": "2.0.0",
-    "jest-preset-angular": "12.2.3",
+    "jest-preset-angular": "12.2.6",
     "lint-staged": "13.1.0",
     "p-iteration": "1.1.8",
     "protractor": "7.0.0",
