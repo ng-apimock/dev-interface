@@ -13,7 +13,7 @@
 
     <ng-container matColumnDef="value">
         <mat-cell *matCellDef="let element">
-            <pre [innerHtml]="element.value | prettyjson:2"></pre>
+            <pre [innerHtml]="element.value | json"></pre>
             </mat-cell>
     </ng-container>
 
@@ -28,7 +28,7 @@
 
     <ng-container matColumnDef="value">
         <mat-cell *matCellDef="let element">
-            <pre [innerHtml]="element.value | prettyjson:2"></pre>
+            <pre [innerHtml]="element.value | json"></pre>
         </mat-cell>
     </ng-container>
 

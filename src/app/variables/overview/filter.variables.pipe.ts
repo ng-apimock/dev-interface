@@ -10,6 +10,6 @@ export class FilterVariablesPipe implements PipeTransform {
             return variables;
         }
         searchText = searchText.toLowerCase();
-        return variables.filter((variable: { [key: string]: string }) => variable.key.toLowerCase().includes(searchText));
+        return variables.filter((variable: { [key: string]: string }) => variable['key'].toLowerCase().includes(searchText));
     }
 }

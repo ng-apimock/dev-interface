@@ -9,8 +9,9 @@
       "jest"
     ]
   },
-  "files": [
-    "src/polyfills.ts"
+  "polyfills": [
+    "zone.js",
+    "zone.js/testing"
   ],
   "include": [
     "src/**/*.spec.ts",
