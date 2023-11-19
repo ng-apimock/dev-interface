@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'filter' })
+@Pipe({
+    name: 'filter',
+    standalone: true
+})
 export class FilterVariablesPipe implements PipeTransform {
     transform(variables: { [key: string]: string }[], searchText: string): any[] {
         if (!variables) {

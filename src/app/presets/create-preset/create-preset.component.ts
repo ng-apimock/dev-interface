@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 
@@ -8,11 +8,24 @@ import { VariablesService } from '../../variables/variables.service';
 import { PresetsService } from '../presets.service';
 
 import { CreatePresetRequest } from './create-preset-request';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     selector: 'apimock-create-preset',
     templateUrl: './create-preset.component.html',
     styleUrls: ['./create-preset.component.scss'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgIf,
+        MatCheckboxModule,
+    ],
 })
 export class CreatePresetComponent implements OnInit {
     presetForm: FormGroup;

@@ -2,17 +2,38 @@ import { Mock } from '@ng-apimock/core/dist/mock/mock';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 
 import { MockRequest } from '../mock-request';
 import { MocksService } from '../mocks.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatOptionModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatBadgeModule } from '@angular/material/badge';
+import { NgIf, NgFor } from '@angular/common';
+import { MatTableFilterComponent } from '../../common/mat-table-filter/filter.component';
+import { AlertComponent } from '../../alert/alert.component';
 
 @Component({
     selector: 'apimock-mocks-overview',
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss'],
+    standalone: true,
+    imports: [
+        AlertComponent,
+        MatTableFilterComponent,
+        NgIf,
+        MatTableModule,
+        MatBadgeModule,
+        MatSelectModule,
+        FormsModule,
+        NgFor,
+        MatOptionModule,
+        MatCheckboxModule,
+    ],
 })
 export class OverviewComponent implements OnInit, OnDestroy {
     changed$ = new Subject<any>();

@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'filter' })
+@Pipe({
+    name: 'filter',
+    standalone: true
+})
 export class FilterMocksPipe implements PipeTransform {
     /** {@inheritDoc}.*/
     transform(mocks: any[], searchText: string): any[] {
