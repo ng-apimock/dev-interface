@@ -6,7 +6,7 @@ import { AppComponent } from "./app/app.component";
 
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { routes } from "./app/app.routes";
-import { provideRouter } from "@angular/router";
+import {provideRouter, withHashLocation} from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
 
 if (environment.production) {
@@ -15,5 +15,5 @@ if (environment.production) {
 
 // eslint-disable-next-line no-console
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routes), provideAnimations(), provideHttpClient()],
+  providers: [provideRouter(routes, withHashLocation()), provideAnimations(), provideHttpClient()],
 }).catch((err) => console.log(err));
