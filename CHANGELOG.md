@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.1](https://github.com/ng-apimock/dev-interface/compare/v3.3.0...v3.3.1) (2023-11-30)
+
+
+### Bug Fixes
+
+* package should include image ([44d4346](https://github.com/ng-apimock/dev-interface/commit/44d434661823bfaaac2b63861c8f59e49df1b18d))
+
 # [3.3.0](https://github.com/ng-apimock/dev-interface/compare/v3.2.1...v3.3.0) (2023-11-30)
 
 
