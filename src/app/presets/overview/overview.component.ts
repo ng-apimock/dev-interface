@@ -2,18 +2,22 @@ import { Preset } from '@ng-apimock/core/dist/preset/preset';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subject, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { CreatePresetComponent } from '../create-preset/create-preset.component';
 import { PresetDetailsComponent } from '../details/details.component';
 import { PresetsService } from '../presets.service';
+import { MatTableFilterComponent } from '../../common/mat-table-filter/filter.component';
+import { AlertComponent } from '../../alert/alert.component';
 
 @Component({
     selector: 'apimock-presets-overview',
     templateUrl: './overview.component.html',
-    styleUrls: ['./overview.component.scss']
+    styleUrls: ['./overview.component.scss'],
+    standalone: true,
+    imports: [AlertComponent, MatTableFilterComponent, MatTableModule]
 })
 export class OverviewComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[];

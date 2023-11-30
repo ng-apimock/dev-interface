@@ -19,10 +19,17 @@ mat-toolbar-row {
     padding-bottom: 0.3125rem;
     margin-right: 1rem;
     font-size: 1.5rem;
-
     line-height: inherit;
     white-space: nowrap;
-    color: mat.get-color-from-palette(theme.$ngapimock-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image:linear-gradient(
+      90deg,
+      #fa2c04 0%,
+      #f637e3 50%,
+      #8514f5 100%
+    );
   }
 
   .toggler {
@@ -106,11 +113,23 @@ mat-toolbar-row {
 }
 
 .jumbotron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 2rem;
   font-size: 1.5rem;
-    background: #4caf50;
-    color: white;
-    text-align: center;
-    padding: 1rem;
+  background-image:linear-gradient(
+    90deg,
+    #e90464 11.42%,
+    #f11653 34.83%,
+    #f637e3 60.69%
+  );
+  color: white;
+  text-align: center;
+  padding: 1rem;
   }
+
+.angular-image {
+  opacity: 0.5;
+}
 

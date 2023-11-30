@@ -1,107 +1,102 @@
-import { $, $$, browser, by, ElementFinder, promise } from 'protractor';
-
 const CONTAINER_SELECTOR = 'apimock-mocks-overview';
 
 export class MockOverviewActionsPo {
-    constructor(private container: ElementFinder = null) {
+    constructor(private container: Cypress.Chainable = null) {
     }
 
-    async resetToDefaults(): Promise<void> {
-        await this.container.element(by.buttonText('Reset to defaults')).click();
+    resetToDefaults() {
+        this.container.contains('button', 'Reset to defaults')
+            .click();
 
-        await browser.sleep(1000); // wait until the command has been finished
+        cy.wait(1000); // wait until the command has been finished
     }
 
-    async setToPassThroughs(): Promise<void> {
-        await this.container.element(by.buttonText('All to passThrough')).click();
+    setToPassThroughs() {
+        this.container.contains('button', 'All to passThrough')
+            .click();
 
-        await browser.sleep(1000); // wait until the command has been finished
+        cy.wait(1000); // wait until the command has been finished
     }
 
-    async search(query: string): Promise<void> {
-        await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
+    search(query: string) {
+        this.container.find('apimock-mat-table-filter').find('input').type(query);
     }
 }
 
 export class MocksOverviewPo {
     static get actions(): MockOverviewActionsPo {
-        return new MockOverviewActionsPo($(CONTAINER_SELECTOR));
+        return new MockOverviewActionsPo(cy.get(CONTAINER_SELECTOR));
     }
 
-    static isActive(): promise.Promise<any> {
-        return $(CONTAINER_SELECTOR).isPresent();
+    static isActive() {
+        return cy.get(CONTAINER_SELECTOR).should('exist');
     }
 
     static row(index: number): MocksOverviewRowPo {
-        return new MocksOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-mdc-row').get(index));
+        return new MocksOverviewRowPo(
+            cy.get(CONTAINER_SELECTOR + " .mat-mdc-row")
+                .eq(index))
     }
 
-    static async selectScenario(name: string, scenario: string): Promise<void> {
+
+    static selectScenario(name: string, scenario: string) {
         // Open mat-select
-        await MocksOverviewPo.find(name).selectScenario(scenario);
+        MocksOverviewPo.find(name)
+            .selectScenario(scenario);
     }
 
     static find(name: string): MocksOverviewRowPo {
-        return new MocksOverviewRowPo($$('.mat-mdc-row')
-            .filter(async el => {
-                const text = await el.$('.mat-column-name').getText();
-                return text === name;
-            }).first());
+        return new MocksOverviewRowPo(cy.contains('.mat-mdc-row .mat-column-name', name)
+            .parent());
     }
 
-    static navigateTo(): promise.Promise<any> {
-        return browser.get('/dev-interface/#/mocks');
+    static navigateTo(destination = '/dev-interface/') {
+        cy.visit(destination);
     }
 }
 
 export class MocksOverviewRowPo {
-    constructor(private container: ElementFinder) {
+    constructor(private container: Cypress.Chainable) {
     }
 
-    get delay(): any {
-        return this.container.$('.delay');
+    get delay(): Cypress.Chainable {
+        return this.container.find('.mat-column-delay input');
     }
 
     get echo(): any {
-        return this.container.$('.echo');
+        return this.container.find('.echo');
     }
 
-    get name(): any {
-        return this.container.$('.mat-column-name').getText();
+    get name(): Cypress.Chainable {
+        return this.container.find('.mat-column-name');
     }
 
-    get scenario(): any {
-        return this.container.$('.mat-mdc-select-value-text').getText();
+    get scenario(): Cypress.Chainable {
+        return this.container.find('.mat-mdc-select-value-text');
     }
 
-    async delayResponse(delay: string): Promise<void> {
-        await this.delay.sendKeys(delay);
+    delayResponse(delay: string) {
+        this.delay.type(delay);
 
         // wait until the command has been finished
-        await browser.sleep(1000);
+        cy.wait(1000);
     }
 
-    async toggleEcho(): Promise<void> {
-        await this.echo.click();
+    toggleEcho() {
+        this.echo.click();
 
         // wait until the command has been finished
-        await browser.sleep(1000);
+        cy.wait(2000);
     }
 
-    async selectScenario(scenario: string): Promise<void> {
+    selectScenario(scenario: string) {
         // Open the mat-select
-        this.container.$('mat-select')
-            .click();
+        this.container.find('mat-select').click();
 
         // Select the scenario
-        await $$('mat-option')
-            .filter(async el => {
-                const text = await el.getText();
-                return text === scenario;
-            }).first()
-            .click();
+        cy.contains('mat-option', scenario).click();
 
         // wait until the command has been finished
-        await browser.sleep(100);
+        cy.wait(100);
     }
 }

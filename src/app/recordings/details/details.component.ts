@@ -1,11 +1,18 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { JsonPipe, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'apimock-recording-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
+    standalone: true,
+    imports: [
+        MatTableModule,
+        JsonPipe,
+        DatePipe,
+    ],
 })
 export class RecordingDetailsComponent {
 

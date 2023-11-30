@@ -1,15 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
 
 import { VariableRequest } from '../variable-request';
 import { VariablesService } from '../variables.service';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatTableFilterComponent } from '../../common/mat-table-filter/filter.component';
+import { AlertComponent } from '../../alert/alert.component';
 
 @Component({
     selector: 'apimock-variables-overview',
     templateUrl: './overview.component.html',
-    styleUrls: ['./overview.component.scss']
+    styleUrls: ['./overview.component.scss'],
+    standalone: true,
+    imports: [AlertComponent, MatTableFilterComponent, MatTableModule, NgIf, MatInputModule, FormsModule]
 })
 export class OverviewComponent implements OnInit, OnDestroy {
     data: any;

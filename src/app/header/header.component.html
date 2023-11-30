@@ -1,42 +1,49 @@
 <mat-toolbar>
-    <mat-toolbar-row>
-        <a class="brand">ng-apimock</a>
-        <button aria-controls="toolbarContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-                class="toggler"
-                [attr.aria-expanded]="!isCollapsed"
-                mat-stroked-button
-                (click)="isCollapsed = !isCollapsed">
-            <span class="toggler-icon"></span>
-        </button>
-        <div class="collapse" [ngClass]="{'show':!isCollapsed}">
-            <ul>
-                <li routerLinkActive="active">
-                    <a routerLink="/mocks">Mocks</a>
-                </li>
-                <li routerLinkActive="active">
-                    <a routerLink="/variables">Variables</a>
-                </li>
-                <li routerLinkActive="active">
-                    <a routerLink="/presets">Presets</a>
-                </li>
-                <li routerLinkActive="active">
-                    <a routerLink="/recordings">Recordings</a>
-                </li>
-            </ul>
+  <mat-toolbar-row>
+    <a class="brand">ng-apimock</a>
+    <button
+      aria-controls="toolbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      class="toggler"
+      [attr.aria-expanded]="!isCollapsed"
+      mat-stroked-button
+      (click)="isCollapsed = !isCollapsed"
+    >
+      <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse" [ngClass]="{ show: !isCollapsed }">
+      <ul>
+        <li routerLinkActive="active">
+          <a routerLink="/mocks">Mocks</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/variables">Variables</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/presets">Presets</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/recordings">Recordings</a>
+        </li>
+      </ul>
 
-            <span class="github-buttons d-none d-lg-inline">
-                    <a class="github-button" href="https://github.com/ng-apimock/core"
-                       data-icon="octicon-star"
-                       data-show-count="true" aria-label="Star ng-apimock/core on GitHub">Star</a>
-          </span>
-        </div>
-    </mat-toolbar-row>
+      <span class="github-buttons d-none d-lg-inline">
+        <a
+          class="github-button"
+          href="https://github.com/ng-apimock/core"
+          data-icon="octicon-star"
+          data-show-count="true"
+          aria-label="Star ng-apimock/core on GitHub"
+          >Star</a
+        >
+      </span>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <article class="jumbotron">
-    <header class="container">
-        <h1>Scenario based api mocking</h1>
-    </header>
+  <img class="angular-image" ngSrc="assets/images/angular_white.png" width="144" height="144" />
+  <h1>Scenario based api mocking</h1>
+  <header class="container"></header>
 </article>

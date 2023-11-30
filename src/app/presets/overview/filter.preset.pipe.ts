@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'filter' })
+@Pipe({
+    name: 'filter',
+    standalone: true
+})
 export class FilterPresetsPipe implements PipeTransform {
     transform(presets: any[], searchText: string): any[] {
         if (!presets) {

@@ -1,10 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, timer } from 'rxjs';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'apimock-alert',
     templateUrl: './alert.component.html',
-    styleUrls: ['./alert.component.scss']
+    styleUrls: ['./alert.component.scss'],
+    standalone: true,
+    imports: [NgIf]
 })
 export class AlertComponent implements OnInit {
     @Input() change: Observable<any>;

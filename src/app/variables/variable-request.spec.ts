@@ -10,7 +10,7 @@ describe('VariableRequest', () => {
             });
 
             it('sets the payload', () =>
-                expect(request.payload.some).toBe('thing'));
+                expect(request.payload['some']).toBe('thing'));
 
             it('sets the key', () =>
                 expect(request.key).toBe('some'));
