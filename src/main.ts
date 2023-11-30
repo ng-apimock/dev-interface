@@ -6,7 +6,7 @@ import { AppComponent } from "./app/app.component";
 
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { routes } from "./app/app.routes";
-import {provideRouter, withHashLocation} from "@angular/router";
+import { provideRouter, withHashLocation } from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
 
 if (environment.production) {

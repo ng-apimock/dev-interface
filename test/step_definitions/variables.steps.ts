@@ -1,55 +1,51 @@
-import { Client } from '@ng-apimock/protractor-plugin';
-import { expect } from 'chai';
-import { Given, Then, When } from 'cucumber';
+import {Given, Then, When} from "@badeball/cypress-cucumber-preprocessor";
+import {VariablesOverviewPo} from "../../src/app/variables/overview/overview.component.po";
 
-import { VariablesOverviewPo } from '../../src/app/variables/overview/overview.component.po';
+Given(/^I open the variables page$/, () => {
+    cy.recordRequests(true);
+    VariablesOverviewPo.navigateTo('/dev-interface/#/variables');
+});
+When(/^I add variable (.*) with value (.*)$/, (key: string, value: string) => {
+    VariablesOverviewPo.actions.add(key, value);
 
-const {forEach} = require('p-iteration');
-declare const ngApimock: Client;
-
-Given(/^I open the variables page$/, async (): Promise<void> => {
-    await ngApimock.recordRequests(true);
-    await VariablesOverviewPo.navigateTo();
 });
-
-When(/^I add variable (.*) with value (.*)$/, async (key: string, value: string): Promise<void> => {
-    await VariablesOverviewPo.actions.add(key, value);
+When(/^I update variable (.*) with (.*)$/, (key: string, value: string) => {
+    VariablesOverviewPo.find(key).updateValue(value);
 });
-When(/^I update variable (.*) with (.*)$/, async (key: string, value: string): Promise<void> => {
-    await VariablesOverviewPo.find(key).updateValue(value);
+When(/^I delete variable (.*)$/, (key: string) => {
+    VariablesOverviewPo.find(key).delete();
 });
-When(/^I delete variable (.*)$/, async (key: string): Promise<void> => {
-    await VariablesOverviewPo.find(key).delete();
+When(/^I search for variables matching (.*)$/, (query: string) => {
+    VariablesOverviewPo.actions.search(query);
 });
-When(/^I search for variables matching (.*)$/, async (query: string): Promise<void> => {
-    await VariablesOverviewPo.actions.search(query);
+Then(/^the variables tab is active$/, () => {
+    VariablesOverviewPo.isActive();
 });
-
-Then(/^the variables tab is active$/, async (): Promise<void> => {
-    expect((await VariablesOverviewPo.isActive())).to.equal(true);
-});
-Then(/^the following variables are present with state:$/, async (dataTable: any): Promise<void> => {
-    await forEach(dataTable.rows(), async (row, index) => {
-        const variableRow = await VariablesOverviewPo.row(index);
-        expect(await variableRow.key.getText()).to.equal(row[0]);
-        expect(await variableRow.value.getAttribute('value')).to.equal(row[1]);
+Then(/^the following variables are present with state:$/, (dataTable: any) => cy
+    .then(() => {
+        dataTable.hashes().forEach((h: Record<string, string>, index: number) => {
+            VariablesOverviewPo.row(index).key.should('contain.text', h['key']);
+            VariablesOverviewPo.row(index).value.should('contain.value', h['value']);
+        });
+    }));
+Then(/^the variable (.*) with value (.*) is added$/, (key: string, value: string) => {
+    cy.getRecordings().then(recordings => {
+        const matchingRecording = Object.keys(recordings.recordings).filter(key => key == 'add or update variable');
+        expect(matchingRecording.length).to.equal(1)
+        expect(recordings.recordings['add or update variable'][0].request.body[key]).to.equal(value);
     });
 });
-Then(/^the variable (.*) with value (.*) is added$/, async (key: string, value: string): Promise<void> => {
-    const recordings = await ngApimock.getRecordings();
-    const updateResponseRecordings = await recordings.recordings['add or update variable'];
-    expect(updateResponseRecordings.length).to.equal(1);
-    expect(updateResponseRecordings[0].request.body[key]).to.equal(value);
+Then(/^the variable (.*) is updated with value (.*)$/, (key: string, value: string) => {
+    cy.getRecordings().then(recordings => {
+        const matchingRecording = Object.keys(recordings.recordings).filter(key => key == 'add or update variable');
+        expect(matchingRecording.length).to.equal(1)
+        expect(recordings.recordings['add or update variable'][0].request.body[key]).to.equal(value);
+    });
 });
-Then(/^the variable (.*) is updated with value (.*)$/, async (key: string, value: string): Promise<void> => {
-    const recordings = await ngApimock.getRecordings();
-    const updateResponseRecordings = await recordings.recordings['add or update variable'];
-    expect(updateResponseRecordings.length).to.equal(1);
-    expect(updateResponseRecordings[0].request.body[key]).to.equal(value);
-});
-Then(/^the variable (.*) is deleted$/, async (key: string): Promise<void> => {
-    const recordings = await ngApimock.getRecordings();
-    const updateResponseRecordings = await recordings.recordings['delete variable'];
-    expect(updateResponseRecordings.length).to.equal(1);
-    expect(updateResponseRecordings[0].request.url.endsWith(key)).to.equal(true);
+Then(/^the variable (.*) is deleted$/, (key: string) => {
+    cy.getRecordings().then(recordings => {
+        const matchingRecording = Object.keys(recordings.recordings).filter(key => key == 'delete variable');
+        expect(matchingRecording.length).to.equal(1)
+        expect(recordings.recordings['delete variable'][0].request.url.endsWith(key)).to.equal(true);
+    });
 });

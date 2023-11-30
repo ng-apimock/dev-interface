@@ -3,5 +3,16 @@
   "compilerOptions": {
     "module": "commonjs"
   },
+  "lib": [
+    "ES2022",
+    "dom"
+  ],
+  "types": [
+    "jest",
+    "chai",
+    "cypress",
+    "node",
+    "@ng-apimock/cypress-plugin"
+  ],
   "include": ["test/**/*.ts", "src/**/*.po.ts"]
 }

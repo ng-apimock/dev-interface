@@ -10,6 +10,9 @@ Feature: List all the available mocks
   - Mocks that have a scenario that is marked as default should be selected by default
   - Mocks that have no scenario that is marked as default should select passThrough by default
 
+  Background:
+    Given ng-apimock has been initialized
+
   Scenario: Show available mocks and state
     Given I open the mocks page
     Then the following mocks are present with state:

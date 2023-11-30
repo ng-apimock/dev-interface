@@ -1,62 +1,59 @@
-import { $, $$, browser, by, ElementFinder, promise } from 'protractor';
-
 import { CreatePresetPo } from '../create-preset/create-preset-component.po';
 
 const CONTAINER_SELECTOR = 'apimock-presets-overview';
 
 export class PresetOverviewActionsPo {
-    constructor(private container: ElementFinder = null) {
+    constructor(private container: Cypress.Chainable = null) {
     }
 
-    async search(query: string): Promise<void> {
-        await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
+    search(query: string) {
+        this.container.find('apimock-mat-table-filter').find('input').type(query);
     }
 
-    async createPreset(name: string, excludeMocks: boolean, excludeVariables: boolean): Promise<void> {
-        await this.container.element(by.buttonText('Create preset')).click();
-
-        await CreatePresetPo.create(name, excludeMocks, excludeVariables);
+    createPreset(name: string, excludeMocks: boolean, excludeVariables: boolean) {
+        this.container.contains('button', 'Create preset').click().then(() => {
+            CreatePresetPo.create(name, excludeMocks, excludeVariables);
+        });
     }
 }
 
 export class PresetsOverviewPo {
     static get actions(): PresetOverviewActionsPo {
-        return new PresetOverviewActionsPo($(CONTAINER_SELECTOR));
+        return new PresetOverviewActionsPo(cy.get(CONTAINER_SELECTOR));
     }
 
     static row(index: number): PresetsOverviewRowPo {
-        return new PresetsOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-mdc-row').get(index));
+        return new PresetsOverviewRowPo(
+            cy.get(CONTAINER_SELECTOR + " .mat-mdc-row")
+                .eq(index));
     }
 
     static find(name: string): PresetsOverviewRowPo {
-        return new PresetsOverviewRowPo($$('.mat-mdc-row')
-            .filter(async el => {
-                const text = await el.$('.mat-column-name').getText();
-                return text === name;
-            }).first());
+        return new PresetsOverviewRowPo(cy.contains('.mat-mdc-row .mat-column-name', name)
+            .parent());
     }
 
-    static navigateTo(): promise.Promise<any> {
-        return browser.get('/dev-interface/#/presets');
+    static navigateTo(destination = '/dev-interface/') {
+        cy.visit(destination);
     }
 
-    static isActive(): promise.Promise<any> {
-        return $(CONTAINER_SELECTOR).isPresent();
+    static isActive() {
+        return cy.get(CONTAINER_SELECTOR).should('exist');
     }
 }
 
 export class PresetsOverviewRowPo {
-    constructor(private container: ElementFinder) {
+    constructor(private container: Cypress.Chainable) {
     }
 
-    get name(): any {
-        return this.container.$('.mat-column-name');
+    get name(): Cypress.Chainable {
+        return this.container.find('.mat-column-name');
     }
 
-    async selectPreset(): Promise<void> {
-        await this.container.element(by.buttonText('Select')).click();
+    selectPreset() {
+        this.container.contains('button', 'Select').click();
 
         // wait until the command has been finished
-        await browser.sleep(100);
+        cy.wait(100);
     }
 }

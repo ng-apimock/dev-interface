@@ -4,6 +4,9 @@ Feature: Create preset
 
   Developers should be able to create a preset
 
+  Background:
+    Given ng-apimock has been initialized
+
   Scenario: Create a preset with mocks and variables
     Given I open the presets page
     And I create preset something with mocks and variables

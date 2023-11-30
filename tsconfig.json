@@ -21,12 +21,21 @@
     "lib": [
       "ES2022",
       "dom"
+    ],
+    "types": [
+      "jest",
+      "chai",
+      "cypress",
+      "node",
+      "@ng-apimock/cypress-plugin"
     ]
   },
   "angularCompilerOptions": {
+    "disableTypeScriptVersionCheck": true,
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+
 }

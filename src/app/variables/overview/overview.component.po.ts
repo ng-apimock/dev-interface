@@ -1,74 +1,69 @@
-import { $, $$, browser, by, ElementFinder, promise } from 'protractor';
-
 const CONTAINER_SELECTOR = 'apimock-variables-overview';
 
 export class VariablesOverviewActionsPo {
-    constructor(private container: ElementFinder = null) {
+    constructor(private container: Cypress.Chainable = null) {
     }
 
-    async add(key: string, value: string): Promise<void> {
-        await this.container.$$('.key').last().sendKeys(key);
-        await this.container.$$('.value').last().sendKeys(value);
-        await this.container.element(by.buttonText('Add variable')).click();
+    add(key: string, value: string) {
+        cy.get('input[placeholder="key"]').type(key);
+        cy.get('input[placeholder="value"]').last().type(value);
+        cy.contains('button', 'Add variable').click();
 
-        await browser.sleep(1000); // wait until the command has been finished
+        cy.wait(1000); // wait until the command has been finished
     }
 
-    async search(query: string): Promise<void> {
-        await this.container.$('apimock-mat-table-filter').$('input').sendKeys(query);
+    search(query: string) {
+        this.container.get('apimock-mat-table-filter input').type(query);
     }
 }
 
 export class VariablesOverviewPo {
     static get actions(): VariablesOverviewActionsPo {
-        return new VariablesOverviewActionsPo($(CONTAINER_SELECTOR));
+        return new VariablesOverviewActionsPo(cy.get(CONTAINER_SELECTOR + " .mat-mdc-table"));
     }
 
     static row(index: number): VariablesOverviewRowPo {
-        return new VariablesOverviewRowPo($(CONTAINER_SELECTOR).$$('.mat-mdc-row').get(index));
+        return new VariablesOverviewRowPo(
+            cy.get(CONTAINER_SELECTOR + " .mat-mdc-row")
+                .eq(index));
     }
 
     static find(name: string): VariablesOverviewRowPo {
-        return new VariablesOverviewRowPo($$('.mat-mdc-row')
-            .filter(async el => {
-                const text = await el.$('.mat-column-key').getText();
-                return text === name;
-            }).first());
+        return new VariablesOverviewRowPo(cy.contains('.mat-mdc-row .mat-column-key', name)
+            .parent());
     }
 
-    static navigateTo(): promise.Promise<any> {
-        return browser.get('/dev-interface/#/variables');
+    static navigateTo(destination = '/dev-interface/') {
+        cy.visit(destination);
     }
 
-    static isActive(): promise.Promise<any> {
-        return $(CONTAINER_SELECTOR).isPresent();
+    static isActive() {
+        return cy.get(CONTAINER_SELECTOR).should('exist');
     }
 }
 
 export class VariablesOverviewRowPo {
-    constructor(private container: ElementFinder) {
+    constructor(private container: Cypress.Chainable) {
     }
 
     get key(): any {
-        return this.container.$('.mat-column-key');
+        return this.container.find('.mat-column-key');
     }
 
     get value(): any {
-        return this.container.$('.mat-column-value').$('input');
+        return this.container.find('.mat-column-value input');
     }
 
-    async updateValue(value: string): Promise<void> {
-        await this.value.clear();
-        await this.value.sendKeys(value);
-
+    updateValue(value: string) {
+        this.value.clear().type(value);
         // wait until the command has been finished
-        await browser.sleep(1000);
+        cy.wait(1000);
     }
 
-    async delete(): Promise<void> {
-        await this.container.$('.delete').click();
+    delete() {
+        this.container.find('.delete').click();
 
         // wait until the command has been finished
-        await browser.sleep(1000);
+        cy.wait(1000);
     }
 }
