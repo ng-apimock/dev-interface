@@ -1,9 +1,13 @@
 # src
 src
 
+# docs
+images/dev-interface.png
+
 # test
 test
 **/*.spec.*
+cypress.config.ts
 
 # configs
 tsconfig.json
@@ -14,6 +18,9 @@ jest.config.js
 proxy.config.json
 sonar-project.properties
 tsconfig.*.json
+.releaserc
+.eslintrc.json
+.browserslistrc
 
 # idea
 .idea
@@ -21,6 +28,9 @@ tsconfig.*.json
 
 # ci
 .circleci
+.github
 
+# build
+.angular
 # other
-images
+
