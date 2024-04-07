@@ -13,11 +13,11 @@ mat-toolbar-row {
     display: flex;
   }
 
-  .brand {
+  .brand, .version {
     display: inline-block;
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
-    margin-right: 1rem;
+    margin-right: 0.5rem;
     font-size: 1.5rem;
     line-height: inherit;
     white-space: nowrap;
@@ -31,6 +31,20 @@ mat-toolbar-row {
       #8514f5 100%
     );
   }
+
+  .version {
+    font-size: 10px;
+    padding-top:20px;
+
+    background-image:linear-gradient(
+      90deg,
+      #fa2c04 0%,
+      #f637e3 50%,
+      #8514f5 100%
+    );
+  }
+
+
 
   .toggler {
     float: right;
