@@ -7,7 +7,7 @@ import { Subject, Subscription } from 'rxjs';
 
 import { RecordingDetailsComponent } from '../details/details.component';
 import { RecordingsService } from '../recordings.service';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTableFilterComponent } from '../../common/mat-table-filter/filter.component';
 import { AlertComponent } from '../../alert/alert.component';
@@ -17,7 +17,7 @@ import { AlertComponent } from '../../alert/alert.component';
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss'],
     standalone: true,
-    imports: [AlertComponent, MatTableFilterComponent, MatTableModule, MatBadgeModule, NgIf, DatePipe]
+    imports: [AlertComponent, MatTableFilterComponent, MatTableModule, MatBadgeModule, DatePipe]
 })
 export class OverviewComponent implements OnInit, OnDestroy {
     changed$ = new Subject<any>();

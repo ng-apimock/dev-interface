@@ -9,7 +9,7 @@ import { PresetsService } from '../presets.service';
 
 import { CreatePresetRequest } from './create-preset-request';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { NgIf } from '@angular/common';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -19,13 +19,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     styleUrls: ['./create-preset.component.scss'],
     standalone: true,
     imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        NgIf,
-        MatCheckboxModule,
-    ],
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule
+],
 })
 export class CreatePresetComponent implements OnInit {
     presetForm: FormGroup;

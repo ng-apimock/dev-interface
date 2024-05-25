@@ -1,39 +1,24 @@
 @use '@angular/material' as mat;
 @use '../../../theme.scss';
-@import '../../../style.scss';
 
 :host {
-  /* badge */
-  span {
-    padding-top: 7px;
-  }
+  .request-method {
+    color: white;
+    padding: 2px;
+    border-radius: 2px;
+    width: 55px;
+    text-align: center;
 
-  .mat-badge {
-
-    &-content {
-      border-radius: 3px;
-      width: auto !important;
-      padding: 0 7px;
-      position: unset;
-      color: white;
+    &.delete {
+      background: crimson;
     }
 
-    &-delete {
-      .mat-badge-content {
-        background: crimson;
-      }
+    &.get {
+      background: mat.get-color-from-palette(theme.$ngapimock-primary, 500);
     }
 
-    &-get {
-      .mat-badge-content {
-        background: mat.get-color-from-palette(theme.$ngapimock-primary, 500);
-      }
-    }
-
-    &-post, &-put, &-patch {
-      .mat-badge-content {
-        background: mat.get-color-from-palette(theme.$ngapimock-primary, 800);
-      }
+    &.post, &.put, &.patch {
+      background: mat.get-color-from-palette(theme.$ngapimock-primary, 800);
     }
   }
 

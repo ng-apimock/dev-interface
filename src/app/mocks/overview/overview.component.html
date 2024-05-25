@@ -1,77 +1,103 @@
 <div class="container-fluid">
+  <apimock-alert [change]="changed$"></apimock-alert>
+  <h2>Available mocks</h2>
 
-    <apimock-alert [change]="changed$"></apimock-alert>
-    <h2>Available mocks</h2>
+  <apimock-mat-table-filter
+    class="filter"
+    placeholder="Filter mocks"
+    (changed)="filter($event)"
+  ></apimock-mat-table-filter>
+  <br />
 
-    <apimock-mat-table-filter class="filter" placeholder="Filter mocks"
-                              (changed)="filter($event)"></apimock-mat-table-filter>
-    <br/>
-
-    <mat-table [dataSource]="dataSource" matSort class="mocks"
-               *ngIf="dataSource.data.length > 0">
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="url">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Url</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.request.url}}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="method">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Method</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <span matBadge="{{element.request.method }}"
-                      matBadgeColor="primary"></span>
+  @if (dataSource.data.length > 0) {
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mocks"
+      >
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Url</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.request.url }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="method">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Method</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">
+            <span
+              class="request-method"
+              [ngClass]="element.request.method | lowercase"
+              >{{ element.request.method | titlecase }}</span
+              >
             </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="scenario">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Scenario</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <mat-select name="{{element.name}}" [(ngModel)]="state[element.name].scenario"
-                            (selectionChange)="this.scenario$.next(element.name)">
-                    <mat-option *ngFor="let response of element.responses" [value]="response">
-                        {{response}}</mat-option>
+          </ng-container>
+          <ng-container matColumnDef="scenario">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Scenario</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">
+                <mat-select
+                  name="{{ element.name }}"
+                  [(ngModel)]="state[element.name].scenario"
+                  (selectionChange)="this.scenario$.next(element.name)"
+                  >
+                  @for (response of element.responses; track response) {
+                    <mat-option
+                      [value]="response"
+                      >
+                      {{ response }}</mat-option
+                      >
+                    }
                     <mat-option value="passThrough" class="">passThrough</mat-option>
-                </mat-select>
-            </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="delay">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Delay</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <input matInput type="number" class="delay"
-                       (keyup)="this.delay$.next(element.name)"
-                       (change)="this.delay$.next(element.name)"
-                       [(ngModel)]="state[element.name].delay">
-            </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="echo">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Echo</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <mat-checkbox class="echo"
-                              (change)="this.echo$.next(element.name)"
-                              color="primary"
-                              [(ngModel)]="state[element.name].echo">
-                </mat-checkbox>
-            </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-            <mat-footer-cell *matFooterCellDef>
-                <button (click)="onResetMocksToDefaults()" mat-stroked-button>Reset to defaults
-                </button>
-                <button (click)="onSetMocksToPassThrough()" mat-stroked-button>All to passThrough
-                </button>
-            </mat-footer-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-        <mat-footer-row *matFooterRowDef="displayedFooterColumns; sticky: true"></mat-footer-row>
-    </mat-table>
-</div>
+                  </mat-select>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="delay">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Delay</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let element">
+                    <input
+                      matInput
+                      type="number"
+                      class="delay"
+                      (keyup)="this.delay$.next(element.name)"
+                      (change)="this.delay$.next(element.name)"
+                      [(ngModel)]="state[element.name].delay"
+                      />
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="echo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Echo</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <mat-checkbox
+                      class="echo"
+                      (change)="this.echo$.next(element.name)"
+                      color="primary"
+                      [(ngModel)]="state[element.name].echo"
+                      >
+                    </mat-checkbox>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                  <mat-footer-cell *matFooterCellDef>
+                    <button (click)="onResetMocksToDefaults()" mat-stroked-button>
+                      Reset to defaults
+                    </button>
+                    <button (click)="onSetMocksToPassThrough()" mat-stroked-button>
+                      All to passThrough
+                    </button>
+                  </mat-footer-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                <mat-footer-row
+                  *matFooterRowDef="displayedFooterColumns; sticky: true"
+                ></mat-footer-row>
+              </mat-table>
+            }
+          </div>
