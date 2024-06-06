@@ -4,47 +4,44 @@
 
 <h4>Mocks details</h4>
 <mat-table [dataSource]="mocksDataSource" matSort class="mocks">
-    <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="scenario">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Scenario</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.scenario}}</mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="scenario">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Scenario</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.scenario}}</mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="delay">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Delay</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.delay}}</mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="delay">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Delay</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.delay}}</mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="echo">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Echo</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.echo}}</mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="echo">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Echo</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.echo}}</mat-cell>
+  </ng-container>
 
-    <mat-header-row *matHeaderRowDef="mocksDisplayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: mocksDisplayedColumns;"></mat-row>
+  <mat-header-row *matHeaderRowDef="mocksDisplayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: mocksDisplayedColumns;"></mat-row>
 
 </mat-table>
 
-<ng-container *ngIf="variablesDataSource.data.length > 0">
-<h4>Variables details</h4>
-<mat-table [dataSource]="variablesDataSource" matSort class="variables">
+@if (variablesDataSource.data.length > 0) {
+  <h4>Variables details</h4>
+  <mat-table [dataSource]="variablesDataSource" matSort class="variables">
     <ng-container matColumnDef="key">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Key</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.key}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Key</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.key}}</mat-cell>
     </ng-container>
-
     <ng-container matColumnDef="value">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Value</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Value</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
     </ng-container>
-
     <mat-header-row *matHeaderRowDef="variablesDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: variablesDisplayedColumns;"></mat-row>
-
-</mat-table>
-</ng-container>
+  </mat-table>
+}
 <br />

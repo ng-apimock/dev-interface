@@ -1,3 +1,5 @@
-<div class="alert alert-success" *ngIf="message">
+@if (message) {
+  <div class="alert alert-success">
     <div [innerHtml]="message"></div>
-</div>
+  </div>
+}

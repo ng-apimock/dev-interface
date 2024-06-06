@@ -1,53 +1,57 @@
 <div class="container-fluid">
-    <apimock-alert [change]="changed$"></apimock-alert>
-    <h2>Recordings</h2>
+  <apimock-alert [change]="changed$"></apimock-alert>
+  <h2>Recordings</h2>
 
-    <apimock-mat-table-filter class="filter" placeholder="Filter recordings"
-                              (changed)="filter($event)"></apimock-mat-table-filter>
-    <br/>
+  <apimock-mat-table-filter class="filter" placeholder="Filter recordings"
+  (changed)="filter($event)"></apimock-mat-table-filter>
+  <br/>
 
-    <mat-table [dataSource]="dataSource" matSort class="recordings">
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-        </ng-container>
+  <mat-table [dataSource]="dataSource" matSort class="recordings">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="url">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Url</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.request.url}}</mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="url">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Url</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.request.url}}</mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="method">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Method</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                  <span matBadge="{{element.request.method }}"
-                        matBadgeColor="primary"></span>
-            </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="method">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Method</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span matBadge="{{element.request.method }}"
+        matBadgeColor="primary"></span>
+      </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="timestamp">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.datetime | date: 'MM/dd/yyyy - HH:mm:ss'}}</mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.datetime | date: 'MM/dd/yyyy - HH:mm:ss'}}</mat-cell>
+    </ng-container>
 
 
-        <ng-container matColumnDef="options">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <button mat-stroked-button (click)="showRecordingDetails(element)">Details</button>
-            </mat-cell>
-        </ng-container>
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Options</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-stroked-button (click)="showRecordingDetails(element)">Details</button>
+      </mat-cell>
+    </ng-container>
 
-        <ng-container matColumnDef="actions">
-            <mat-footer-cell *matFooterCellDef>
-                <button mat-stroked-button (click)="enableRecording()" *ngIf="!record">Enable recording</button>
-                <button mat-stroked-button (click)="disableRecording()" *ngIf="record">Disable recording</button>
-            </mat-footer-cell>
-        </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-footer-cell *matFooterCellDef>
+        @if (!record) {
+          <button mat-stroked-button (click)="enableRecording()">Enable recording</button>
+        }
+        @if (record) {
+          <button mat-stroked-button (click)="disableRecording()">Disable recording</button>
+        }
+      </mat-footer-cell>
+    </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-        <mat-footer-row *matFooterRowDef="displayedFooterColumns; sticky: true"></mat-footer-row>
-    </mat-table>
+    <mat-footer-row *matFooterRowDef="displayedFooterColumns; sticky: true"></mat-footer-row>
+  </mat-table>
 </div>

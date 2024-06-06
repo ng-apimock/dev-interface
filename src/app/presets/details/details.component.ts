@@ -4,14 +4,14 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MockState } from "@ng-apimock/core/dist/state/mock.state";
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'apimock-presets-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
     standalone: true,
-    imports: [MatTableModule, NgIf],
+    imports: [MatTableModule],
 })
 export class PresetDetailsComponent {
 

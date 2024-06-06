@@ -1,30 +1,34 @@
 <form class="container" (ngSubmit)="submitForm()" [formGroup]="presetForm">
-    <h2>Create Preset</h2>
-    <span class="info">This will create a preset based on the current selected scenarios.</span>
-    <mat-form-field>
-        <input class="name" matInput formControlName="name" placeholder="Name" required/>
-    </mat-form-field>
+  <h2>Create Preset</h2>
+  <span class="info">This will create a preset based on the current selected scenarios.</span>
+  <mat-form-field>
+    <input class="name" matInput formControlName="name" placeholder="Name" required/>
+  </mat-form-field>
 
-    <div class="error" *ngIf="this.duplicate">A preset with this name already exists. Please choose
-        another one.
+  @if (this.duplicate) {
+    <div class="error">A preset with this name already exists. Please choose
+      another one.
     </div>
-    <br/>
-    <mat-checkbox class="excludeMocks" color="primary" formControlName="excludeMocks">
-        Exclude mocks*
-    </mat-checkbox>
-    <mat-checkbox class="excludeVariables" color="primary" formControlName="excludeVariables">
-        Exclude variables*
-    </mat-checkbox>
-    <br/>
-    <div class="error" *ngIf="!this.hasData">A preset needs to contain at least mocks or variables.
-        Please deselect one of the excludes.
+  }
+  <br/>
+  <mat-checkbox class="excludeMocks" color="primary" formControlName="excludeMocks">
+    Exclude mocks*
+  </mat-checkbox>
+  <mat-checkbox class="excludeVariables" color="primary" formControlName="excludeVariables">
+    Exclude variables*
+  </mat-checkbox>
+  <br/>
+  @if (!this.hasData) {
+    <div class="error">A preset needs to contain at least mocks or variables.
+      Please deselect one of the excludes.
     </div>
-    <br/>
+  }
+  <br/>
 
-    <div class="actions">
-        <button [disabled]="!presetForm.valid || this.duplicate || !this.hasData"
-                mat-stroked-button>Create
-        </button>
-        <button mat-stroked-button mat-dialog-close (click)="cancel()" type="cancel">Cancel</button>
-    </div>
+  <div class="actions">
+    <button [disabled]="!presetForm.valid || this.duplicate || !this.hasData"
+      mat-stroked-button>Create
+    </button>
+    <button mat-stroked-button mat-dialog-close (click)="cancel()" type="cancel">Cancel</button>
+  </div>
 </form>

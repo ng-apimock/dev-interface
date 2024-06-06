@@ -13,7 +13,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
-import { NgIf, NgFor } from '@angular/common';
+import { NgClass, LowerCasePipe, TitleCasePipe } from '@angular/common';
 import { MatTableFilterComponent } from '../../common/mat-table-filter/filter.component';
 import { AlertComponent } from '../../alert/alert.component';
 
@@ -23,17 +23,18 @@ import { AlertComponent } from '../../alert/alert.component';
     styleUrls: ['./overview.component.scss'],
     standalone: true,
     imports: [
-        AlertComponent,
-        MatTableFilterComponent,
-        NgIf,
-        MatTableModule,
-        MatBadgeModule,
-        MatSelectModule,
-        FormsModule,
-        NgFor,
-        MatOptionModule,
-        MatCheckboxModule,
-    ],
+    AlertComponent,
+    MatTableFilterComponent,
+    MatTableModule,
+    MatBadgeModule,
+    MatSelectModule,
+    FormsModule,
+    MatOptionModule,
+    MatCheckboxModule,
+    NgClass,
+    LowerCasePipe,
+    TitleCasePipe
+],
 })
 export class OverviewComponent implements OnInit, OnDestroy {
     changed$ = new Subject<any>();
