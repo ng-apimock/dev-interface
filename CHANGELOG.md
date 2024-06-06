@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/ng-apimock/dev-interface/compare/v3.4.0...v3.5.0) (2024-06-06)
+
+
+### Features
+
+* migrate to ng 18 ([#521](https://github.com/ng-apimock/dev-interface/issues/521)) ([7993778](https://github.com/ng-apimock/dev-interface/commit/7993778e6e1e264bd46259720ccabc9301d3abfd))
+
 # [3.4.0](https://github.com/ng-apimock/dev-interface/compare/v3.3.1...v3.4.0) (2024-04-07)
 
 
